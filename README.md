@@ -39,7 +39,7 @@ O AlugueLink centraliza e organiza todo o processo de gestão de aluguéis, ofer
 **Funcionalidades Principais:**
 
 🏠 **Gestão de Imóveis**
-- Cadastro detalhado com fotos e características
+- Cadastro detalhado com fotos e características do imovel
 - Controle de ocupação e disponibilidade
 
 📋 **Controle de Contratos**
