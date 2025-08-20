@@ -1,0 +1,105 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Projetos\\AlugueLINK\\AlugueLink\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\projetos\\aluguelink\\aluguelink\\aluguelinkweb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\projetos\\aluguelink\\aluguelink\\aluguelinkweb\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\projetos\\aluguelink\\aluguelink\\core\\dano.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\dano.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\projetos\\aluguelink\\aluguelink\\aluguelinkweb\\aluguelinkweb.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\aluguelinkweb.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\projetos\\aluguelink\\aluguelink\\aluguelinkweb\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Dano.cs",
+              "DocumentMoniker": "C:\\Projetos\\AlugueLINK\\AlugueLink\\Core\\Dano.cs",
+              "RelativeDocumentMoniker": "Core\\Dano.cs",
+              "ToolTip": "C:\\Projetos\\AlugueLINK\\AlugueLink\\Core\\Dano.cs",
+              "RelativeToolTip": "Core\\Dano.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-20T22:11:15.165Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Projetos\\AlugueLINK\\AlugueLink\\AlugueLinkWEB\\Program.cs",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\Program.cs",
+              "ToolTip": "C:\\Projetos\\AlugueLINK\\AlugueLink\\AlugueLinkWEB\\Program.cs",
+              "RelativeToolTip": "AlugueLinkWEB\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-20T21:16:24.506Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AlugueLinkWEB",
+              "DocumentMoniker": "C:\\Projetos\\AlugueLINK\\AlugueLink\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\AlugueLinkWEB.csproj",
+              "ToolTip": "C:\\Projetos\\AlugueLINK\\AlugueLink\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
+              "RelativeToolTip": "AlugueLinkWEB\\AlugueLinkWEB.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-08-20T21:16:08.846Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Projetos\\AlugueLINK\\AlugueLink\\AlugueLinkWEB\\appsettings.json",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\appsettings.json",
+              "ToolTip": "C:\\Projetos\\AlugueLINK\\AlugueLink\\AlugueLinkWEB\\appsettings.json",
+              "RelativeToolTip": "AlugueLinkWEB\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-20T21:10:43.633Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Projetos\\AlugueLINK\\AlugueLink\\AlugueLinkWEB\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\appsettings.Development.json",
+              "ToolTip": "C:\\Projetos\\AlugueLINK\\AlugueLink\\AlugueLinkWEB\\appsettings.Development.json",
+              "RelativeToolTip": "AlugueLinkWEB\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-20T21:10:50.939Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
