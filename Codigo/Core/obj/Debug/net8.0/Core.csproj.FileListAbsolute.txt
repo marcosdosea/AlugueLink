@@ -1,0 +1,14 @@
+C:\Projetos\AlugueLINK\AlugueLink\Core\bin\Debug\net8.0\Core.deps.json
+C:\Projetos\AlugueLINK\AlugueLink\Core\bin\Debug\net8.0\Core.runtimeconfig.json
+C:\Projetos\AlugueLINK\AlugueLink\Core\bin\Debug\net8.0\Core.dll
+C:\Projetos\AlugueLINK\AlugueLink\Core\bin\Debug\net8.0\Core.pdb
+C:\Projetos\AlugueLINK\AlugueLink\Core\obj\Debug\net8.0\Core.csproj.AssemblyReference.cache
+C:\Projetos\AlugueLINK\AlugueLink\Core\obj\Debug\net8.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projetos\AlugueLINK\AlugueLink\Core\obj\Debug\net8.0\Core.AssemblyInfoInputs.cache
+C:\Projetos\AlugueLINK\AlugueLink\Core\obj\Debug\net8.0\Core.AssemblyInfo.cs
+C:\Projetos\AlugueLINK\AlugueLink\Core\obj\Debug\net8.0\Core.csproj.CoreCompileInputs.cache
+C:\Projetos\AlugueLINK\AlugueLink\Core\obj\Debug\net8.0\Core.dll
+C:\Projetos\AlugueLINK\AlugueLink\Core\obj\Debug\net8.0\refint\Core.dll
+C:\Projetos\AlugueLINK\AlugueLink\Core\obj\Debug\net8.0\Core.pdb
+C:\Projetos\AlugueLINK\AlugueLink\Core\obj\Debug\net8.0\Core.genruntimeconfig.cache
+C:\Projetos\AlugueLINK\AlugueLink\Core\obj\Debug\net8.0\ref\Core.dll
