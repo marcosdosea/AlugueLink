@@ -1,0 +1,65 @@
+@model AlugueLinkWEB.Models.ImovelViewModel
+
+@{
+    ViewData["Title"] = "Excluir Imóvel";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="alert alert-warning">
+    <h4>Tem certeza que deseja excluir este imóvel?</h4>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>Informações do Imóvel</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Tipo)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Tipo)
+                    </dd>
+                    
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Valor)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Valor)
+                    </dd>
+                    
+                    <dt class="col-sm-3">
+                        Locador
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.LocadorNome)
+                    </dd>
+                    
+                    <dt class="col-sm-3">
+                        Endereço
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Logradouro), @Html.DisplayFor(model => model.Numero) - @Html.DisplayFor(model => model.Bairro), @Html.DisplayFor(model => model.Cidade) - @Html.DisplayFor(model => model.Estado)
+                    </dd>
+                    
+                    <dt class="col-sm-3">
+                        Características
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Quartos) quartos, @Html.DisplayFor(model => model.Banheiros) banheiros, @Html.DisplayFor(model => model.Area) m², @Html.DisplayFor(model => model.VagasGaragem) vagas
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <form asp-action="Delete" class="mt-3">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Excluir" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>

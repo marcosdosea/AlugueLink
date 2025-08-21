@@ -1,0 +1,245 @@
+using Core.DTO;
+using Core.Models;
+using Core.Service;
+using Microsoft.EntityFrameworkCore;
+using Xunit;
+
+namespace ServiceTests
+{
+    public class ImovelServiceTests : IDisposable
+    {
+        private readonly AluguelinkContext _context;
+        private readonly ImovelService _imovelService;
+
+        public ImovelServiceTests()
+        {
+            // Configurar contexto in-memory para testes
+            var options = new DbContextOptionsBuilder<AluguelinkContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            _context = new AluguelinkContext(options);
+            _imovelService = new ImovelService(_context);
+
+            // Seed data - criar locador para testes
+            SeedTestData();
+        }
+
+        private void SeedTestData()
+        {
+            var locador = new Locador
+            {
+                Id = 1,
+                Nome = "Locador Teste",
+                Email = "locador@teste.com",
+                Cpf = "12345678901",
+                Telefone = "11999999999",
+                PasswordHash = "hash_teste"
+            };
+
+            _context.Locadors.Add(locador);
+            _context.SaveChanges();
+        }
+
+        [Fact]
+        public async Task CreateAsync_DeveInserirImovelComSucesso()
+        {
+            // Arrange
+            var imovelDto = new ImovelDTO
+            {
+                Cep = "12345678",
+                Logradouro = "Rua das Flores",
+                Numero = "123",
+                Complemento = "Apto 1",
+                Bairro = "Centro",
+                Cidade = "São Paulo",
+                Estado = "SP",
+                Tipo = "apartamento",
+                Quartos = 2,
+                Banheiros = 1,
+                Area = 65.50m,
+                VagasGaragem = 1,
+                Valor = 1500.00m,
+                Descricao = "Apartamento bem localizado",
+                LocadorId = 1
+            };
+
+            // Act
+            var resultado = await _imovelService.CreateAsync(imovelDto);
+
+            // Assert
+            Assert.NotNull(resultado);
+            Assert.True(resultado.Id > 0);
+            Assert.Equal(imovelDto.Cep, resultado.Cep);
+            Assert.Equal(imovelDto.Logradouro, resultado.Logradouro);
+            Assert.Equal(imovelDto.Numero, resultado.Numero);
+            Assert.Equal(imovelDto.Complemento, resultado.Complemento);
+            Assert.Equal(imovelDto.Bairro, resultado.Bairro);
+            Assert.Equal(imovelDto.Cidade, resultado.Cidade);
+            Assert.Equal(imovelDto.Estado, resultado.Estado);
+            Assert.Equal(imovelDto.Tipo, resultado.Tipo);
+            Assert.Equal(imovelDto.Quartos, resultado.Quartos);
+            Assert.Equal(imovelDto.Banheiros, resultado.Banheiros);
+            Assert.Equal(imovelDto.Area, resultado.Area);
+            Assert.Equal(imovelDto.VagasGaragem, resultado.VagasGaragem);
+            Assert.Equal(imovelDto.Valor, resultado.Valor);
+            Assert.Equal(imovelDto.Descricao, resultado.Descricao);
+            Assert.Equal(imovelDto.LocadorId, resultado.LocadorId);
+
+            // Verificar se foi salvo no banco
+            var imovelNoBanco = await _context.Imovels.FindAsync(resultado.Id);
+            Assert.NotNull(imovelNoBanco);
+            Assert.Equal(resultado.Id, imovelNoBanco.Id);
+        }
+
+        [Fact]
+        public async Task CreateAsync_ComDadosMinimos_DeveInserirComSucesso()
+        {
+            // Arrange
+            var imovelDto = new ImovelDTO
+            {
+                LocadorId = 1,
+                Tipo = "casa",
+                Cidade = "Rio de Janeiro",
+                Valor = 2000.00m
+            };
+
+            // Act
+            var resultado = await _imovelService.CreateAsync(imovelDto);
+
+            // Assert
+            Assert.NotNull(resultado);
+            Assert.True(resultado.Id > 0);
+            Assert.Equal(imovelDto.LocadorId, resultado.LocadorId);
+            Assert.Equal(imovelDto.Tipo, resultado.Tipo);
+            Assert.Equal(imovelDto.Cidade, resultado.Cidade);
+            Assert.Equal(imovelDto.Valor, resultado.Valor);
+
+            // Verificar se foi salvo no banco
+            var imovelNoBanco = await _context.Imovels.FindAsync(resultado.Id);
+            Assert.NotNull(imovelNoBanco);
+        }
+
+        [Fact]
+        public async Task CreateAsync_ComTodosOsCampos_DevePreservarTodosOsDados()
+        {
+            // Arrange
+            var imovelDto = new ImovelDTO
+            {
+                Cep = "01234567",
+                Logradouro = "Avenida Paulista",
+                Numero = "1000",
+                Complemento = "Conjunto 45",
+                Bairro = "Bela Vista",
+                Cidade = "São Paulo",
+                Estado = "SP",
+                Tipo = "comercial",
+                Quartos = 0,
+                Banheiros = 2,
+                Area = 120.75m,
+                VagasGaragem = 2,
+                Valor = 8500.00m,
+                Descricao = "Sala comercial ampla com vista panorâmica",
+                LocadorId = 1
+            };
+
+            // Act
+            var resultado = await _imovelService.CreateAsync(imovelDto);
+
+            // Assert - Verificar todos os campos
+            Assert.NotNull(resultado);
+            Assert.True(resultado.Id > 0);
+            
+            // Verificar endereço
+            Assert.Equal("01234567", resultado.Cep);
+            Assert.Equal("Avenida Paulista", resultado.Logradouro);
+            Assert.Equal("1000", resultado.Numero);
+            Assert.Equal("Conjunto 45", resultado.Complemento);
+            Assert.Equal("Bela Vista", resultado.Bairro);
+            Assert.Equal("São Paulo", resultado.Cidade);
+            Assert.Equal("SP", resultado.Estado);
+            
+            // Verificar características
+            Assert.Equal("comercial", resultado.Tipo);
+            Assert.Equal(0, resultado.Quartos);
+            Assert.Equal(2, resultado.Banheiros);
+            Assert.Equal(120.75m, resultado.Area);
+            Assert.Equal(2, resultado.VagasGaragem);
+            Assert.Equal(8500.00m, resultado.Valor);
+            Assert.Equal("Sala comercial ampla com vista panorâmica", resultado.Descricao);
+            Assert.Equal(1, resultado.LocadorId);
+        }
+
+        [Theory]
+        [InlineData("casa")]
+        [InlineData("apartamento")]
+        [InlineData("comercial")]
+        public async Task CreateAsync_ComDiferentesTiposDeImovel_DeveInserirCorretamente(string tipoImovel)
+        {
+            // Arrange
+            var imovelDto = new ImovelDTO
+            {
+                Tipo = tipoImovel,
+                Cidade = "Teste",
+                Valor = 1000.00m,
+                LocadorId = 1
+            };
+
+            // Act
+            var resultado = await _imovelService.CreateAsync(imovelDto);
+
+            // Assert
+            Assert.NotNull(resultado);
+            Assert.Equal(tipoImovel, resultado.Tipo);
+            
+            var imovelNoBanco = await _context.Imovels.FindAsync(resultado.Id);
+            Assert.Equal(tipoImovel, imovelNoBanco.Tipo);
+        }
+
+        [Fact]
+        public async Task CreateAsync_DeveAtribuirIdAutomaticamente()
+        {
+            // Arrange
+            var imovel1 = new ImovelDTO { Cidade = "Cidade1", LocadorId = 1, Valor = 1000 };
+            var imovel2 = new ImovelDTO { Cidade = "Cidade2", LocadorId = 1, Valor = 2000 };
+
+            // Act
+            var resultado1 = await _imovelService.CreateAsync(imovel1);
+            var resultado2 = await _imovelService.CreateAsync(imovel2);
+
+            // Assert
+            Assert.True(resultado1.Id > 0);
+            Assert.True(resultado2.Id > 0);
+            Assert.NotEqual(resultado1.Id, resultado2.Id);
+        }
+
+        [Fact]
+        public async Task CreateAsync_ComValoresDecimais_DevePreservarPrecisao()
+        {
+            // Arrange
+            var imovelDto = new ImovelDTO
+            {
+                Area = 87.65m,
+                Valor = 1234.56m,
+                LocadorId = 1,
+                Cidade = "Teste"
+            };
+
+            // Act
+            var resultado = await _imovelService.CreateAsync(imovelDto);
+
+            // Assert
+            Assert.Equal(87.65m, resultado.Area);
+            Assert.Equal(1234.56m, resultado.Valor);
+            
+            var imovelNoBanco = await _context.Imovels.FindAsync(resultado.Id);
+            Assert.Equal(87.65m, imovelNoBanco.Area);
+            Assert.Equal(1234.56m, imovelNoBanco.Valor);
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
+    }
+}
