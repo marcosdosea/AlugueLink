@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projetos\\AlugueLINK\\AlugueLink\\Core\\Core.csproj": {}
+    "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Core.csproj": {}
   },
   "projects": {
-    "C:\\Projetos\\AlugueLINK\\AlugueLink\\Core\\Core.csproj": {
+    "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projetos\\AlugueLINK\\AlugueLink\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Projetos\\AlugueLINK\\AlugueLink\\Core\\Core.csproj",
+        "projectPath": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\Dede\\.nuget\\packages\\",
-        "outputPath": "C:\\Projetos\\AlugueLINK\\AlugueLink\\Core\\obj\\",
+        "outputPath": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,6 +50,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.18, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[9.0.8, )"
@@ -58,17 +62,21 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.8, )"
+              "version": "[8.0.18, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.8, )"
+              "version": "[8.0.18, )"
             },
             "MySql.Data.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.20, )"
+            },
+            "MySql.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.17, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
