@@ -1,0 +1,142 @@
+@model AlugueLinkWEB.Models.ImovelViewModel
+
+@{
+    ViewData["Title"] = "Detalhes do Imóvel";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>Informações do Imóvel</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Tipo)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Tipo)
+                    </dd>
+                    
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Valor)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Valor)
+                    </dd>
+                    
+                    <dt class="col-sm-3">
+                        Locador
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.LocadorNome)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5>Endereço</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Cep)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Cep)
+                    </dd>
+                    
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Logradouro)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Logradouro), @Html.DisplayFor(model => model.Numero)
+                    </dd>
+                    
+                    @if (!string.IsNullOrEmpty(Model.Complemento))
+                    {
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.Complemento)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.Complemento)
+                        </dd>
+                    }
+                    
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Bairro)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Bairro)
+                    </dd>
+                    
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Cidade)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Cidade) - @Html.DisplayFor(model => model.Estado)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5>Características</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Quartos)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Quartos)
+                    </dd>
+                    
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Banheiros)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Banheiros)
+                    </dd>
+                    
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Area)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Area) m²
+                    </dd>
+                    
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.VagasGaragem)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.VagasGaragem)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.Descricao))
+        {
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5>@Html.DisplayNameFor(model => model.Descricao)</h5>
+                </div>
+                <div class="card-body">
+                    <p>@Html.DisplayFor(model => model.Descricao)</p>
+                </div>
+            </div>
+        }
+
+        <div class="mt-3">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+            <a asp-action="Index" class="btn btn-secondary">Voltar para Lista</a>
+        </div>
+    </div>
+</div>

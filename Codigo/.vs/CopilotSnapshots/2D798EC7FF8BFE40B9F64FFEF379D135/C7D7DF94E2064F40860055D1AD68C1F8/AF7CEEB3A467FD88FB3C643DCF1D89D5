@@ -1,0 +1,14 @@
+﻿using AutoMapper;
+using Core.Models;
+using AlugueLinkWEB.Models;
+
+namespace AlugueLinkWEB.Mappers
+{
+    public class ImovelProfile : Profile
+    {
+        public ImovelProfile()
+        {
+            CreateMap<ImovelViewModel, Imovel>().ReverseMap();
+        }
+    }
+}

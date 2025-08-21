@@ -1,0 +1,15 @@
+﻿using AutoMapper;
+using Core.Models;
+using AlugueLinkWEB.Models;
+
+namespace AlugueLinkWEB.Mappers
+{
+    public class AluguelProfile : Profile
+    {
+        public AluguelProfile()
+        {
+            // TODO: Uncomment when AluguelViewModel is created
+            // CreateMap<AluguelViewModel, Aluguel>().ReverseMap();
+        }
+    }
+}
