@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("AlugueLinkWEB")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c8d1c61a712a6dc07c659fe3d3b6c523aeb86bca")]
 [assembly: System.Reflection.AssemblyProductAttribute("AlugueLinkWEB")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AlugueLinkWEB")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
