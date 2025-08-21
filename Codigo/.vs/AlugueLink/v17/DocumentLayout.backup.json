@@ -1,102 +1,121 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\",
+  "WorkspaceRootPath": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\core\\service\\imovelservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\service\\imovelservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B002CA09-340C-42BC-8ED6-8BB1EF09638C}|AlugueLinkWebTests\\AlugueLinkWebTests.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkwebtests\\imovelcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B002CA09-340C-42BC-8ED6-8BB1EF09638C}|AlugueLinkWebTests\\AlugueLinkWebTests.csproj|solutionrelative:aluguelinkwebtests\\imovelcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\core\\service\\iimovelservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\service\\iimovelservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C2AACC5D-1195-493D-B3B5-05F2E667DAF6}|ServiceTests\\ServiceTests.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\servicetests\\imovelservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2AACC5D-1195-493D-B3B5-05F2E667DAF6}|ServiceTests\\ServiceTests.csproj|solutionrelative:servicetests\\imovelservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\mappers\\imovelmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\mappers\\imovelmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\controllers\\imovelcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\controllers\\imovelcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\views\\imovel\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\views\\imovel\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\core\\dto\\imoveldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\dto\\imoveldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\core\\dto\\alugueldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\dto\\alugueldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\core\\dto\\locat\u00E1riodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\dto\\locat\u00E1riodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\core\\service\\imovelservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\service\\imovelservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\core\\service\\iimovelservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\service\\iimovelservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\mappers\\imovelmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\mappers\\imovelmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\controllers\\imovelcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\controllers\\imovelcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\views\\imovel\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\views\\imovel\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\core\\dto\\imoveldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\dto\\imoveldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\core\\dto\\alugueldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\dto\\alugueldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\core\\dto\\locat\u00E1riodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\dto\\locat\u00E1riodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\core\\core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\core\\core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\core\\aluguel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\core\\aluguel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\aluguel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\UsuarioLoginDTO.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Core\\DTO\\UsuarioLoginDTO.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\UsuarioLoginDTO.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\core\\dto\\.gitkeep||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\core\\dto\\.gitkeep||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\dto\\.gitkeep||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\core\\service\\.gitkeep||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\core\\service\\.gitkeep||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\service\\.gitkeep||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\aluguelinkweb.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\aluguelinkweb.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\aluguelinkweb.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\mappers\\.gitkeep||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\mappers\\.gitkeep||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\mappers\\.gitkeep||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\models\\imovelviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\models\\imovelviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\models\\imovelviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\views\\imovel\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\views\\imovel\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\views\\imovel\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\views\\imovel\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\views\\imovel\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\views\\imovel\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\views\\imovel\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\views\\imovel\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\views\\imovel\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\views\\imovel\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\views\\imovel\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\views\\imovel\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\aluguelink\\codigo\\aluguelinkweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{F39879D0-E5DC-4584-9964-91C6669A8219}|AlugueLinkWEB\\AlugueLinkWEB.csproj|solutionrelative:aluguelinkweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2AACC5D-1195-493D-B3B5-05F2E667DAF6}|ServiceTests\\ServiceTests.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\servicetests\\servicetests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{C2AACC5D-1195-493D-B3B5-05F2E667DAF6}|ServiceTests\\ServiceTests.csproj|solutionrelative:servicetests\\servicetests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B002CA09-340C-42BC-8ED6-8BB1EF09638C}|AlugueLinkWebTests\\AlugueLinkWebTests.csproj|c:\\users\\dede\\desktop\\alugink\\codigo\\aluguelinkwebtests\\aluguelinkwebtests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{B002CA09-340C-42BC-8ED6-8BB1EF09638C}|AlugueLinkWebTests\\AlugueLinkWebTests.csproj|solutionrelative:aluguelinkwebtests\\aluguelinkwebtests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -111,10 +130,75 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ImovelControllerTests.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWebTests\\ImovelControllerTests.cs",
+              "RelativeDocumentMoniker": "AlugueLinkWebTests\\ImovelControllerTests.cs",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWebTests\\ImovelControllerTests.cs",
+              "RelativeToolTip": "AlugueLinkWebTests\\ImovelControllerTests.cs",
+              "ViewState": "AgIAAPsAAAAAAAAAAAAiwDMBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T02:39:41.962Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "AlugueLinkWebTests",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWebTests\\AlugueLinkWebTests.csproj",
+              "RelativeDocumentMoniker": "AlugueLinkWebTests\\AlugueLinkWebTests.csproj",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWebTests\\AlugueLinkWebTests.csproj",
+              "RelativeToolTip": "AlugueLinkWebTests\\AlugueLinkWebTests.csproj",
+              "ViewState": "AgIAABsAAAAAAAAAAABBwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-08-21T02:39:10.032Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ImovelServiceTests.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\ServiceTests\\ImovelServiceTests.cs",
+              "RelativeDocumentMoniker": "ServiceTests\\ImovelServiceTests.cs",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\ServiceTests\\ImovelServiceTests.cs",
+              "RelativeToolTip": "ServiceTests\\ImovelServiceTests.cs",
+              "ViewState": "AgIAANIAAAAAAAAAAAAqwA0AAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T02:39:01.849Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "ServiceTests",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\ServiceTests\\ServiceTests.csproj",
+              "RelativeDocumentMoniker": "ServiceTests\\ServiceTests.csproj",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\ServiceTests\\ServiceTests.csproj",
+              "RelativeToolTip": "ServiceTests\\ServiceTests.csproj",
+              "ViewState": "AgIAABkAAAAAAAAAAABBwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-08-21T02:38:29.955Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\appsettings.json",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\appsettings.json",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\appsettings.json",
+              "RelativeToolTip": "AlugueLinkWEB\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-08-21T02:35:28.672Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ImovelService.cs",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Service\\ImovelService.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Service\\ImovelService.cs",
               "RelativeDocumentMoniker": "Core\\Service\\ImovelService.cs",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Service\\ImovelService.cs",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Service\\ImovelService.cs",
               "RelativeToolTip": "Core\\Service\\ImovelService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAIYAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -123,193 +207,119 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Create.cshtml",
-              "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Create.cshtml",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Create.cshtml",
-              "RelativeToolTip": "AlugueLinkWEB\\Views\\Imovel\\Create.cshtml",
-              "ViewState": "AgIAAIEAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-21T01:48:34.466Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "_ViewImports.cshtml",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\_ViewImports.cshtml",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\_ViewImports.cshtml",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\_ViewImports.cshtml",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\_ViewImports.cshtml",
               "RelativeToolTip": "AlugueLinkWEB\\Views\\_ViewImports.cshtml",
               "ViewState": "AgIAAAIAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-21T01:49:36.081Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "ImovelViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Models\\ImovelViewModel.cs",
-              "RelativeDocumentMoniker": "AlugueLinkWEB\\Models\\ImovelViewModel.cs",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Models\\ImovelViewModel.cs",
-              "RelativeToolTip": "AlugueLinkWEB\\Models\\ImovelViewModel.cs",
-              "ViewState": "AgIAAEMAAAAAAAAAAABBwEQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T01:47:35.206Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ImovelMapper.cs",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Mappers\\ImovelMapper.cs",
-              "RelativeDocumentMoniker": "AlugueLinkWEB\\Mappers\\ImovelMapper.cs",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Mappers\\ImovelMapper.cs",
-              "RelativeToolTip": "AlugueLinkWEB\\Mappers\\ImovelMapper.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAgwDoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T01:47:43.253Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T01:49:36.081Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 20,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Details.cshtml",
-              "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Details.cshtml",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Details.cshtml",
-              "RelativeToolTip": "AlugueLinkWEB\\Views\\Imovel\\Details.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAI0AAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-21T01:49:11.091Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Edit.cshtml",
-              "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Edit.cshtml",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Edit.cshtml",
-              "RelativeToolTip": "AlugueLinkWEB\\Views\\Imovel\\Edit.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-21T01:48:53.961Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Index.cshtml",
-              "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Index.cshtml",
-              "RelativeToolTip": "AlugueLinkWEB\\Views\\Imovel\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE4AAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-21T01:48:12.583Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ImovelController.cs",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Controllers\\ImovelController.cs",
-              "RelativeDocumentMoniker": "AlugueLinkWEB\\Controllers\\ImovelController.cs",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Controllers\\ImovelController.cs",
-              "RelativeToolTip": "AlugueLinkWEB\\Controllers\\ImovelController.cs",
-              "ViewState": "AgIAAO0AAAAAAAAAAAAAAO0AAAABAAAAAAAAAA==",
+              "Title": "ImovelViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Models\\ImovelViewModel.cs",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\Models\\ImovelViewModel.cs",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Models\\ImovelViewModel.cs",
+              "RelativeToolTip": "AlugueLinkWEB\\Models\\ImovelViewModel.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAABBwEQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T01:48:00.78Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "IImovelService.cs",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Service\\IImovelService.cs",
-              "RelativeDocumentMoniker": "Core\\Service\\IImovelService.cs",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Service\\IImovelService.cs",
-              "RelativeToolTip": "Core\\Service\\IImovelService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T01:47:09.972Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "Delete.cshtml",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Delete.cshtml",
-              "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Delete.cshtml",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Delete.cshtml",
-              "RelativeToolTip": "AlugueLinkWEB\\Views\\Imovel\\Delete.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEAAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-21T01:49:22.702Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "AlugueLinkWEB\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAADEAAAAAAAAAAABRwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-21T01:50:00.237Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T01:47:35.206Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "AluguelDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\AluguelDTO.cs",
-              "RelativeDocumentMoniker": "Core\\DTO\\AluguelDTO.cs",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\AluguelDTO.cs",
-              "RelativeToolTip": "Core\\DTO\\AluguelDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "ImovelMapper.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Mappers\\ImovelMapper.cs",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\Mappers\\ImovelMapper.cs",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Mappers\\ImovelMapper.cs",
+              "RelativeToolTip": "AlugueLinkWEB\\Mappers\\ImovelMapper.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAgwDoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T00:52:21.928Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T01:47:43.253Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ImovelDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\ImovelDTO.cs",
-              "RelativeDocumentMoniker": "Core\\DTO\\ImovelDTO.cs",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\ImovelDTO.cs",
-              "RelativeToolTip": "Core\\DTO\\ImovelDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T00:52:15.771Z",
-              "EditorCaption": ""
+              "DocumentIndex": 23,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Details.cshtml",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Details.cshtml",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Details.cshtml",
+              "RelativeToolTip": "AlugueLinkWEB\\Views\\Imovel\\Details.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAI0AAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T01:49:11.091Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Edit.cshtml",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Edit.cshtml",
+              "RelativeToolTip": "AlugueLinkWEB\\Views\\Imovel\\Edit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T01:48:53.961Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Index.cshtml",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Index.cshtml",
+              "RelativeToolTip": "AlugueLinkWEB\\Views\\Imovel\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE4AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T01:48:12.583Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "Locat\u00E1rioDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\Locat\u00E1rioDTO.cs",
-              "RelativeDocumentMoniker": "Core\\DTO\\Locat\u00E1rioDTO.cs",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\Locat\u00E1rioDTO.cs",
-              "RelativeToolTip": "Core\\DTO\\Locat\u00E1rioDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "ImovelController.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Controllers\\ImovelController.cs",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\Controllers\\ImovelController.cs",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Controllers\\ImovelController.cs",
+              "RelativeToolTip": "AlugueLinkWEB\\Controllers\\ImovelController.cs",
+              "ViewState": "AgIAAO0AAAAAAAAAAAAAAO0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T01:42:54.848Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-21T01:48:00.78Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 5,
+              "Title": "IImovelService.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Service\\IImovelService.cs",
+              "RelativeDocumentMoniker": "Core\\Service\\IImovelService.cs",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Service\\IImovelService.cs",
+              "RelativeToolTip": "Core\\Service\\IImovelService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T01:47:09.972Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Delete.cshtml",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Delete.cshtml",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Delete.cshtml",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Delete.cshtml",
+              "RelativeToolTip": "AlugueLinkWEB\\Views\\Imovel\\Delete.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEAAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T01:49:22.702Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Program.cs",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Program.cs",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Program.cs",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Program.cs",
               "RelativeToolTip": "AlugueLinkWEB\\Program.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAArwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -318,24 +328,83 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "AlugueLinkWEB\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "AlugueLinkWEB\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-21T01:34:02.514Z",
-              "EditorCaption": ""
+              "DocumentIndex": 8,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Create.cshtml",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Create.cshtml",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Create.cshtml",
+              "RelativeToolTip": "AlugueLinkWEB\\Views\\Imovel\\Create.cshtml",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T01:48:34.466Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 26,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "AlugueLinkWEB\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAADEAAAAAAAAAAABRwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T01:50:00.237Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AluguelDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\DTO\\AluguelDTO.cs",
+              "RelativeDocumentMoniker": "Core\\DTO\\AluguelDTO.cs",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\DTO\\AluguelDTO.cs",
+              "RelativeToolTip": "Core\\DTO\\AluguelDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T00:52:21.928Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ImovelDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\DTO\\ImovelDTO.cs",
+              "RelativeDocumentMoniker": "Core\\DTO\\ImovelDTO.cs",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\DTO\\ImovelDTO.cs",
+              "RelativeToolTip": "Core\\DTO\\ImovelDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T00:52:15.771Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Locat\u00E1rioDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\DTO\\Locat\u00E1rioDTO.cs",
+              "RelativeDocumentMoniker": "Core\\DTO\\Locat\u00E1rioDTO.cs",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\DTO\\Locat\u00E1rioDTO.cs",
+              "RelativeToolTip": "Core\\DTO\\Locat\u00E1rioDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T01:42:54.848Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "AlugueLinkWEB\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "AlugueLinkWEB\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T01:34:02.514Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
               "Title": "AlugueLinkWEB.csproj",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\AlugueLinkWEB.csproj",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
               "RelativeToolTip": "AlugueLinkWEB\\AlugueLinkWEB.csproj",
               "ViewState": "AgIAABoAAAAAAAAAAABRwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
@@ -343,11 +412,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": ".gitkeep",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Mappers\\.gitkeep",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Mappers\\.gitkeep",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Mappers\\.gitkeep",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\Mappers\\.gitkeep",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\Mappers\\.gitkeep",
               "RelativeToolTip": "AlugueLinkWEB\\Mappers\\.gitkeep",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
@@ -355,11 +424,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": ".gitkeep",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Service\\.gitkeep",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Service\\.gitkeep",
               "RelativeDocumentMoniker": "Core\\Service\\.gitkeep",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Service\\.gitkeep",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Service\\.gitkeep",
               "RelativeToolTip": "Core\\Service\\.gitkeep",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
@@ -367,11 +436,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": ".gitkeep",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\.gitkeep",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\DTO\\.gitkeep",
               "RelativeDocumentMoniker": "Core\\DTO\\.gitkeep",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\.gitkeep",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\DTO\\.gitkeep",
               "RelativeToolTip": "Core\\DTO\\.gitkeep",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
@@ -379,11 +448,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "Core.csproj",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Core.csproj",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Core.csproj",
               "RelativeDocumentMoniker": "Core\\Core.csproj",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Core.csproj",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Core.csproj",
               "RelativeToolTip": "Core\\Core.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
@@ -391,23 +460,23 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "UsuarioLoginDTO.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\UsuarioLoginDTO.cs",
-              "RelativeDocumentMoniker": "Core\\DTO\\UsuarioLoginDTO.cs",
+              "RelativeDocumentMoniker": "..\\..\\AlugueLink\\Codigo\\Core\\DTO\\UsuarioLoginDTO.cs",
               "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\UsuarioLoginDTO.cs",
-              "RelativeToolTip": "Core\\DTO\\UsuarioLoginDTO.cs",
+              "RelativeToolTip": "..\\..\\AlugueLink\\Codigo\\Core\\DTO\\UsuarioLoginDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-21T00:52:29.487Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "Aluguel.cs",
-              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Aluguel.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Aluguel.cs",
               "RelativeDocumentMoniker": "Core\\Aluguel.cs",
-              "ToolTip": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Aluguel.cs",
+              "ToolTip": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Aluguel.cs",
               "RelativeToolTip": "Core\\Aluguel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj": {}
+    "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj": {
+    "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
+        "projectUniqueName": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
         "projectName": "AlugueLinkWEB",
-        "projectPath": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
+        "projectPath": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
         "packagesPath": "C:\\Users\\Dede\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\obj\\",
+        "outputPath": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,11 +32,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Core.csproj"
+              "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Core.csproj"
               },
-              "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Service\\Service.csproj": {
-                "projectPath": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Service\\Service.csproj"
+              "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Service\\Service.csproj": {
+                "projectPath": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Service\\Service.csproj"
               }
             }
           }
@@ -109,14 +109,14 @@
         }
       }
     },
-    "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Core.csproj": {
+    "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Core.csproj",
+        "projectPath": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\Dede\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\obj\\",
+        "outputPath": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -208,14 +208,14 @@
         }
       }
     },
-    "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Service\\Service.csproj": {
+    "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Service\\Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Service\\Service.csproj",
+        "projectUniqueName": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Service\\Service.csproj",
         "projectName": "Service",
-        "projectPath": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Service\\Service.csproj",
+        "projectPath": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Service\\Service.csproj",
         "packagesPath": "C:\\Users\\Dede\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Service\\obj\\",
+        "outputPath": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -235,11 +235,7 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {
-              "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\Core.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -257,28 +253,6 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "dependencies": {
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[8.0.18, )"
-            },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.18, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.18, )"
-            },
-            "MySql.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[8.0.17, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",

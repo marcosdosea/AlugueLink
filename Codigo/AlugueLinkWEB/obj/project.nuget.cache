@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MOSayjvnjys=",
+  "dgSpecHash": "P6CoHIxDrnM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
+  "projectFilePath": "C:\\Users\\Dede\\Desktop\\alugink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dede\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
     "C:\\Users\\Dede\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",

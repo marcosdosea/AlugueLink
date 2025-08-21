@@ -1938,6 +1938,14 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "Service/1.0.0": {
+        "runtime": {
+          "Service.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -3068,6 +3076,11 @@
       "hashPath": "zstdsharp.port.0.8.5.nupkg.sha512"
     },
     "Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Service/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
