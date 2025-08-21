@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Core.Models;
+using Core.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,9 @@ builder.Services.AddDbContext<AluguelinkContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection"),
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
     ));
+
+// Add Services
+builder.Services.AddScoped<IImovelService, ImovelService>();
 
 var app = builder.Build();
 
