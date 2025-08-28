@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Core.Models;
+
+public partial class Aluguel
+{
+    public int Id { get; set; }
+
+    public DateOnly DataInicio { get; set; }
+
+    public DateOnly DataFim { get; set; }
+
+    public string? Status { get; set; }
+
+    public DateOnly DataAssinatura { get; set; }
+
+    public int LocatarioId { get; set; }
+
+    public int ImovelId { get; set; }
+
+    public int ImovelLocadorId { get; set; }
+
+    public virtual Imovel Imovel { get; set; } = null!;
+
+    public virtual Locatario Locatario { get; set; } = null!;
+}

@@ -1,0 +1,12 @@
+﻿namespace Core.DTO
+{
+    public class AluguelDTO
+    {
+        public int Id { get; set; }
+        public DateOnly? DataInicio { get; set; }
+        public DateOnly? DataFim { get; set; }
+        public string Status { get; set; } = string.Empty;
+        public int ImovelId { get; set; }
+        public int LocatárioId { get; set; }
+    }
+}

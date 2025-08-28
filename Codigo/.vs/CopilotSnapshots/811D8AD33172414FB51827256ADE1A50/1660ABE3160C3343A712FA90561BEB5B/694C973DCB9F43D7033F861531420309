@@ -1,6 +1,6 @@
-namespace Core.DTO
+﻿namespace Core.DTO
 {
-    public class Locat�rioDTO
+    public class LocatárioDTO
     {
         public int Id { get; set; }
         public string Nome { get; set; } = string.Empty;
