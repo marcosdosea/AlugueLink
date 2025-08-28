@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Core.Models;
+
+public partial class Locatário
+{
+    public int Id { get; set; }
+
+    public string Nome { get; set; } = null!;
+
+    public string? Email { get; set; }
+
+    public string? Telefone { get; set; }
+
+    public string? PasswordHash { get; set; }
+
+    public string? Cpf { get; set; }
+
+    public virtual ICollection<Aluguel> Aluguels { get; set; } = new List<Aluguel>();
+
+    public virtual ICollection<Contrato> Contratos { get; set; } = new List<Contrato>();
+
+    public virtual ICollection<Manutencao> Manutencaos { get; set; } = new List<Manutencao>();
+}

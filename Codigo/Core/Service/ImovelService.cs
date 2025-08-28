@@ -1,5 +1,5 @@
 using Core.DTO;
-using Core.Models;
+using Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Service
@@ -16,7 +16,7 @@ namespace Core.Service
         public async Task<IEnumerable<ImovelDTO>> GetAllAsync()
         {
             return await _context.Imovels
-                .Include(i => i.Locador)
+                .Include(i => i.IdLocadorNavigation)
                 .Select(i => new ImovelDTO
                 {
                     Id = i.Id,
@@ -34,7 +34,7 @@ namespace Core.Service
                     VagasGaragem = i.VagasGaragem,
                     Valor = i.Valor,
                     Descricao = i.Descricao,
-                    LocadorId = i.LocadorId
+                    IdLocador = i.IdLocador
                 })
                 .ToListAsync();
         }
@@ -42,8 +42,9 @@ namespace Core.Service
         public async Task<ImovelDTO?> GetByIdAsync(int id)
         {
             var imovel = await _context.Imovels
-                .Include(i => i.Locador)
-                .FirstOrDefaultAsync(i => i.Id == id);
+                .Include(i => i.IdLocadorNavigation)
+                .Where(i => i.Id == id)
+                .FirstOrDefaultAsync();
 
             if (imovel == null)
                 return null;
@@ -65,7 +66,7 @@ namespace Core.Service
                 VagasGaragem = imovel.VagasGaragem,
                 Valor = imovel.Valor,
                 Descricao = imovel.Descricao,
-                LocadorId = imovel.LocadorId
+                IdLocador = imovel.IdLocador
             };
         }
 
@@ -73,21 +74,21 @@ namespace Core.Service
         {
             var imovel = new Imovel
             {
-                Cep = imovelDto.Cep,
-                Logradouro = imovelDto.Logradouro,
-                Numero = imovelDto.Numero,
+                Cep = imovelDto.Cep ?? "",
+                Logradouro = imovelDto.Logradouro ?? "",
+                Numero = imovelDto.Numero ?? "",
                 Complemento = imovelDto.Complemento,
-                Bairro = imovelDto.Bairro,
-                Cidade = imovelDto.Cidade,
-                Estado = imovelDto.Estado,
-                Tipo = imovelDto.Tipo,
-                Quartos = imovelDto.Quartos,
-                Banheiros = imovelDto.Banheiros,
-                Area = imovelDto.Area,
-                VagasGaragem = imovelDto.VagasGaragem,
-                Valor = imovelDto.Valor,
-                Descricao = imovelDto.Descricao,
-                LocadorId = imovelDto.LocadorId
+                Bairro = imovelDto.Bairro ?? "",
+                Cidade = imovelDto.Cidade ?? "",
+                Estado = imovelDto.Estado ?? "",
+                Tipo = imovelDto.Tipo ?? "",
+                Quartos = imovelDto.Quartos ?? 0,
+                Banheiros = imovelDto.Banheiros ?? 0,
+                Area = imovelDto.Area ?? 0,
+                VagasGaragem = imovelDto.VagasGaragem ?? 0,
+                Valor = imovelDto.Valor ?? 0,
+                Descricao = imovelDto.Descricao ?? "",
+                IdLocador = imovelDto.IdLocador
             };
 
             _context.Imovels.Add(imovel);
@@ -99,25 +100,28 @@ namespace Core.Service
 
         public async Task<ImovelDTO?> UpdateAsync(int id, ImovelDTO imovelDto)
         {
-            var imovel = await _context.Imovels.FindAsync(id);
+            var imovel = await _context.Imovels
+                .Where(i => i.Id == id)
+                .FirstOrDefaultAsync();
+
             if (imovel == null)
                 return null;
 
-            imovel.Cep = imovelDto.Cep;
-            imovel.Logradouro = imovelDto.Logradouro;
-            imovel.Numero = imovelDto.Numero;
+            imovel.Cep = imovelDto.Cep ?? "";
+            imovel.Logradouro = imovelDto.Logradouro ?? "";
+            imovel.Numero = imovelDto.Numero ?? "";
             imovel.Complemento = imovelDto.Complemento;
-            imovel.Bairro = imovelDto.Bairro;
-            imovel.Cidade = imovelDto.Cidade;
-            imovel.Estado = imovelDto.Estado;
-            imovel.Tipo = imovelDto.Tipo;
-            imovel.Quartos = imovelDto.Quartos;
-            imovel.Banheiros = imovelDto.Banheiros;
-            imovel.Area = imovelDto.Area;
-            imovel.VagasGaragem = imovelDto.VagasGaragem;
-            imovel.Valor = imovelDto.Valor;
-            imovel.Descricao = imovelDto.Descricao;
-            imovel.LocadorId = imovelDto.LocadorId;
+            imovel.Bairro = imovelDto.Bairro ?? "";
+            imovel.Cidade = imovelDto.Cidade ?? "";
+            imovel.Estado = imovelDto.Estado ?? "";
+            imovel.Tipo = imovelDto.Tipo ?? "";
+            imovel.Quartos = imovelDto.Quartos ?? 0;
+            imovel.Banheiros = imovelDto.Banheiros ?? 0;
+            imovel.Area = imovelDto.Area ?? 0;
+            imovel.VagasGaragem = imovelDto.VagasGaragem ?? 0;
+            imovel.Valor = imovelDto.Valor ?? 0;
+            imovel.Descricao = imovelDto.Descricao ?? "";
+            imovel.IdLocador = imovelDto.IdLocador;
 
             await _context.SaveChangesAsync();
 
@@ -127,7 +131,10 @@ namespace Core.Service
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var imovel = await _context.Imovels.FindAsync(id);
+            var imovel = await _context.Imovels
+                .Where(i => i.Id == id)
+                .FirstOrDefaultAsync();
+
             if (imovel == null)
                 return false;
 

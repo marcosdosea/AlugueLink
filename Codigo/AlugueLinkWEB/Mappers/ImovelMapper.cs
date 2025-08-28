@@ -17,14 +17,14 @@ namespace AlugueLinkWEB.Mappers
                 Bairro = dto.Bairro,
                 Cidade = dto.Cidade,
                 Estado = dto.Estado,
-                Tipo = dto.Tipo,
+                Tipo = MapTipoFromDatabase(dto.Tipo),
                 Quartos = dto.Quartos,
                 Banheiros = dto.Banheiros,
                 Area = dto.Area,
                 VagasGaragem = dto.VagasGaragem,
                 Valor = dto.Valor,
                 Descricao = dto.Descricao,
-                LocadorId = dto.LocadorId
+                LocadorId = dto.IdLocador
             };
         }
 
@@ -40,20 +40,42 @@ namespace AlugueLinkWEB.Mappers
                 Bairro = viewModel.Bairro,
                 Cidade = viewModel.Cidade,
                 Estado = viewModel.Estado,
-                Tipo = viewModel.Tipo,
+                Tipo = MapTipoToDatabase(viewModel.Tipo),
                 Quartos = viewModel.Quartos,
                 Banheiros = viewModel.Banheiros,
                 Area = viewModel.Area,
                 VagasGaragem = viewModel.VagasGaragem,
                 Valor = viewModel.Valor,
                 Descricao = viewModel.Descricao,
-                LocadorId = viewModel.LocadorId
+                IdLocador = viewModel.LocadorId
             };
         }
 
         public static IEnumerable<ImovelViewModel> ToViewModelList(IEnumerable<ImovelDTO> dtos)
         {
             return dtos.Select(ToViewModel);
+        }
+
+        private static string? MapTipoFromDatabase(string? tipoDb)
+        {
+            return tipoDb switch
+            {
+                "C" => "Casa",
+                "A" => "Apartamento",
+                "PC" => "Comercial",
+                _ => tipoDb
+            };
+        }
+
+        private static string? MapTipoToDatabase(string? tipoView)
+        {
+            return tipoView?.ToLower() switch
+            {
+                "casa" => "C",
+                "apartamento" => "A",
+                "comercial" => "PC",
+                _ => tipoView
+            };
         }
     }
 }

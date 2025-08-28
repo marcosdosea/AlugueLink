@@ -17,6 +17,6 @@ namespace Core.DTO
         public int? VagasGaragem { get; set; }
         public decimal? Valor { get; set; }
         public string? Descricao { get; set; }
-        public int LocadorId { get; set; }
+        public int IdLocador { get; set; }
     }
 }

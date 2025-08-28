@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
-namespace Core.Models;
+namespace Core;
 
 public partial class AluguelinkContext : DbContext
 {
@@ -18,27 +18,21 @@ public partial class AluguelinkContext : DbContext
 
     public virtual DbSet<Aluguel> Aluguels { get; set; }
 
-    public virtual DbSet<Contrato> Contratos { get; set; }
-
-    public virtual DbSet<Dano> Danos { get; set; }
-
     public virtual DbSet<Imovel> Imovels { get; set; }
 
     public virtual DbSet<Locador> Locadors { get; set; }
 
-    public virtual DbSet<Locatário> Locatários { get; set; }
+    public virtual DbSet<Locatario> Locatarios { get; set; }
 
     public virtual DbSet<Manutencao> Manutencaos { get; set; }
 
     public virtual DbSet<Pagamento> Pagamentos { get; set; }
 
-    public virtual DbSet<Vistoria> Vistoria { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
     {
         if (!optionsBuilder.IsConfigured)
         {
-            // Fallback connection string - idealmente deve ser configurado via DI
             optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=Carira1010!;database=aluguelink", 
                 Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.41-mysql"));
         }
@@ -52,94 +46,54 @@ public partial class AluguelinkContext : DbContext
 
         modelBuilder.Entity<Aluguel>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity.HasKey(e => new { e.Id, e.IdLocatario, e.IdImovel, e.IdLocador })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0, 0, 0 });
 
             entity.ToTable("aluguel");
 
-            entity.HasIndex(e => e.ImovelId, "fk_aluguel_Imovel1_idx");
+            entity.HasIndex(e => new { e.IdImovel, e.IdLocador }, "fk_aluguel_imovel1_idx");
 
-            entity.HasIndex(e => e.LocatárioId, "fk_aluguel_locatário1_idx");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.DataFim).HasColumnName("dataFim");
-            entity.Property(e => e.DataInicio).HasColumnName("dataInicio");
-            entity.Property(e => e.ImovelId).HasColumnName("Imovel_id");
-            entity.Property(e => e.LocatárioId).HasColumnName("locatário_id");
-            entity.Property(e => e.Status)
-                .HasMaxLength(50)
-                .HasColumnName("status");
-
-            entity.HasOne(d => d.Imovel).WithMany(p => p.Aluguels)
-                .HasForeignKey(d => d.ImovelId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_aluguel_Imovel1");
-
-            entity.HasOne(d => d.Locatário).WithMany(p => p.Aluguels)
-                .HasForeignKey(d => d.LocatárioId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_aluguel_locatário1");
-        });
-
-        modelBuilder.Entity<Contrato>(entity =>
-        {
-            entity.HasKey(e => new { e.Id, e.AluguelId })
-                .HasName("PRIMARY")
-                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
-
-            entity.ToTable("contrato");
-
-            entity.HasIndex(e => e.AluguelId, "fk_contrato_aluguel1_idx");
-
-            entity.HasIndex(e => e.LocatárioId, "fk_contrato_locatário1_idx");
+            entity.HasIndex(e => e.IdLocatario, "fk_aluguel_locatario1_idx");
 
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("id");
-            entity.Property(e => e.AluguelId).HasColumnName("aluguel_id");
-            entity.Property(e => e.DataAssinatura).HasColumnName("data_assinatura");
-            entity.Property(e => e.DataInicio).HasColumnName("data_inicio");
-            entity.Property(e => e.DataTermino).HasColumnName("data_termino");
-            entity.Property(e => e.LocatárioId).HasColumnName("locatário_id");
+            entity.Property(e => e.IdLocatario).HasColumnName("idLocatario");
+            entity.Property(e => e.IdImovel).HasColumnName("idImovel");
+            entity.Property(e => e.IdLocador).HasColumnName("idLocador");
+            entity.Property(e => e.DataAssinatura).HasColumnName("dataAssinatura");
+            entity.Property(e => e.DataFim).HasColumnName("dataFim");
+            entity.Property(e => e.DataInicio).HasColumnName("dataInicio");
             entity.Property(e => e.Status)
-                .HasDefaultValueSql("'ativo'")
-                .HasColumnType("enum('ativo','inativo','rescindido')")
+                .HasColumnType("enum('A','F','P')")
                 .HasColumnName("status");
 
-            entity.HasOne(d => d.Aluguel).WithMany(p => p.Contratos)
-                .HasForeignKey(d => d.AluguelId)
+            entity.HasOne(d => d.IdLocatarioNavigation).WithMany(p => p.Aluguels)
+                .HasForeignKey(d => d.IdLocatario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_contrato_aluguel1");
+                .HasConstraintName("fk_aluguel_locatario1");
 
-            entity.HasOne(d => d.Locatário).WithMany(p => p.Contratos)
-                .HasForeignKey(d => d.LocatárioId)
+            entity.HasOne(d => d.Imovel).WithMany(p => p.Aluguels)
+                .HasForeignKey(d => new { d.IdImovel, d.IdLocador })
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_contrato_locatário1");
-        });
-
-        modelBuilder.Entity<Dano>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("dano");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Descricao)
-                .HasColumnType("text")
-                .HasColumnName("descricao");
-            entity.Property(e => e.Valor)
-                .HasPrecision(10, 2)
-                .HasColumnName("valor");
+                .HasConstraintName("fk_aluguel_imovel1");
         });
 
         modelBuilder.Entity<Imovel>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity.HasKey(e => new { e.Id, e.IdLocador })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
             entity.ToTable("imovel");
 
-            entity.HasIndex(e => e.LocadorId, "fk_Imovel_locador1_idx");
+            entity.HasIndex(e => e.IdLocador, "fk_imovel_locador_idx");
 
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("id");
+            entity.Property(e => e.IdLocador).HasColumnName("idLocador");
             entity.Property(e => e.Area)
                 .HasPrecision(10, 2)
                 .HasColumnName("area");
@@ -157,13 +111,12 @@ public partial class AluguelinkContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("complemento");
             entity.Property(e => e.Descricao)
-                .HasColumnType("text")
+                .HasMaxLength(200)
                 .HasColumnName("descricao");
             entity.Property(e => e.Estado)
                 .HasMaxLength(2)
                 .IsFixedLength()
                 .HasColumnName("estado");
-            entity.Property(e => e.LocadorId).HasColumnName("locador_id");
             entity.Property(e => e.Logradouro)
                 .HasMaxLength(100)
                 .HasColumnName("logradouro");
@@ -172,40 +125,17 @@ public partial class AluguelinkContext : DbContext
                 .HasColumnName("numero");
             entity.Property(e => e.Quartos).HasColumnName("quartos");
             entity.Property(e => e.Tipo)
-                .HasColumnType("enum('casa','apartamento','comercial')")
+                .HasColumnType("enum('C','A','PC')")
                 .HasColumnName("tipo");
             entity.Property(e => e.VagasGaragem).HasColumnName("vagasGaragem");
             entity.Property(e => e.Valor)
                 .HasPrecision(10, 2)
                 .HasColumnName("valor");
 
-            entity.HasOne(d => d.Locador).WithMany(p => p.Imovels)
-                .HasForeignKey(d => d.LocadorId)
+            entity.HasOne(d => d.IdLocadorNavigation).WithMany(p => p.Imovels)
+                .HasForeignKey(d => d.IdLocador)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_Imovel_locador1");
-
-            entity.HasMany(d => d.Vistoria).WithMany(p => p.Imovels)
-                .UsingEntity<Dictionary<string, object>>(
-                    "ImovelVistorium",
-                    r => r.HasOne<Vistoria>().WithMany()
-                        .HasForeignKey("VistoriaId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("fk_Imovel_has_vistoria_vistoria1"),
-                    l => l.HasOne<Imovel>().WithMany()
-                        .HasForeignKey("ImovelId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("fk_Imovel_has_vistoria_Imovel1"),
-                    j =>
-                    {
-                        j.HasKey("ImovelId", "VistoriaId")
-                            .HasName("PRIMARY")
-                            .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
-                        j.ToTable("imovel_vistoria");
-                        j.HasIndex(new[] { "ImovelId" }, "fk_Imovel_has_vistoria_Imovel1_idx");
-                        j.HasIndex(new[] { "VistoriaId" }, "fk_Imovel_has_vistoria_vistoria1_idx");
-                        j.IndexerProperty<int>("ImovelId").HasColumnName("Imovel_id");
-                        j.IndexerProperty<int>("VistoriaId").HasColumnName("vistoria_id");
-                    });
+                .HasConstraintName("fk_imovel_locador");
         });
 
         modelBuilder.Entity<Locador>(entity =>
@@ -214,10 +144,6 @@ public partial class AluguelinkContext : DbContext
 
             entity.ToTable("locador");
 
-            entity.HasIndex(e => e.Cpf, "cpf_UNIQUE").IsUnique();
-
-            entity.HasIndex(e => e.Email, "email_UNIQUE").IsUnique();
-
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Cpf)
                 .HasMaxLength(11)
@@ -229,23 +155,18 @@ public partial class AluguelinkContext : DbContext
             entity.Property(e => e.Nome)
                 .HasMaxLength(100)
                 .HasColumnName("nome");
-            entity.Property(e => e.PasswordHash)
-                .HasMaxLength(255)
-                .HasColumnName("password_hash");
             entity.Property(e => e.Telefone)
                 .HasMaxLength(20)
                 .HasColumnName("telefone");
         });
 
-        modelBuilder.Entity<Locatário>(entity =>
+        modelBuilder.Entity<Locatario>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("locatário");
+            entity.ToTable("locatario");
 
             entity.HasIndex(e => e.Cpf, "cpf_UNIQUE").IsUnique();
-
-            entity.HasIndex(e => e.Nome, "nome_UNIQUE").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Cpf)
@@ -258,97 +179,87 @@ public partial class AluguelinkContext : DbContext
             entity.Property(e => e.Nome)
                 .HasMaxLength(100)
                 .HasColumnName("nome");
-            entity.Property(e => e.PasswordHash)
-                .HasMaxLength(255)
-                .HasColumnName("password_hash");
             entity.Property(e => e.Telefone)
                 .HasMaxLength(20)
                 .HasColumnName("telefone");
+
+            entity.HasMany(d => d.IdLocadors).WithMany(p => p.IdLocatarios)
+                .UsingEntity<Dictionary<string, object>>(
+                    "LocatarioHasLocador",
+                    r => r.HasOne<Locador>().WithMany()
+                        .HasForeignKey("IdLocador")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("fk_locatario_has_locador_locador1"),
+                    l => l.HasOne<Locatario>().WithMany()
+                        .HasForeignKey("IdLocatario")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("fk_locatario_has_locador_locatario1"),
+                    j =>
+                    {
+                        j.HasKey("IdLocatario", "IdLocador")
+                            .HasName("PRIMARY")
+                            .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+                        j.ToTable("locatario_has_locador");
+                        j.HasIndex(new[] { "IdLocador" }, "fk_locatario_has_locador_locador1_idx");
+                        j.HasIndex(new[] { "IdLocatario" }, "fk_locatario_has_locador_locatario1_idx");
+                        j.IndexerProperty<int>("IdLocatario").HasColumnName("idLocatario");
+                        j.IndexerProperty<int>("IdLocador").HasColumnName("idLocador");
+                    });
         });
 
         modelBuilder.Entity<Manutencao>(entity =>
         {
-            entity.HasKey(e => new { e.Id, e.LocatárioId })
+            entity.HasKey(e => new { e.Id, e.IdImovel, e.IdLocador })
                 .HasName("PRIMARY")
-                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0, 0 });
 
             entity.ToTable("manutencao");
 
-            entity.HasIndex(e => e.DanoId, "fk_manutencao_dano1_idx");
-
-            entity.HasIndex(e => e.LocadorId, "fk_manutencao_locador1_idx");
-
-            entity.HasIndex(e => e.LocatárioId, "fk_manutencao_locatário1_idx");
+            entity.HasIndex(e => new { e.IdImovel, e.IdLocador }, "fk_manutencao_imovel1_idx");
 
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("id");
-            entity.Property(e => e.LocatárioId).HasColumnName("locatário_id");
-            entity.Property(e => e.DanoId).HasColumnName("dano_id");
+            entity.Property(e => e.IdImovel).HasColumnName("idImovel");
+            entity.Property(e => e.IdLocador).HasColumnName("idLocador");
             entity.Property(e => e.DataSolicitacao).HasColumnName("dataSolicitacao");
             entity.Property(e => e.Descricao)
-                .HasColumnType("text")
+                .HasMaxLength(200)
                 .HasColumnName("descricao");
-            entity.Property(e => e.LocadorId).HasColumnName("locador_id");
             entity.Property(e => e.Status)
-                .HasMaxLength(45)
+                .HasColumnType("enum('P','A','C')")
                 .HasColumnName("status");
+            entity.Property(e => e.Valor)
+                .HasPrecision(10, 2)
+                .HasColumnName("valor");
 
-            entity.HasOne(d => d.Dano).WithMany(p => p.Manutencaos)
-                .HasForeignKey(d => d.DanoId)
+            entity.HasOne(d => d.Imovel).WithMany(p => p.Manutencaos)
+                .HasForeignKey(d => new { d.IdImovel, d.IdLocador })
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_manutencao_dano1");
-
-            entity.HasOne(d => d.Locador).WithMany(p => p.Manutencaos)
-                .HasForeignKey(d => d.LocadorId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_manutencao_locador1");
-
-            entity.HasOne(d => d.Locatário).WithMany(p => p.Manutencaos)
-                .HasForeignKey(d => d.LocatárioId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_manutencao_locatário1");
+                .HasConstraintName("fk_manutencao_imovel1");
         });
 
         modelBuilder.Entity<Pagamento>(entity =>
         {
-            entity.HasKey(e => new { e.Id, e.AluguelId })
+            entity.HasKey(e => new { e.Id, e.IdAluguel })
                 .HasName("PRIMARY")
                 .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
             entity.ToTable("pagamento");
 
-            entity.HasIndex(e => e.AluguelId, "fk_pagamento_aluguel1_idx");
+            entity.HasIndex(e => e.IdAluguel, "fk_pagamento_aluguel1_idx");
 
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("id");
-            entity.Property(e => e.AluguelId).HasColumnName("aluguel_id");
+            entity.Property(e => e.IdAluguel).HasColumnName("idAluguel");
             entity.Property(e => e.DataPagamento).HasColumnName("dataPagamento");
             entity.Property(e => e.TipoPagamento)
-                .HasMaxLength(45)
+                .HasColumnType("enum('CD','CC','P','B')")
                 .HasColumnName("tipoPagamento");
             entity.Property(e => e.Valor)
                 .HasPrecision(10, 2)
                 .HasColumnName("valor");
-
-            entity.HasOne(d => d.Aluguel).WithMany(p => p.Pagamentos)
-                .HasForeignKey(d => d.AluguelId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_pagamento_aluguel1");
-        });
-
-        modelBuilder.Entity<Vistoria>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("vistoria");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.CondicaoImovel)
-                .HasColumnType("text")
-                .HasColumnName("condicaoImovel");
-            entity.Property(e => e.Data).HasColumnName("data");
         });
 
         OnModelCreatingPartial(modelBuilder);

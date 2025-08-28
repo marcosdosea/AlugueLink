@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using AlugueLinkWEB.Models;
 using AlugueLinkWEB.Mappers;
 using Core.Service;
-using Core.Models;
+using Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlugueLinkWEB.Controllers
@@ -205,14 +205,12 @@ namespace AlugueLinkWEB.Controllers
 
         private async Task<int> EnsureLocadorExists()
         {
-            // Verificar se já existe um locador
             var locadorExistente = await _context.Locadors.FirstOrDefaultAsync();
             if (locadorExistente != null)
             {
                 return locadorExistente.Id;
             }
 
-            // Criar um locador padrão se não existir nenhum
             try
             {
                 var locadorPadrao = new Locador
@@ -220,8 +218,7 @@ namespace AlugueLinkWEB.Controllers
                     Nome = "Locador Padrão",
                     Email = "padrao@aluguelink.com",
                     Cpf = "00000000000",
-                    Telefone = "00000000000",
-                    PasswordHash = "hash_padrao"
+                    Telefone = "00000000000"
                 };
 
                 _context.Locadors.Add(locadorPadrao);
@@ -231,7 +228,7 @@ namespace AlugueLinkWEB.Controllers
             }
             catch (Exception)
             {
-                return 0; // Indica erro
+                return 0;
             }
         }
     }

@@ -1,5 +1,5 @@
 using Core.DTO;
-using Core.Models;
+using Core;
 using Core.Service;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -33,8 +33,7 @@ namespace ServiceTests
                 Nome = "Locador Teste",
                 Email = "locador@teste.com",
                 Cpf = "12345678901",
-                Telefone = "11999999999",
-                PasswordHash = "hash_teste"
+                Telefone = "11999999999"
             };
 
             _context.Locadors.Add(locador);
@@ -54,14 +53,14 @@ namespace ServiceTests
                 Bairro = "Centro",
                 Cidade = "São Paulo",
                 Estado = "SP",
-                Tipo = "apartamento",
+                Tipo = "A", // Valor ENUM correto
                 Quartos = 2,
                 Banheiros = 1,
                 Area = 65.50m,
                 VagasGaragem = 1,
                 Valor = 1500.00m,
                 Descricao = "Apartamento bem localizado",
-                LocadorId = 1
+                IdLocador = 1
             };
 
             // Act
@@ -84,10 +83,12 @@ namespace ServiceTests
             Assert.Equal(imovelDto.VagasGaragem, resultado.VagasGaragem);
             Assert.Equal(imovelDto.Valor, resultado.Valor);
             Assert.Equal(imovelDto.Descricao, resultado.Descricao);
-            Assert.Equal(imovelDto.LocadorId, resultado.LocadorId);
+            Assert.Equal(imovelDto.IdLocador, resultado.IdLocador);
 
             // Verificar se foi salvo no banco
-            var imovelNoBanco = await _context.Imovels.FindAsync(resultado.Id);
+            var imovelNoBanco = await _context.Imovels
+                .Where(i => i.Id == resultado.Id && i.IdLocador == resultado.IdLocador)
+                .FirstOrDefaultAsync();
             Assert.NotNull(imovelNoBanco);
             Assert.Equal(resultado.Id, imovelNoBanco.Id);
         }
@@ -98,8 +99,8 @@ namespace ServiceTests
             // Arrange
             var imovelDto = new ImovelDTO
             {
-                LocadorId = 1,
-                Tipo = "casa",
+                IdLocador = 1,
+                Tipo = "C", // Casa
                 Cidade = "Rio de Janeiro",
                 Valor = 2000.00m
             };
@@ -110,13 +111,15 @@ namespace ServiceTests
             // Assert
             Assert.NotNull(resultado);
             Assert.True(resultado.Id > 0);
-            Assert.Equal(imovelDto.LocadorId, resultado.LocadorId);
+            Assert.Equal(imovelDto.IdLocador, resultado.IdLocador);
             Assert.Equal(imovelDto.Tipo, resultado.Tipo);
             Assert.Equal(imovelDto.Cidade, resultado.Cidade);
             Assert.Equal(imovelDto.Valor, resultado.Valor);
 
             // Verificar se foi salvo no banco
-            var imovelNoBanco = await _context.Imovels.FindAsync(resultado.Id);
+            var imovelNoBanco = await _context.Imovels
+                .Where(i => i.Id == resultado.Id && i.IdLocador == resultado.IdLocador)
+                .FirstOrDefaultAsync();
             Assert.NotNull(imovelNoBanco);
         }
 
@@ -133,14 +136,14 @@ namespace ServiceTests
                 Bairro = "Bela Vista",
                 Cidade = "São Paulo",
                 Estado = "SP",
-                Tipo = "comercial",
+                Tipo = "PC", // Comercial
                 Quartos = 0,
                 Banheiros = 2,
                 Area = 120.75m,
                 VagasGaragem = 2,
                 Valor = 8500.00m,
                 Descricao = "Sala comercial ampla com vista panorâmica",
-                LocadorId = 1
+                IdLocador = 1
             };
 
             // Act
@@ -160,20 +163,20 @@ namespace ServiceTests
             Assert.Equal("SP", resultado.Estado);
             
             // Verificar características
-            Assert.Equal("comercial", resultado.Tipo);
+            Assert.Equal("PC", resultado.Tipo);
             Assert.Equal(0, resultado.Quartos);
             Assert.Equal(2, resultado.Banheiros);
             Assert.Equal(120.75m, resultado.Area);
             Assert.Equal(2, resultado.VagasGaragem);
             Assert.Equal(8500.00m, resultado.Valor);
             Assert.Equal("Sala comercial ampla com vista panorâmica", resultado.Descricao);
-            Assert.Equal(1, resultado.LocadorId);
+            Assert.Equal(1, resultado.IdLocador);
         }
 
         [Theory]
-        [InlineData("casa")]
-        [InlineData("apartamento")]
-        [InlineData("comercial")]
+        [InlineData("C")]
+        [InlineData("A")]
+        [InlineData("PC")]
         public async Task CreateAsync_ComDiferentesTiposDeImovel_DeveInserirCorretamente(string tipoImovel)
         {
             // Arrange
@@ -182,7 +185,7 @@ namespace ServiceTests
                 Tipo = tipoImovel,
                 Cidade = "Teste",
                 Valor = 1000.00m,
-                LocadorId = 1
+                IdLocador = 1
             };
 
             // Act
@@ -192,16 +195,18 @@ namespace ServiceTests
             Assert.NotNull(resultado);
             Assert.Equal(tipoImovel, resultado.Tipo);
             
-            var imovelNoBanco = await _context.Imovels.FindAsync(resultado.Id);
-            Assert.Equal(tipoImovel, imovelNoBanco.Tipo);
+            var imovelNoBanco = await _context.Imovels
+                .Where(i => i.Id == resultado.Id && i.IdLocador == resultado.IdLocador)
+                .FirstOrDefaultAsync();
+            Assert.Equal(tipoImovel, imovelNoBanco?.Tipo);
         }
 
         [Fact]
         public async Task CreateAsync_DeveAtribuirIdAutomaticamente()
         {
             // Arrange
-            var imovel1 = new ImovelDTO { Cidade = "Cidade1", LocadorId = 1, Valor = 1000 };
-            var imovel2 = new ImovelDTO { Cidade = "Cidade2", LocadorId = 1, Valor = 2000 };
+            var imovel1 = new ImovelDTO { Cidade = "Cidade1", IdLocador = 1, Valor = 1000 };
+            var imovel2 = new ImovelDTO { Cidade = "Cidade2", IdLocador = 1, Valor = 2000 };
 
             // Act
             var resultado1 = await _imovelService.CreateAsync(imovel1);
@@ -221,7 +226,7 @@ namespace ServiceTests
             {
                 Area = 87.65m,
                 Valor = 1234.56m,
-                LocadorId = 1,
+                IdLocador = 1,
                 Cidade = "Teste"
             };
 
@@ -232,9 +237,11 @@ namespace ServiceTests
             Assert.Equal(87.65m, resultado.Area);
             Assert.Equal(1234.56m, resultado.Valor);
             
-            var imovelNoBanco = await _context.Imovels.FindAsync(resultado.Id);
-            Assert.Equal(87.65m, imovelNoBanco.Area);
-            Assert.Equal(1234.56m, imovelNoBanco.Valor);
+            var imovelNoBanco = await _context.Imovels
+                .Where(i => i.Id == resultado.Id && i.IdLocador == resultado.IdLocador)
+                .FirstOrDefaultAsync();
+            Assert.Equal(87.65m, imovelNoBanco?.Area);
+            Assert.Equal(1234.56m, imovelNoBanco?.Valor);
         }
 
         public void Dispose()
