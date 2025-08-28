@@ -1,0 +1,59 @@
+﻿using AlugueLinkWEB.Models;
+using Core.DTO;
+
+namespace AlugueLinkWEB.Mappers
+{
+    public static class ImovelMapper
+    {
+        public static ImovelViewModel ToViewModel(ImovelDTO dto)
+        {
+            return new ImovelViewModel
+            {
+                Id = dto.Id,
+                Cep = dto.Cep,
+                Logradouro = dto.Logradouro,
+                Numero = dto.Numero,
+                Complemento = dto.Complemento,
+                Bairro = dto.Bairro,
+                Cidade = dto.Cidade,
+                Estado = dto.Estado,
+                Tipo = dto.Tipo,
+                Quartos = dto.Quartos,
+                Banheiros = dto.Banheiros,
+                Area = dto.Area,
+                VagasGaragem = dto.VagasGaragem,
+                Valor = dto.Valor,
+                Descricao = dto.Descricao,
+                LocadorId = dto.LocadorId
+            };
+        }
+
+        public static ImovelDTO ToDTO(ImovelViewModel viewModel)
+        {
+            return new ImovelDTO
+            {
+                Id = viewModel.Id,
+                Cep = viewModel.Cep,
+                Logradouro = viewModel.Logradouro,
+                Numero = viewModel.Numero,
+                Complemento = viewModel.Complemento,
+                Bairro = viewModel.Bairro,
+                Cidade = viewModel.Cidade,
+                Estado = viewModel.Estado,
+                Tipo = viewModel.Tipo,
+                Quartos = viewModel.Quartos,
+                Banheiros = viewModel.Banheiros,
+                Area = viewModel.Area,
+                VagasGaragem = viewModel.VagasGaragem,
+                Valor = viewModel.Valor,
+                Descricao = viewModel.Descricao,
+                LocadorId = viewModel.LocadorId
+            };
+        }
+
+        public static IEnumerable<ImovelViewModel> ToViewModelList(IEnumerable<ImovelDTO> dtos)
+        {
+            return dtos.Select(ToViewModel);
+        }
+    }
+}

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\Core\\Core.csproj": {}
+    "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\Core\\Core.csproj": {
+    "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\Core\\Core.csproj",
+        "projectPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\Dede\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\Core\\obj\\",
+        "outputPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

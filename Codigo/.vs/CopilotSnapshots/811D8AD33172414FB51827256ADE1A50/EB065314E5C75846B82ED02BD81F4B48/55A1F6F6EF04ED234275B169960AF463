@@ -1,0 +1,146 @@
+﻿using Core.DTO;
+using Core;
+using Microsoft.EntityFrameworkCore;
+
+namespace Core.Service
+{
+    public class ImovelService : IImovelService
+    {
+        private readonly AluguelinkContext _context;
+
+        public ImovelService(AluguelinkContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<IEnumerable<ImovelDTO>> GetAllAsync()
+        {
+            return await _context.Imovels
+                .Include(i => i.IdLocadorNavigation)
+                .Select(i => new ImovelDTO
+                {
+                    Id = i.Id,
+                    Cep = i.Cep,
+                    Logradouro = i.Logradouro,
+                    Numero = i.Numero,
+                    Complemento = i.Complemento,
+                    Bairro = i.Bairro,
+                    Cidade = i.Cidade,
+                    Estado = i.Estado,
+                    Tipo = i.Tipo,
+                    Quartos = i.Quartos,
+                    Banheiros = i.Banheiros,
+                    Area = i.Area,
+                    VagasGaragem = i.VagasGaragem,
+                    Valor = i.Valor,
+                    Descricao = i.Descricao,
+                    IdLocador = i.IdLocador
+                })
+                .ToListAsync();
+        }
+
+        public async Task<ImovelDTO?> GetByIdAsync(int id)
+        {
+            var imovel = await _context.Imovels
+                .Include(i => i.IdLocadorNavigation)
+                .Where(i => i.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (imovel == null)
+                return null;
+
+            return new ImovelDTO
+            {
+                Id = imovel.Id,
+                Cep = imovel.Cep,
+                Logradouro = imovel.Logradouro,
+                Numero = imovel.Numero,
+                Complemento = imovel.Complemento,
+                Bairro = imovel.Bairro,
+                Cidade = imovel.Cidade,
+                Estado = imovel.Estado,
+                Tipo = imovel.Tipo,
+                Quartos = imovel.Quartos,
+                Banheiros = imovel.Banheiros,
+                Area = imovel.Area,
+                VagasGaragem = imovel.VagasGaragem,
+                Valor = imovel.Valor,
+                Descricao = imovel.Descricao,
+                IdLocador = imovel.IdLocador
+            };
+        }
+
+        public async Task<ImovelDTO> CreateAsync(ImovelDTO imovelDto)
+        {
+            var imovel = new Imovel
+            {
+                Cep = imovelDto.Cep ?? "",
+                Logradouro = imovelDto.Logradouro ?? "",
+                Numero = imovelDto.Numero ?? "",
+                Complemento = imovelDto.Complemento,
+                Bairro = imovelDto.Bairro ?? "",
+                Cidade = imovelDto.Cidade ?? "",
+                Estado = imovelDto.Estado ?? "",
+                Tipo = imovelDto.Tipo ?? "",
+                Quartos = imovelDto.Quartos ?? 0,
+                Banheiros = imovelDto.Banheiros ?? 0,
+                Area = imovelDto.Area ?? 0,
+                VagasGaragem = imovelDto.VagasGaragem ?? 0,
+                Valor = imovelDto.Valor ?? 0,
+                Descricao = imovelDto.Descricao ?? "",
+                IdLocador = imovelDto.IdLocador
+            };
+
+            _context.Imovels.Add(imovel);
+            await _context.SaveChangesAsync();
+
+            imovelDto.Id = imovel.Id;
+            return imovelDto;
+        }
+
+        public async Task<ImovelDTO?> UpdateAsync(int id, ImovelDTO imovelDto)
+        {
+            var imovel = await _context.Imovels
+                .Where(i => i.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (imovel == null)
+                return null;
+
+            imovel.Cep = imovelDto.Cep ?? "";
+            imovel.Logradouro = imovelDto.Logradouro ?? "";
+            imovel.Numero = imovelDto.Numero ?? "";
+            imovel.Complemento = imovelDto.Complemento;
+            imovel.Bairro = imovelDto.Bairro ?? "";
+            imovel.Cidade = imovelDto.Cidade ?? "";
+            imovel.Estado = imovelDto.Estado ?? "";
+            imovel.Tipo = imovelDto.Tipo ?? "";
+            imovel.Quartos = imovelDto.Quartos ?? 0;
+            imovel.Banheiros = imovelDto.Banheiros ?? 0;
+            imovel.Area = imovelDto.Area ?? 0;
+            imovel.VagasGaragem = imovelDto.VagasGaragem ?? 0;
+            imovel.Valor = imovelDto.Valor ?? 0;
+            imovel.Descricao = imovelDto.Descricao ?? "";
+            imovel.IdLocador = imovelDto.IdLocador;
+
+            await _context.SaveChangesAsync();
+
+            imovelDto.Id = imovel.Id;
+            return imovelDto;
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var imovel = await _context.Imovels
+                .Where(i => i.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (imovel == null)
+                return false;
+
+            _context.Imovels.Remove(imovel);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+    }
+}
