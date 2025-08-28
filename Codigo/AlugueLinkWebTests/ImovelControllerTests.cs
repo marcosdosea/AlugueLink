@@ -1,7 +1,7 @@
 using AlugueLinkWEB.Controllers;
 using AlugueLinkWEB.Models;
 using Core.DTO;
-using Core.Models;
+using Core;
 using Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -41,8 +41,7 @@ namespace AlugueLinkWebTests
                 Nome = "Locador Teste",
                 Email = "locador@teste.com",
                 Cpf = "12345678901",
-                Telefone = "11999999999",
-                PasswordHash = "hash_teste"
+                Telefone = "11999999999"
             };
 
             _context.Locadors.Add(locador);
@@ -79,14 +78,14 @@ namespace AlugueLinkWebTests
                 Bairro = viewModel.Bairro,
                 Cidade = viewModel.Cidade,
                 Estado = viewModel.Estado,
-                Tipo = viewModel.Tipo,
+                Tipo = "A", // Valor correto para o banco
                 Quartos = viewModel.Quartos,
                 Banheiros = viewModel.Banheiros,
                 Area = viewModel.Area,
                 VagasGaragem = viewModel.VagasGaragem,
                 Valor = viewModel.Valor,
                 Descricao = viewModel.Descricao,
-                LocadorId = 1
+                IdLocador = 1
             };
 
             _mockImovelService
@@ -108,14 +107,14 @@ namespace AlugueLinkWebTests
                 dto.Bairro == viewModel.Bairro &&
                 dto.Cidade == viewModel.Cidade &&
                 dto.Estado == viewModel.Estado &&
-                dto.Tipo == viewModel.Tipo &&
+                dto.Tipo == "A" && // Valor ENUM correto
                 dto.Quartos == viewModel.Quartos &&
                 dto.Banheiros == viewModel.Banheiros &&
                 dto.Area == viewModel.Area &&
                 dto.VagasGaragem == viewModel.VagasGaragem &&
                 dto.Valor == viewModel.Valor &&
                 dto.Descricao == viewModel.Descricao &&
-                dto.LocadorId == 1
+                dto.IdLocador == 1
             )), Times.Once);
         }
 
@@ -177,7 +176,7 @@ namespace AlugueLinkWebTests
 
             _mockImovelService
                 .Setup(s => s.CreateAsync(It.IsAny<ImovelDTO>()))
-                .ReturnsAsync(new ImovelDTO { Id = 1, LocadorId = 2 }); // Novo locador terá ID = 2
+                .ReturnsAsync(new ImovelDTO { Id = 1, IdLocador = 2 }); // Novo locador terá ID = 2
 
             // Act
             var result = await _controller.Create(viewModel);
@@ -194,7 +193,7 @@ namespace AlugueLinkWebTests
 
             // Verificar se o service foi chamado com o ID do novo locador
             _mockImovelService.Verify(s => s.CreateAsync(It.Is<ImovelDTO>(dto => 
-                dto.LocadorId == locadorCriado.Id
+                dto.IdLocador == locadorCriado.Id
             )), Times.Once);
         }
 
@@ -213,13 +212,13 @@ namespace AlugueLinkWebTests
             _mockImovelService
                 .Setup(s => s.CreateAsync(It.IsAny<ImovelDTO>()))
                 .Callback<ImovelDTO>(dto => dtoCapturado = dto)
-                .ReturnsAsync(new ImovelDTO { Id = 1, LocadorId = 1 });
+                .ReturnsAsync(new ImovelDTO { Id = 1, IdLocador = 1 });
 
             // Act
             await _controller.Create(viewModel);
 
             // Assert
-            Assert.Equal(1, dtoCapturado.LocadorId);
+            Assert.Equal(1, dtoCapturado.IdLocador);
             Assert.Equal(1, viewModel.LocadorId);
         }
 
@@ -234,10 +233,10 @@ namespace AlugueLinkWebTests
         }
 
         [Theory]
-        [InlineData("casa")]
-        [InlineData("apartamento")]
-        [InlineData("comercial")]
-        public async Task Create_POST_ComDiferentesTiposDeImovel_DeveFuncionar(string tipoImovel)
+        [InlineData("casa", "C")]
+        [InlineData("apartamento", "A")]
+        [InlineData("comercial", "PC")]
+        public async Task Create_POST_ComDiferentesTiposDeImovel_DeveFuncionar(string tipoImovel, string tipoEnum)
         {
             // Arrange
             var viewModel = new ImovelViewModel
@@ -249,7 +248,7 @@ namespace AlugueLinkWebTests
 
             _mockImovelService
                 .Setup(s => s.CreateAsync(It.IsAny<ImovelDTO>()))
-                .ReturnsAsync(new ImovelDTO { Id = 1, Tipo = tipoImovel });
+                .ReturnsAsync(new ImovelDTO { Id = 1, Tipo = tipoEnum });
 
             // Act
             var result = await _controller.Create(viewModel);
@@ -259,7 +258,7 @@ namespace AlugueLinkWebTests
             Assert.Equal("Index", redirectResult.ActionName);
 
             _mockImovelService.Verify(s => s.CreateAsync(It.Is<ImovelDTO>(dto => 
-                dto.Tipo == tipoImovel
+                dto.Tipo == tipoEnum
             )), Times.Once);
         }
 
@@ -288,7 +287,7 @@ namespace AlugueLinkWebTests
 
             _mockImovelService
                 .Setup(s => s.CreateAsync(It.IsAny<ImovelDTO>()))
-                .ReturnsAsync(new ImovelDTO { Id = 1, LocadorId = 1 });
+                .ReturnsAsync(new ImovelDTO { Id = 1, IdLocador = 1 });
 
             // Act
             var result = await _controller.Create(viewModel);
