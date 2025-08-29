@@ -20,7 +20,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label asp-for="Cep" class="control-label"></label>
-                                <input asp-for="Cep" class="form-control" />
+                                <input asp-for="Cep" class="form-control" type="text" pattern="[0-9]*" inputmode="numeric" maxlength="8" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
                                 <span asp-validation-for="Cep" class="text-danger"></span>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label asp-for="Numero" class="control-label"></label>
-                                <input asp-for="Numero" class="form-control" />
+                                <input asp-for="Numero" class="form-control" type="text" pattern="[0-9]*" inputmode="numeric" maxlength="5" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
                                 <span asp-validation-for="Numero" class="text-danger"></span>
                             </div>
                         </div>
@@ -65,7 +65,36 @@
                         <div class="col-md-1">
                             <div class="form-group">
                                 <label asp-for="Estado" class="control-label"></label>
-                                <input asp-for="Estado" class="form-control" />
+                                <select asp-for="Estado" class="form-control">
+                                    <option value="">Selecione...</option>
+                                    <option value="AC">AC</option>
+                                    <option value="AL">AL</option>
+                                    <option value="AP">AP</option>
+                                    <option value="AM">AM</option>
+                                    <option value="BA">BA</option>
+                                    <option value="CE">CE</option>
+                                    <option value="DF">DF</option>
+                                    <option value="ES">ES</option>
+                                    <option value="GO">GO</option>
+                                    <option value="MA">MA</option>
+                                    <option value="MT">MT</option>
+                                    <option value="MS">MS</option>
+                                    <option value="MG">MG</option>
+                                    <option value="PA">PA</option>
+                                    <option value="PB">PB</option>
+                                    <option value="PR">PR</option>
+                                    <option value="PE">PE</option>
+                                    <option value="PI">PI</option>
+                                    <option value="RJ">RJ</option>
+                                    <option value="RN">RN</option>
+                                    <option value="RS">RS</option>
+                                    <option value="RO">RO</option>
+                                    <option value="RR">RR</option>
+                                    <option value="SC">SC</option>
+                                    <option value="SP">SP</option>
+                                    <option value="SE">SE</option>
+                                    <option value="TO">TO</option>
+                                </select>
                                 <span asp-validation-for="Estado" class="text-danger"></span>
                             </div>
                         </div>
@@ -94,14 +123,14 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label asp-for="Quartos" class="control-label"></label>
-                                <input asp-for="Quartos" class="form-control" type="number" min="0" max="10" />
+                                <input asp-for="Quartos" class="form-control" type="number" min="0" max="10" step="1" />
                                 <span asp-validation-for="Quartos" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label asp-for="Banheiros" class="control-label"></label>
-                                <input asp-for="Banheiros" class="form-control" type="number" min="0" max="10" />
+                                <input asp-for="Banheiros" class="form-control" type="number" min="0" max="10" step="1" />
                                 <span asp-validation-for="Banheiros" class="text-danger"></span>
                             </div>
                         </div>
@@ -115,7 +144,7 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label asp-for="VagasGaragem" class="control-label"></label>
-                                <input asp-for="VagasGaragem" class="form-control" type="number" min="0" max="10" />
+                                <input asp-for="VagasGaragem" class="form-control" type="number" min="0" max="10" step="1" />
                                 <span asp-validation-for="VagasGaragem" class="text-danger"></span>
                             </div>
                         </div>
