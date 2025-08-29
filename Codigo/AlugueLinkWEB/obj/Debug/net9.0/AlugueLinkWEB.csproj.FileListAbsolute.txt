@@ -708,7 +708,6 @@ C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\
 C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\compressed\nezrqnk58p-muycvpuwrr.gz
 C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\compressed\v0zgfp0y55-87fc7y1x7t.gz
 C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\compressed\yfc7ypekbg-mlv21k5csn.gz
-C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\compressed\o3drsszp6y-c2tiyv64ts.gz
 C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\compressed\0ztkx78ckr-61n19gt1b8.gz
 C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\compressed\m5o8ispz41-xtxxf3hu2r.gz
 C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\compressed\tgslb6n4zi-nakmwdwsxp.gz
@@ -779,3 +778,5 @@ C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\
 C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\AlugueLinkWEB.pdb
 C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\AlugueLinkWEB.genruntimeconfig.cache
 C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\ref\AlugueLinkWEB.dll
+C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\compressed\ir7kwxwz2w-k900laicpr.gz
+C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\compressed\o3drsszp6y-jlr4psv8pz.gz
