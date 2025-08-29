@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AfeXtrh7nwI=",
+  "dgSpecHash": "Iqwe7ZAw/Lo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\ServiceTests\\ServiceTests.csproj",
+  "projectFilePath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\ServiceTests\\ServiceTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dede\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
     "C:\\Users\\Dede\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",

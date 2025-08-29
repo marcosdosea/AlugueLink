@@ -9741,11 +9741,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\AlugueLinkWebTests\\AlugueLinkWebTests.csproj",
+      "projectUniqueName": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWebTests\\AlugueLinkWebTests.csproj",
       "projectName": "AlugueLinkWebTests",
-      "projectPath": "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\AlugueLinkWebTests\\AlugueLinkWebTests.csproj",
+      "projectPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWebTests\\AlugueLinkWebTests.csproj",
       "packagesPath": "C:\\Users\\Dede\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\AlugueLinkWebTests\\obj\\",
+      "outputPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWebTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -9766,11 +9766,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj": {
-              "projectPath": "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj"
+            "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj": {
+              "projectPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj"
             },
-            "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\Core\\Core.csproj": {
-              "projectPath": "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\Core\\Core.csproj"
+            "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj": {
+              "projectPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj"
             }
           }
         }

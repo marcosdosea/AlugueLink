@@ -1,0 +1,308 @@
+﻿using AlugueLinkWEB.Controllers;
+using AlugueLinkWEB.Models;
+using Core.DTO;
+using Core.Models;
+using Core.Service;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Moq;
+using Xunit;
+
+namespace AlugueLinkWebTests
+{
+    public class ImovelControllerTests : IDisposable
+    {
+        private readonly Mock<IImovelService> _mockImovelService;
+        private readonly AluguelinkContext _context;
+        private readonly ImovelController _controller;
+
+        public ImovelControllerTests()
+        {
+            // Setup do mock do service
+            _mockImovelService = new Mock<IImovelService>();
+
+            // Setup do contexto in-memory
+            var options = new DbContextOptionsBuilder<AluguelinkContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            _context = new AluguelinkContext(options);
+            SeedTestData();
+
+            // Criar controller com dependências mockadas
+            _controller = new ImovelController(_mockImovelService.Object, _context);
+        }
+
+        private void SeedTestData()
+        {
+            var locador = new Locador
+            {
+                Id = 1,
+                Nome = "Locador Teste",
+                Email = "locador@teste.com",
+                Cpf = "12345678901",
+                Telefone = "11999999999",
+                PasswordHash = "hash_teste"
+            };
+
+            _context.Locadors.Add(locador);
+            _context.SaveChanges();
+        }
+
+        [Fact]
+        public async Task Create_POST_ComDadosValidos_DeveRedirecionarParaIndex()
+        {
+            // Arrange
+            var viewModel = new ImovelViewModel
+            {
+                Cep = "12345678",
+                Logradouro = "Rua Teste",
+                Numero = "123",
+                Bairro = "Centro",
+                Cidade = "São Paulo",
+                Estado = "SP",
+                Tipo = "apartamento",
+                Quartos = 2,
+                Banheiros = 1,
+                Area = 65.50m,
+                VagasGaragem = 1,
+                Valor = 1500.00m,
+                Descricao = "Apartamento teste"
+            };
+
+            var dtoEsperado = new ImovelDTO
+            {
+                Id = 1,
+                Cep = viewModel.Cep,
+                Logradouro = viewModel.Logradouro,
+                Numero = viewModel.Numero,
+                Bairro = viewModel.Bairro,
+                Cidade = viewModel.Cidade,
+                Estado = viewModel.Estado,
+                Tipo = viewModel.Tipo,
+                Quartos = viewModel.Quartos,
+                Banheiros = viewModel.Banheiros,
+                Area = viewModel.Area,
+                VagasGaragem = viewModel.VagasGaragem,
+                Valor = viewModel.Valor,
+                Descricao = viewModel.Descricao,
+                LocadorId = 1
+            };
+
+            _mockImovelService
+                .Setup(s => s.CreateAsync(It.IsAny<ImovelDTO>()))
+                .ReturnsAsync(dtoEsperado);
+
+            // Act
+            var result = await _controller.Create(viewModel);
+
+            // Assert
+            var redirectResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Index", redirectResult.ActionName);
+
+            // Verificar se o service foi chamado corretamente
+            _mockImovelService.Verify(s => s.CreateAsync(It.Is<ImovelDTO>(dto => 
+                dto.Cep == viewModel.Cep &&
+                dto.Logradouro == viewModel.Logradouro &&
+                dto.Numero == viewModel.Numero &&
+                dto.Bairro == viewModel.Bairro &&
+                dto.Cidade == viewModel.Cidade &&
+                dto.Estado == viewModel.Estado &&
+                dto.Tipo == viewModel.Tipo &&
+                dto.Quartos == viewModel.Quartos &&
+                dto.Banheiros == viewModel.Banheiros &&
+                dto.Area == viewModel.Area &&
+                dto.VagasGaragem == viewModel.VagasGaragem &&
+                dto.Valor == viewModel.Valor &&
+                dto.Descricao == viewModel.Descricao &&
+                dto.LocadorId == 1
+            )), Times.Once);
+        }
+
+        [Fact]
+        public async Task Create_POST_ComModelStateInvalido_DeveRetornarView()
+        {
+            // Arrange
+            var viewModel = new ImovelViewModel();
+            _controller.ModelState.AddModelError("Cidade", "Cidade é obrigatória");
+
+            // Act
+            var result = await _controller.Create(viewModel);
+
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            Assert.Equal(viewModel, viewResult.Model);
+
+            // Verificar que o service não foi chamado
+            _mockImovelService.Verify(s => s.CreateAsync(It.IsAny<ImovelDTO>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task Create_POST_QuandoServiceLancaException_DeveAdicionarErroERetornarView()
+        {
+            // Arrange
+            var viewModel = new ImovelViewModel
+            {
+                Cidade = "São Paulo",
+                Valor = 1500.00m
+            };
+
+            _mockImovelService
+                .Setup(s => s.CreateAsync(It.IsAny<ImovelDTO>()))
+                .ThrowsAsync(new Exception("Erro de teste"));
+
+            // Act
+            var result = await _controller.Create(viewModel);
+
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            Assert.Equal(viewModel, viewResult.Model);
+            Assert.True(_controller.ModelState.ContainsKey(""));
+            Assert.Contains("Erro ao salvar o imóvel", _controller.ModelState[""].Errors[0].ErrorMessage);
+        }
+
+        [Fact]
+        public async Task Create_POST_SemLocadorNoBanco_DeveCriarLocadorPadraoESalvarImovel()
+        {
+            // Arrange
+            // Limpar locadores do contexto
+            _context.Locadors.RemoveRange(_context.Locadors);
+            await _context.SaveChangesAsync();
+
+            var viewModel = new ImovelViewModel
+            {
+                Cidade = "São Paulo",
+                Valor = 1500.00m
+            };
+
+            _mockImovelService
+                .Setup(s => s.CreateAsync(It.IsAny<ImovelDTO>()))
+                .ReturnsAsync(new ImovelDTO { Id = 1, LocadorId = 2 }); // Novo locador terá ID = 2
+
+            // Act
+            var result = await _controller.Create(viewModel);
+
+            // Assert
+            var redirectResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Index", redirectResult.ActionName);
+
+            // Verificar se o locador padrão foi criado
+            var locadorCriado = await _context.Locadors.FirstOrDefaultAsync();
+            Assert.NotNull(locadorCriado);
+            Assert.Equal("Locador Padrão", locadorCriado.Nome);
+            Assert.Equal("padrao@aluguelink.com", locadorCriado.Email);
+
+            // Verificar se o service foi chamado com o ID do novo locador
+            _mockImovelService.Verify(s => s.CreateAsync(It.Is<ImovelDTO>(dto => 
+                dto.LocadorId == locadorCriado.Id
+            )), Times.Once);
+        }
+
+        [Fact]
+        public async Task Create_POST_DeveDefinirLocadorIdCorreto()
+        {
+            // Arrange
+            var viewModel = new ImovelViewModel
+            {
+                Cidade = "São Paulo",
+                Valor = 1500.00m,
+                LocadorId = 0 // Inicialmente zero
+            };
+
+            var dtoCapturado = new ImovelDTO();
+            _mockImovelService
+                .Setup(s => s.CreateAsync(It.IsAny<ImovelDTO>()))
+                .Callback<ImovelDTO>(dto => dtoCapturado = dto)
+                .ReturnsAsync(new ImovelDTO { Id = 1, LocadorId = 1 });
+
+            // Act
+            await _controller.Create(viewModel);
+
+            // Assert
+            Assert.Equal(1, dtoCapturado.LocadorId);
+            Assert.Equal(1, viewModel.LocadorId);
+        }
+
+        [Fact]
+        public void Create_GET_DeveRetornarView()
+        {
+            // Act
+            var result = _controller.Create();
+
+            // Assert
+            Assert.IsType<ViewResult>(result);
+        }
+
+        [Theory]
+        [InlineData("casa")]
+        [InlineData("apartamento")]
+        [InlineData("comercial")]
+        public async Task Create_POST_ComDiferentesTiposDeImovel_DeveFuncionar(string tipoImovel)
+        {
+            // Arrange
+            var viewModel = new ImovelViewModel
+            {
+                Tipo = tipoImovel,
+                Cidade = "Teste",
+                Valor = 1000.00m
+            };
+
+            _mockImovelService
+                .Setup(s => s.CreateAsync(It.IsAny<ImovelDTO>()))
+                .ReturnsAsync(new ImovelDTO { Id = 1, Tipo = tipoImovel });
+
+            // Act
+            var result = await _controller.Create(viewModel);
+
+            // Assert
+            var redirectResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Index", redirectResult.ActionName);
+
+            _mockImovelService.Verify(s => s.CreateAsync(It.Is<ImovelDTO>(dto => 
+                dto.Tipo == tipoImovel
+            )), Times.Once);
+        }
+
+        [Fact]
+        public async Task Create_POST_ComCamposOpcionaisNulos_DeveFuncionar()
+        {
+            // Arrange
+            var viewModel = new ImovelViewModel
+            {
+                Cidade = "São Paulo",
+                Valor = 1500.00m,
+                // Campos opcionais ficam nulos
+                Cep = null,
+                Logradouro = null,
+                Numero = null,
+                Complemento = null,
+                Bairro = null,
+                Estado = null,
+                Tipo = null,
+                Quartos = null,
+                Banheiros = null,
+                Area = null,
+                VagasGaragem = null,
+                Descricao = null
+            };
+
+            _mockImovelService
+                .Setup(s => s.CreateAsync(It.IsAny<ImovelDTO>()))
+                .ReturnsAsync(new ImovelDTO { Id = 1, LocadorId = 1 });
+
+            // Act
+            var result = await _controller.Create(viewModel);
+
+            // Assert
+            var redirectResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Index", redirectResult.ActionName);
+
+            _mockImovelService.Verify(s => s.CreateAsync(It.IsAny<ImovelDTO>()), Times.Once);
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
+    }
+}
