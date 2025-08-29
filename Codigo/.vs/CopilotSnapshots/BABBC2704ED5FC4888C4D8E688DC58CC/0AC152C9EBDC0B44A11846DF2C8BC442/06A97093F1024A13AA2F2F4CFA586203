@@ -1,4 +1,4 @@
-using AlugueLinkWEB.Controllers;
+Ôªøusing AlugueLinkWEB.Controllers;
 using AlugueLinkWEB.Models;
 using Core.DTO;
 using Core;
@@ -29,7 +29,7 @@ namespace AlugueLinkWebTests
             _context = new AluguelinkContext(options);
             SeedTestData();
 
-            // Criar controller com dependÍncias mockadas
+            // Criar controller com depend√™ncias mockadas
             _controller = new ImovelController(_mockImovelService.Object, _context);
         }
 
@@ -58,7 +58,7 @@ namespace AlugueLinkWebTests
                 Logradouro = "Rua Teste",
                 Numero = "123",
                 Bairro = "Centro",
-                Cidade = "S„o Paulo",
+                Cidade = "S√£o Paulo",
                 Estado = "SP",
                 Tipo = "apartamento",
                 Quartos = 2,
@@ -123,7 +123,7 @@ namespace AlugueLinkWebTests
         {
             // Arrange
             var viewModel = new ImovelViewModel();
-            _controller.ModelState.AddModelError("Cidade", "Cidade È obrigatÛria");
+            _controller.ModelState.AddModelError("Cidade", "Cidade √© obrigat√≥ria");
 
             // Act
             var result = await _controller.Create(viewModel);
@@ -132,7 +132,7 @@ namespace AlugueLinkWebTests
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.Equal(viewModel, viewResult.Model);
 
-            // Verificar que o service n„o foi chamado
+            // Verificar que o service n√£o foi chamado
             _mockImovelService.Verify(s => s.CreateAsync(It.IsAny<ImovelDTO>()), Times.Never);
         }
 
@@ -142,7 +142,7 @@ namespace AlugueLinkWebTests
             // Arrange
             var viewModel = new ImovelViewModel
             {
-                Cidade = "S„o Paulo",
+                Cidade = "S√£o Paulo",
                 Valor = 1500.00m
             };
 
@@ -157,7 +157,7 @@ namespace AlugueLinkWebTests
             var viewResult = Assert.IsType<ViewResult>(result);
             Assert.Equal(viewModel, viewResult.Model);
             Assert.True(_controller.ModelState.ContainsKey(""));
-            Assert.Contains("Erro ao salvar o imÛvel", _controller.ModelState[""].Errors[0].ErrorMessage);
+            Assert.Contains("Erro ao salvar o im√≥vel", _controller.ModelState[""].Errors[0].ErrorMessage);
         }
 
         [Fact]
@@ -170,13 +170,13 @@ namespace AlugueLinkWebTests
 
             var viewModel = new ImovelViewModel
             {
-                Cidade = "S„o Paulo",
+                Cidade = "S√£o Paulo",
                 Valor = 1500.00m
             };
 
             _mockImovelService
                 .Setup(s => s.CreateAsync(It.IsAny<ImovelDTO>()))
-                .ReturnsAsync(new ImovelDTO { Id = 1, IdLocador = 2 }); // Novo locador ter· ID = 2
+                .ReturnsAsync(new ImovelDTO { Id = 1, IdLocador = 2 }); // Novo locador ter√° ID = 2
 
             // Act
             var result = await _controller.Create(viewModel);
@@ -185,10 +185,10 @@ namespace AlugueLinkWebTests
             var redirectResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("Index", redirectResult.ActionName);
 
-            // Verificar se o locador padr„o foi criado
+            // Verificar se o locador padr√£o foi criado
             var locadorCriado = await _context.Locadors.FirstOrDefaultAsync();
             Assert.NotNull(locadorCriado);
-            Assert.Equal("Locador Padr„o", locadorCriado.Nome);
+            Assert.Equal("Locador Padr√£o", locadorCriado.Nome);
             Assert.Equal("padrao@aluguelink.com", locadorCriado.Email);
 
             // Verificar se o service foi chamado com o ID do novo locador
@@ -203,7 +203,7 @@ namespace AlugueLinkWebTests
             // Arrange
             var viewModel = new ImovelViewModel
             {
-                Cidade = "S„o Paulo",
+                Cidade = "S√£o Paulo",
                 Valor = 1500.00m,
                 LocadorId = 0 // Inicialmente zero
             };
@@ -268,7 +268,7 @@ namespace AlugueLinkWebTests
             // Arrange
             var viewModel = new ImovelViewModel
             {
-                Cidade = "S„o Paulo",
+                Cidade = "S√£o Paulo",
                 Valor = 1500.00m,
                 // Campos opcionais ficam nulos
                 Cep = null,

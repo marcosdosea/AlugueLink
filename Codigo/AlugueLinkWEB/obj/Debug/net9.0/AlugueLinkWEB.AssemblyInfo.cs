@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AlugueLinkWEB")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3885e3a11f7a1fe357285d4dc6445dfb58ca6c6f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4a61e1ed364a2dc7a50379b0fee9179b6ab9e019")]
 [assembly: System.Reflection.AssemblyProductAttribute("AlugueLinkWEB")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AlugueLinkWEB")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
