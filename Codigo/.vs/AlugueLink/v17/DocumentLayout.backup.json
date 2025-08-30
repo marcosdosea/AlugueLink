@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Testes_Locatario_Documentacao.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Testes_Locatario_Documentacao.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B002CA09-340C-42BC-8ED6-8BB1EF09638C}|AlugueLinkWebTests\\AlugueLinkWebTests.csproj|c:\\users\\dede\\documents\\github\\aluguelink\\codigo\\aluguelinkwebtests\\locatariomappertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B002CA09-340C-42BC-8ED6-8BB1EF09638C}|AlugueLinkWebTests\\AlugueLinkWebTests.csproj|solutionrelative:aluguelinkwebtests\\locatariomappertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|c:\\users\\dede\\documents\\github\\aluguelink\\codigo\\core\\dto\\pagamentodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{50A4A23E-FBED-49F6-84E7-1BD84BE6812E}|Core\\Core.csproj|solutionrelative:core\\dto\\pagamentodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -190,20 +198,12 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AlugueLinkIntegrationTests\\LocatarioIntegrationTests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C2AACC5D-1195-493D-B3B5-05F2E667DAF6}|ServiceTests\\ServiceTests.csproj|c:\\users\\dede\\documents\\github\\aluguelink\\codigo\\servicetests\\locatarioservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C2AACC5D-1195-493D-B3B5-05F2E667DAF6}|ServiceTests\\ServiceTests.csproj|solutionrelative:servicetests\\locatarioservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B002CA09-340C-42BC-8ED6-8BB1EF09638C}|AlugueLinkWebTests\\AlugueLinkWebTests.csproj|c:\\users\\dede\\documents\\github\\aluguelink\\codigo\\aluguelinkwebtests\\locatariocontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B002CA09-340C-42BC-8ED6-8BB1EF09638C}|AlugueLinkWebTests\\AlugueLinkWebTests.csproj|solutionrelative:aluguelinkwebtests\\locatariocontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B002CA09-340C-42BC-8ED6-8BB1EF09638C}|AlugueLinkWebTests\\AlugueLinkWebTests.csproj|c:\\users\\dede\\documents\\github\\aluguelink\\codigo\\aluguelinkwebtests\\locatarioviewmodelvalidationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B002CA09-340C-42BC-8ED6-8BB1EF09638C}|AlugueLinkWebTests\\AlugueLinkWebTests.csproj|solutionrelative:aluguelinkwebtests\\locatarioviewmodelvalidationtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B002CA09-340C-42BC-8ED6-8BB1EF09638C}|AlugueLinkWebTests\\AlugueLinkWebTests.csproj|c:\\users\\dede\\documents\\github\\aluguelink\\codigo\\aluguelinkwebtests\\locatariomappertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B002CA09-340C-42BC-8ED6-8BB1EF09638C}|AlugueLinkWebTests\\AlugueLinkWebTests.csproj|solutionrelative:aluguelinkwebtests\\locatariomappertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -213,11 +213,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 2,
+              "Title": "PagamentoDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\DTO\\PagamentoDTO.cs",
+              "RelativeDocumentMoniker": "Core\\DTO\\PagamentoDTO.cs",
+              "ToolTip": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\DTO\\PagamentoDTO.cs",
+              "RelativeToolTip": "Core\\DTO\\PagamentoDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-30T00:36:05.716Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Testes_Locatario_Documentacao.md",
+              "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Testes_Locatario_Documentacao.md",
+              "RelativeDocumentMoniker": "Testes_Locatario_Documentacao.md",
+              "ToolTip": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Testes_Locatario_Documentacao.md",
+              "RelativeToolTip": "Testes_Locatario_Documentacao.md",
+              "ViewState": "AgIAAJwAAAAAAAAAAAAAAK4AAABJAQAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-08-30T02:27:00.903Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "LocatarioMapperTests.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWebTests\\LocatarioMapperTests.cs",
               "RelativeDocumentMoniker": "AlugueLinkWebTests\\LocatarioMapperTests.cs",
@@ -230,46 +256,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
-              "Title": "LocatarioServiceTests.cs",
-              "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\ServiceTests\\LocatarioServiceTests.cs",
-              "RelativeDocumentMoniker": "ServiceTests\\LocatarioServiceTests.cs",
-              "ToolTip": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\ServiceTests\\LocatarioServiceTests.cs",
-              "RelativeToolTip": "ServiceTests\\LocatarioServiceTests.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkCAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-30T02:16:44.336Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PagamentoDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\DTO\\PagamentoDTO.cs",
-              "RelativeDocumentMoniker": "Core\\DTO\\PagamentoDTO.cs",
-              "ToolTip": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\DTO\\PagamentoDTO.cs*",
-              "RelativeToolTip": "Core\\DTO\\PagamentoDTO.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-30T00:36:05.716Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 51,
               "Title": "LocatarioViewModelValidationTests.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWebTests\\LocatarioViewModelValidationTests.cs",
               "RelativeDocumentMoniker": "AlugueLinkWebTests\\LocatarioViewModelValidationTests.cs",
               "ToolTip": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWebTests\\LocatarioViewModelValidationTests.cs",
               "RelativeToolTip": "AlugueLinkWebTests\\LocatarioViewModelValidationTests.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUCAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAPgBAAAAAAAAAIBZwP0BAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-30T02:20:54.715Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 50,
               "Title": "LocatarioControllerTests.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWebTests\\LocatarioControllerTests.cs",
               "RelativeDocumentMoniker": "AlugueLinkWebTests\\LocatarioControllerTests.cs",
@@ -282,7 +282,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 49,
               "Title": "LocatarioIntegrationTests.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkIntegrationTests\\LocatarioIntegrationTests.cs",
               "RelativeDocumentMoniker": "AlugueLinkIntegrationTests\\LocatarioIntegrationTests.cs",
@@ -295,7 +295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 48,
               "Title": "CustomWebApplicationFactory.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkIntegrationTests\\CustomWebApplicationFactory.cs",
               "RelativeDocumentMoniker": "AlugueLinkIntegrationTests\\CustomWebApplicationFactory.cs",
@@ -308,7 +308,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 47,
               "Title": "AlugueLinkIntegrationTests.csproj",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkIntegrationTests\\AlugueLinkIntegrationTests.csproj",
               "RelativeDocumentMoniker": "AlugueLinkIntegrationTests\\AlugueLinkIntegrationTests.csproj",
@@ -321,7 +321,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "ManutencaoDTO.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\DTO\\ManutencaoDTO.cs",
               "RelativeDocumentMoniker": "Core\\DTO\\ManutencaoDTO.cs",
@@ -333,7 +333,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 37,
               "Title": "AluguelDTO.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\DTO\\AluguelDTO.cs",
               "RelativeDocumentMoniker": "Core\\DTO\\AluguelDTO.cs",
@@ -345,7 +345,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 36,
               "Title": "ImovelMapper.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Mappers\\ImovelMapper.cs",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Mappers\\ImovelMapper.cs",
@@ -357,7 +357,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Home\\Index.cshtml",
@@ -369,7 +369,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Locatario.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Locatario.cs",
               "RelativeDocumentMoniker": "Core\\Locatario.cs",
@@ -381,7 +381,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 43,
               "Title": "Startup.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Startup.cs",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Startup.cs",
@@ -393,7 +393,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 42,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Locatario\\Delete.cshtml",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Locatario\\Delete.cshtml",
@@ -405,7 +405,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 41,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Locatario\\Details.cshtml",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Locatario\\Details.cshtml",
@@ -417,7 +417,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 40,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Locatario\\Edit.cshtml",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Locatario\\Edit.cshtml",
@@ -429,7 +429,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 39,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Locatario\\Create.cshtml",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Locatario\\Create.cshtml",
@@ -441,7 +441,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 38,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Locatario\\Index.cshtml",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Locatario\\Index.cshtml",
@@ -453,7 +453,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 44,
               "Title": "ImovelControllerTests.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWebTests\\ImovelControllerTests.cs",
               "RelativeDocumentMoniker": "AlugueLinkWebTests\\ImovelControllerTests.cs",
@@ -465,7 +465,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 35,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Index.cshtml",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Index.cshtml",
@@ -477,7 +477,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 34,
               "Title": "logo.svg",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\wwwroot\\images\\logo.svg",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\wwwroot\\images\\logo.svg",
@@ -489,7 +489,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 33,
               "Title": "site.css",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\wwwroot\\css\\site.css",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\wwwroot\\css\\site.css",
@@ -501,7 +501,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 32,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Shared\\_Layout.cshtml",
@@ -513,7 +513,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Edit.cshtml",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Edit.cshtml",
@@ -525,7 +525,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Create.cshtml",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Create.cshtml",
@@ -537,7 +537,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Locador.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Locador.cs",
               "RelativeDocumentMoniker": "Core\\Locador.cs",
@@ -549,7 +549,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 45,
               "Title": "ImovelViewModelValidationTests.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWebTests\\ImovelViewModelValidationTests.cs",
               "RelativeDocumentMoniker": "AlugueLinkWebTests\\ImovelViewModelValidationTests.cs",
@@ -561,7 +561,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 46,
               "Title": "ImovelMapperTests.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWebTests\\ImovelMapperTests.cs",
               "RelativeDocumentMoniker": "AlugueLinkWebTests\\ImovelMapperTests.cs",
@@ -573,7 +573,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "Pagamento.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Pagamento.cs",
               "RelativeDocumentMoniker": "Core\\Pagamento.cs",
@@ -585,7 +585,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "Manutencao.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Manutencao.cs",
               "RelativeDocumentMoniker": "Core\\Manutencao.cs",
@@ -597,7 +597,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "Aluguel.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Aluguel.cs",
               "RelativeDocumentMoniker": "Core\\Aluguel.cs",
@@ -609,7 +609,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "Imovel.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Imovel.cs",
               "RelativeDocumentMoniker": "Core\\Imovel.cs",
@@ -621,7 +621,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 28,
               "Title": "Locatario.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\Core\\Models\\Locatario.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\AlugueLink\\Codigo\\Core\\Models\\Locatario.cs",
@@ -633,7 +633,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 29,
               "Title": "Pagamento.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\Core\\Models\\Pagamento.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\AlugueLink\\Codigo\\Core\\Models\\Pagamento.cs",
@@ -645,7 +645,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 30,
               "Title": "Imovel.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\Core\\Models\\Imovel.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\AlugueLink\\Codigo\\Core\\Models\\Imovel.cs",
@@ -657,7 +657,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 31,
               "Title": "Aluguel.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\AlugueLink\\Codigo\\Core\\Models\\Aluguel.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\AlugueLink\\Codigo\\Core\\Models\\Aluguel.cs",
@@ -669,7 +669,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 27,
               "Title": "AluguelinkContext.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\AluguelinkContext.cs",
               "RelativeDocumentMoniker": "Core\\AluguelinkContext.cs",
@@ -681,7 +681,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "LocatarioDTO.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\DTO\\LocatarioDTO.cs",
               "RelativeDocumentMoniker": "Core\\DTO\\LocatarioDTO.cs",
@@ -693,7 +693,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 26,
               "Title": "Service.csproj",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Service\\Service.csproj",
               "RelativeDocumentMoniker": "Service\\Service.csproj",
@@ -705,7 +705,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "ImovelServiceTests.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\ServiceTests\\ImovelServiceTests.cs",
               "RelativeDocumentMoniker": "ServiceTests\\ImovelServiceTests.cs",
@@ -717,7 +717,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 25,
               "Title": "ServiceTests.csproj",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\ServiceTests\\ServiceTests.csproj",
               "RelativeDocumentMoniker": "ServiceTests\\ServiceTests.csproj",
@@ -729,7 +729,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\appsettings.json",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\appsettings.json",
@@ -741,7 +741,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 24,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\_ViewImports.cshtml",
@@ -753,7 +753,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "ImovelViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Models\\ImovelViewModel.cs",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Models\\ImovelViewModel.cs",
@@ -765,7 +765,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Views\\Imovel\\Details.cshtml",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Views\\Imovel\\Details.cshtml",
@@ -777,7 +777,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "AlugueLinkWEB.csproj",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\AlugueLinkWEB.csproj",
@@ -789,7 +789,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": ".gitkeep",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\Mappers\\.gitkeep",
               "RelativeDocumentMoniker": "AlugueLinkWEB\\Mappers\\.gitkeep",
@@ -801,7 +801,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": ".gitkeep",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Service\\.gitkeep",
               "RelativeDocumentMoniker": "Core\\Service\\.gitkeep",
@@ -813,7 +813,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": ".gitkeep",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\DTO\\.gitkeep",
               "RelativeDocumentMoniker": "Core\\DTO\\.gitkeep",
@@ -825,7 +825,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "Core.csproj",
               "DocumentMoniker": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj",
               "RelativeDocumentMoniker": "Core\\Core.csproj",
@@ -837,7 +837,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "UsuarioLoginDTO.cs",
               "DocumentMoniker": "C:\\Users\\Dede\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\UsuarioLoginDTO.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\Desktop\\AlugueLink\\Codigo\\Core\\DTO\\UsuarioLoginDTO.cs",
