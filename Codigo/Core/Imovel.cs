@@ -7,6 +7,8 @@ public partial class Imovel
 {
     public int Id { get; set; }
 
+    public int IdLocador { get; set; }
+
     public string Cep { get; set; } = null!;
 
     public string Logradouro { get; set; } = null!;
@@ -34,8 +36,6 @@ public partial class Imovel
     public decimal Valor { get; set; }
 
     public string Descricao { get; set; } = null!;
-
-    public int IdLocador { get; set; }
 
     public virtual ICollection<Aluguel> Aluguels { get; set; } = new List<Aluguel>();
 

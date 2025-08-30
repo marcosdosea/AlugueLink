@@ -9,15 +9,18 @@ public partial class Manutencao
 
     public string Descricao { get; set; } = null!;
 
-    public DateOnly DataSolicitacao { get; set; }
+    public DateTime DataSolicitacao { get; set; }
 
-    public string? Status { get; set; }
+    /// <summary>
+    /// P - PEDIDO REALIZADO
+    /// A - ATENDIDA
+    /// C - CANCELADA
+    /// </summary>
+    public string Status { get; set; } = null!;
 
     public decimal Valor { get; set; }
 
-    public int IdImovel { get; set; }
+    public int Idimovel { get; set; }
 
-    public int IdLocador { get; set; }
-
-    public virtual Imovel Imovel { get; set; } = null!;
+    public virtual Imovel IdimovelNavigation { get; set; } = null!;
 }

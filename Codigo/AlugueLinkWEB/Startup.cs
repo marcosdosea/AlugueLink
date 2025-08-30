@@ -41,6 +41,7 @@ namespace AlugueLinkWEB
 
             
             services.AddScoped<IImovelService, ImovelService>();
+            services.AddScoped<ILocatarioService, LocatarioService>();
         }
 
         

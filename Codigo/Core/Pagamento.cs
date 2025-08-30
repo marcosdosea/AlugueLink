@@ -9,9 +9,11 @@ public partial class Pagamento
 
     public decimal Valor { get; set; }
 
-    public DateOnly DataPagamento { get; set; }
+    public DateTime DataPagamento { get; set; }
 
     public string TipoPagamento { get; set; } = null!;
 
-    public int IdAluguel { get; set; }
+    public int Idaluguel { get; set; }
+
+    public virtual Aluguel IdaluguelNavigation { get; set; } = null!;
 }

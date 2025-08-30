@@ -1,0 +1,125 @@
+@model AlugueLinkWEB.Models.LocatarioViewModel
+
+@{
+    ViewData["Title"] = "Detalhes do Locatário";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>@ViewData["Title"]</h2>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+            <i class="fas fa-edit"></i> Editar
+        </a>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <!-- Dados Pessoais -->
+        <div class="mb-4">
+            <h5 class="border-bottom pb-2"><i class="fas fa-user"></i> Dados Pessoais</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Nome):</strong>
+                    <p class="mb-0">@Html.DisplayFor(model => model.Nome)</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Email):</strong>
+                    <p class="mb-0">
+                        <a href="mailto:@Model.Email">@Html.DisplayFor(model => model.Email)</a>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Cpf):</strong>
+                    <p class="mb-0">@Html.DisplayFor(model => model.Cpf)</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Telefone1):</strong>
+                    <p class="mb-0">
+                        <a href="tel:@Model.Telefone1">@Html.DisplayFor(model => model.Telefone1)</a>
+                    </p>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.Telefone2))
+                {
+                    <div class="col-md-4 mb-3">
+                        <strong>@Html.DisplayNameFor(model => model.Telefone2):</strong>
+                        <p class="mb-0">
+                            <a href="tel:@Model.Telefone2">@Html.DisplayFor(model => model.Telefone2)</a>
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Endereço -->
+        <div class="mb-4">
+            <h5 class="border-bottom pb-2"><i class="fas fa-map-marker-alt"></i> Endereço</h5>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Cep):</strong>
+                    <p class="mb-0">@Html.DisplayFor(model => model.Cep)</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Logradouro):</strong>
+                    <p class="mb-0">@Html.DisplayFor(model => model.Logradouro)</p>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Numero):</strong>
+                    <p class="mb-0">@Html.DisplayFor(model => model.Numero)</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                @if (!string.IsNullOrWhiteSpace(Model.Complemento))
+                {
+                    <div class="col-md-3 mb-3">
+                        <strong>@Html.DisplayNameFor(model => model.Complemento):</strong>
+                        <p class="mb-0">@Html.DisplayFor(model => model.Complemento)</p>
+                    </div>
+                }
+                <div class="col-md-4 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Bairro):</strong>
+                    <p class="mb-0">@Html.DisplayFor(model => model.Bairro)</p>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Cidade):</strong>
+                    <p class="mb-0">@Html.DisplayFor(model => model.Cidade)</p>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Estado):</strong>
+                    <p class="mb-0">@Html.DisplayFor(model => model.Estado)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informações Adicionais -->
+        @if (!string.IsNullOrWhiteSpace(Model.Profissao) || Model.Renda.HasValue)
+        {
+            <div class="mb-4">
+                <h5 class="border-bottom pb-2"><i class="fas fa-info-circle"></i> Informações Adicionais</h5>
+                <div class="row">
+                    @if (!string.IsNullOrWhiteSpace(Model.Profissao))
+                    {
+                        <div class="col-md-6 mb-3">
+                            <strong>@Html.DisplayNameFor(model => model.Profissao):</strong>
+                            <p class="mb-0">@Html.DisplayFor(model => model.Profissao)</p>
+                        </div>
+                    }
+                    @if (Model.Renda.HasValue)
+                    {
+                        <div class="col-md-6 mb-3">
+                            <strong>@Html.DisplayNameFor(model => model.Renda):</strong>
+                            <p class="mb-0">@Html.DisplayFor(model => model.Renda, "{0:C}")</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

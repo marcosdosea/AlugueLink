@@ -68,6 +68,92 @@ body{margin:0;background:var(--bg);color:var(--text);}
   100% { transform: scale(1); }
 }
 
+/* Form sections */
+.form-section {
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.form-section h5 {
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-section h5 i {
+  color: var(--primary);
+  width: 20px;
+  text-align: center;
+}
+
+/* Locatario specific styles */
+.locatario-form .form-label {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.locatario-form .form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem rgba(17, 17, 17, 0.25);
+}
+
+.locatario-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: var(--text);
+  border-bottom: 2px solid var(--border);
+}
+
+.locatario-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.locatario-details .detail-section {
+  margin-bottom: 2rem;
+}
+
+.locatario-details .detail-section h5 {
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.locatario-details .detail-section h5 i {
+  color: var(--primary);
+  width: 20px;
+  text-align: center;
+}
+
+.locatario-details .detail-item {
+  margin-bottom: 1rem;
+}
+
+.locatario-details .detail-item strong {
+  display: block;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.locatario-details .detail-item p {
+  color: var(--muted);
+  margin: 0;
+}
+
 /* Property Cards */
 .property-card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;

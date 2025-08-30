@@ -15,13 +15,13 @@ public partial class Aluguel
 
     public DateOnly DataAssinatura { get; set; }
 
-    public int IdLocatario { get; set; }
+    public int Idlocatario { get; set; }
 
-    public int IdImovel { get; set; }
+    public int Idimovel { get; set; }
 
-    public int IdLocador { get; set; }
+    public virtual Imovel IdimovelNavigation { get; set; } = null!;
 
-    public virtual Locatario IdLocatarioNavigation { get; set; } = null!;
+    public virtual Locatario IdlocatarioNavigation { get; set; } = null!;
 
-    public virtual Imovel Imovel { get; set; } = null!;
+    public virtual ICollection<Pagamento> Pagamentos { get; set; } = new List<Pagamento>();
 }
