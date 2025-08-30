@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj": {}
+    "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj": {
+    "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
+        "projectUniqueName": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
         "projectName": "AlugueLinkWEB",
-        "projectPath": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
-        "packagesPath": "C:\\Users\\Eduardo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\AlugueLinkWEB\\obj\\",
+        "projectPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
+        "packagesPath": "C:\\Users\\Dede\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Eduardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dede\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,17 +26,17 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\AlugueLink\\AlugueLink": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\Core\\Core.csproj"
+              "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj"
               },
-              "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\Service\\Service.csproj": {
-                "projectPath": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\Service\\Service.csproj"
+              "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Service\\Service.csproj": {
+                "projectPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Service\\Service.csproj"
               }
             }
           }
@@ -109,20 +109,20 @@
         }
       }
     },
-    "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\Core\\Core.csproj": {
+    "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\Eduardo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\Core\\obj\\",
+        "projectPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\Dede\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Eduardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dede\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -131,7 +131,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\AlugueLink\\AlugueLink": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
@@ -208,20 +208,20 @@
         }
       }
     },
-    "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\Service\\Service.csproj": {
+    "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Service\\Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\Service\\Service.csproj",
+        "projectUniqueName": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Service\\Service.csproj",
         "projectName": "Service",
-        "projectPath": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\Service\\Service.csproj",
-        "packagesPath": "C:\\Users\\Eduardo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\92\\AlugueLink\\Codigo\\Service\\obj\\",
+        "projectPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Service\\Service.csproj",
+        "packagesPath": "C:\\Users\\Dede\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Eduardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dede\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -230,7 +230,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\AlugueLink\\AlugueLink": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
