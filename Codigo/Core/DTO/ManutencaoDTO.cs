@@ -4,10 +4,9 @@ namespace Core.DTO
     {
         public int Id { get; set; }
         public string Descricao { get; set; } = string.Empty;
-        public DateOnly DataSolicitacao { get; set; }
-        public string? Status { get; set; }
+        public DateTime DataSolicitacao { get; set; }
+        public string Status { get; set; } = string.Empty;
         public decimal Valor { get; set; }
-        public int IdImovel { get; set; }
-        public int IdLocador { get; set; }
+        public int Idimovel { get; set; }
     }
 }

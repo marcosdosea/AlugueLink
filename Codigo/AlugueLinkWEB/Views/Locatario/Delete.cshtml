@@ -1,0 +1,61 @@
+@model AlugueLinkWEB.Models.LocatarioViewModel
+
+@{
+    ViewData["Title"] = "Excluir Locatário";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-danger">@ViewData["Title"]</h2>
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Voltar
+    </a>
+</div>
+
+<div class="alert alert-warning">
+    <i class="fas fa-exclamation-triangle"></i>
+    <strong>Atenção!</strong> Esta ação não pode ser desfeita. Tem certeza de que deseja excluir este locatário?
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <!-- Dados Pessoais -->
+        <div class="mb-4">
+            <h5 class="border-bottom pb-2"><i class="fas fa-user"></i> Dados do Locatário</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Nome):</strong>
+                    <p class="mb-0">@Html.DisplayFor(model => model.Nome)</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Email):</strong>
+                    <p class="mb-0">@Html.DisplayFor(model => model.Email)</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Cpf):</strong>
+                    <p class="mb-0">@Html.DisplayFor(model => model.Cpf)</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Telefone1):</strong>
+                    <p class="mb-0">@Html.DisplayFor(model => model.Telefone1)</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <strong>@Html.DisplayNameFor(model => model.Cidade):</strong>
+                    <p class="mb-0">@Html.DisplayFor(model => model.Cidade) - @Html.DisplayFor(model => model.Estado)</p>
+                </div>
+            </div>
+        </div>
+
+        <form asp-action="Delete" method="post">
+            <input asp-for="Id" type="hidden" />
+            <div class="d-flex justify-content-end gap-2">
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Confirmar Exclusão
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -87,9 +87,9 @@ namespace ServiceTests
             Assert.Equal(imovelDto.Descricao, resultado.Descricao);
             Assert.Equal(imovelDto.IdLocador, resultado.IdLocador);
 
-            // Verificar se foi salvo no banco (chave composta)
+            // Verificar se foi salvo no banco (chave simples agora)
             var imovelNoBanco = await _context.Imovels
-                .Where(i => i.Id == resultado.Id && i.IdLocador == resultado.IdLocador)
+                .Where(i => i.Id == resultado.Id)
                 .FirstOrDefaultAsync();
             Assert.NotNull(imovelNoBanco);
             Assert.Equal(resultado.Id, imovelNoBanco.Id);
@@ -136,7 +136,7 @@ namespace ServiceTests
 
             // Verificar se foi salvo no banco (usar Where em vez de Find para chave composta)
             var imovelNoBanco = await _context.Imovels
-                .Where(i => i.Id == resultado.Id && i.IdLocador == resultado.IdLocador)
+                .Where(i => i.Id == resultado.Id)
                 .FirstOrDefaultAsync();
             Assert.NotNull(imovelNoBanco);
         }
@@ -172,7 +172,7 @@ namespace ServiceTests
             Assert.Equal(tipoImovel, resultado.Tipo);
             
             var imovelNoBanco = await _context.Imovels
-                .Where(i => i.Id == resultado.Id && i.IdLocador == resultado.IdLocador)
+                .Where(i => i.Id == resultado.Id)
                 .FirstOrDefaultAsync();
             Assert.Equal(tipoImovel, imovelNoBanco?.Tipo);
         }
@@ -206,7 +206,7 @@ namespace ServiceTests
             Assert.Equal(1234.56m, resultado.Valor);
             
             var imovelNoBanco = await _context.Imovels
-                .Where(i => i.Id == resultado.Id && i.IdLocador == resultado.IdLocador)
+                .Where(i => i.Id == resultado.Id)
                 .FirstOrDefaultAsync();
             Assert.Equal(45.75m, imovelNoBanco?.Area);
             Assert.Equal(1234.56m, imovelNoBanco?.Valor);
@@ -244,7 +244,7 @@ namespace ServiceTests
             Assert.True(resultado.Id > 0);
             
             var imovelNoBanco = await _context.Imovels
-                .Where(i => i.Id == resultado.Id && i.IdLocador == resultado.IdLocador)
+                .Where(i => i.Id == resultado.Id)
                 .FirstOrDefaultAsync();
             Assert.NotNull(imovelNoBanco);
             Assert.Equal(0, imovelNoBanco.VagasGaragem); // Valor padrão
@@ -392,7 +392,7 @@ namespace ServiceTests
 
             // Verificar no banco
             var imovelNoBanco = await _context.Imovels
-                .Where(i => i.Id == criado.Id && i.IdLocador == criado.IdLocador)
+                .Where(i => i.Id == criado.Id)
                 .FirstOrDefaultAsync();
             Assert.NotNull(imovelNoBanco);
             Assert.Equal("Rio de Janeiro", imovelNoBanco.Cidade);
@@ -442,7 +442,7 @@ namespace ServiceTests
 
             // Verificar se foi removido do banco
             var imovelNoBanco = await _context.Imovels
-                .Where(i => i.Id == criado.Id && i.IdLocador == criado.IdLocador)
+                .Where(i => i.Id == criado.Id)
                 .FirstOrDefaultAsync();
             Assert.Null(imovelNoBanco);
         }

@@ -60,9 +60,14 @@ namespace AlugueLinkWEB.Mappers
         {
             return tipoDb switch
             {
+                // Current database enum values
                 "C" => "Casa",
                 "A" => "Apartamento",
                 "PC" => "Comercial",
+                // Support for full word values if they exist
+                "casa" => "Casa",
+                "apartamento" => "Apartamento", 
+                "comercial" => "Comercial",
                 _ => tipoDb
             };
         }
