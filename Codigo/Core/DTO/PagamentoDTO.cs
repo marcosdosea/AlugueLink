@@ -9,3 +9,4 @@ namespace Core.DTO
         public int Idaluguel { get; set; }
     }
 }
+// atualizadao em 
