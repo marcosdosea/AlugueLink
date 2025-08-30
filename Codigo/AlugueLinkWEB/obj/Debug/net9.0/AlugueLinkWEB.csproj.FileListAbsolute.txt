@@ -779,5 +779,4 @@ C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\
 C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\AlugueLinkWEB.genruntimeconfig.cache
 C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\ref\AlugueLinkWEB.dll
 C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\compressed\ir7kwxwz2w-k900laicpr.gz
-C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\Dede\Documents\GitHub\AlugueLink\Codigo\AlugueLinkWEB\obj\Debug\net9.0\compressed\o3drsszp6y-6plsxmfgdw.gz
