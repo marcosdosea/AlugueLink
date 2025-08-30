@@ -8028,23 +8028,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Dede\\.nuget\\packages\\": {},
+    "C:\\Users\\Eduardo\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
+      "projectUniqueName": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\103\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
       "projectName": "AlugueLinkWEB",
-      "projectPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
-      "packagesPath": "C:\\Users\\Dede\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\AlugueLinkWEB\\obj\\",
+      "projectPath": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\103\\AlugueLink\\Codigo\\AlugueLinkWEB\\AlugueLinkWEB.csproj",
+      "packagesPath": "C:\\Users\\Eduardo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\103\\AlugueLink\\Codigo\\AlugueLinkWEB\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Dede\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Eduardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -8053,17 +8053,17 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\AlugueLink\\AlugueLink": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj": {
-              "projectPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Core\\Core.csproj"
+            "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\103\\AlugueLink\\Codigo\\Core\\Core.csproj": {
+              "projectPath": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\103\\AlugueLink\\Codigo\\Core\\Core.csproj"
             },
-            "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Service\\Service.csproj": {
-              "projectPath": "C:\\Users\\Dede\\Documents\\GitHub\\AlugueLink\\Codigo\\Service\\Service.csproj"
+            "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\103\\AlugueLink\\Codigo\\Service\\Service.csproj": {
+              "projectPath": "C:\\Users\\Eduardo\\Desktop\\Período 2025.1\\ES II\\103\\AlugueLink\\Codigo\\Service\\Service.csproj"
             }
           }
         }
@@ -8135,5 +8135,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Ocorreu um erro ao obter os dados de vulnerabilidade do pacote: Referência de objeto não definida para uma instância de um objeto."
+    }
+  ]
 }
