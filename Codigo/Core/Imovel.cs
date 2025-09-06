@@ -7,7 +7,7 @@ public partial class Imovel
 {
     public int Id { get; set; }
 
-    public int IdLocador { get; set; }
+    public int IdLocador { get; set; } // obrigatório novamente
 
     public string Cep { get; set; } = null!;
 
@@ -39,7 +39,7 @@ public partial class Imovel
 
     public virtual ICollection<Aluguel> Aluguels { get; set; } = new List<Aluguel>();
 
-    public virtual Locador IdLocadorNavigation { get; set; } = null!;
+    public virtual Locador IdLocadorNavigation { get; set; } = null!; // obrigatório
 
     public virtual ICollection<Manutencao> Manutencaos { get; set; } = new List<Manutencao>();
 }

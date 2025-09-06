@@ -4,10 +4,14 @@ namespace Core.Service
 {
     public interface IImovelService
     {
-        Task<IEnumerable<ImovelDTO>> GetAllAsync();
-        Task<ImovelDTO?> GetByIdAsync(int id);
-        Task<ImovelDTO> CreateAsync(ImovelDTO imovelDto);
-        Task<ImovelDTO?> UpdateAsync(int id, ImovelDTO imovelDto);
-        Task<bool> DeleteAsync(int id);
+        int Create(Imovel imovel);
+        void Edit(Imovel imovel);
+        void Delete(int id);
+        Imovel? Get(int id);
+        IEnumerable<Imovel> GetAll(int page, int pageSize);
+        IEnumerable<ImovelDTO> GetByLocador(int idLocador);
+        IEnumerable<ImovelDTO> GetByTipo(string tipo);
+        IEnumerable<ImovelDTO> GetByValorRange(decimal valorMin, decimal valorMax);
+        int GetCount();
     }
 }
