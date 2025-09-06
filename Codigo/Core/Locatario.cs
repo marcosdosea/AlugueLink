@@ -13,7 +13,7 @@ public partial class Locatario
 
     public string Telefone1 { get; set; } = null!;
 
-    public string Telefone2 { get; set; } = null!;
+    public string Telefone2 { get; set; } = null!; // obrigatório novamente
 
     public string Cpf { get; set; } = null!;
 

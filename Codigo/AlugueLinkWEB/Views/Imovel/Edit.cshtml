@@ -124,13 +124,6 @@
                             <input asp-for="Valor" class="form-control" type="text" required oninput="formatDecimalInput(this)" data-decimal-field="true" />
                             <span asp-validation-for="Valor" class="text-danger"></span>
                         </div>
-                        <div class="col-md-6">
-                            <label asp-for="LocadorId" class="form-label">Locador <span class="required">*</span></label>
-                            <select asp-for="LocadorId" class="form-select" asp-items="ViewBag.LocadorId" required>
-                                <option value="">Selecione um locador...</option>
-                            </select>
-                            <span asp-validation-for="LocadorId" class="text-danger"></span>
-                        </div>
                         <div class="col-12">
                             <label asp-for="Descricao" class="form-label">Características</label>
                             <textarea asp-for="Descricao" class="form-control" rows="4" placeholder="Descreva as características do imóvel"></textarea>

@@ -1,4 +1,0 @@
-﻿@using AlugueLinkWEB
-@using AlugueLinkWEB.Models
-@using Core.DTO
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

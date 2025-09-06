@@ -1,62 +1,48 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using AlugueLinkWEB.Models;
-using AlugueLinkWEB.Mappers;
-using Core.Service;
+using AutoMapper;
 using Core;
-using Microsoft.EntityFrameworkCore;
+using Core.Service;
+using AlugueLinkWEB.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AlugueLinkWEB.Controllers
 {
     public class ImovelController : Controller
     {
-        private readonly IImovelService _imovelService;
-        private readonly AluguelinkContext _context;
+        private readonly IImovelService imovelService;
+        private readonly ILocadorService locadorService;
+        private readonly IMapper mapper;
 
-        public ImovelController(IImovelService imovelService, AluguelinkContext context)
+        public ImovelController(IImovelService imovelService, ILocadorService locadorService, IMapper mapper)
         {
-            _imovelService = imovelService;
-            _context = context;
+            this.imovelService = imovelService;
+            this.locadorService = locadorService;
+            this.mapper = mapper;
         }
 
         // GET: Imovel
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int page = 1, int pageSize = 10)
         {
-            var imoveisDto = await _imovelService.GetAllAsync();
-            var imoveisViewModel = ImovelMapper.ToViewModelList(imoveisDto);
+            var imoveis = imovelService.GetAll(page, pageSize);
+            var viewModels = mapper.Map<IEnumerable<ImovelViewModel>>(imoveis);
 
-            // Carrega os nomes dos locadores para exibição
-            var locadores = await _context.Locadors.ToListAsync();
-            foreach (var imovel in imoveisViewModel)
-            {
-                var locador = locadores.FirstOrDefault(l => l.Id == imovel.LocadorId);
-                imovel.LocadorNome = locador?.Nome;
-            }
+            ViewBag.TotalItems = imovelService.GetCount();
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
 
-            return View(imoveisViewModel);
+            return View(viewModels);
         }
 
         // GET: Imovel/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
+            var imovel = imovelService.Get(id);
+            if (imovel == null)
             {
                 return NotFound();
             }
 
-            var imovelDto = await _imovelService.GetByIdAsync(id.Value);
-            if (imovelDto == null)
-            {
-                return NotFound();
-            }
-
-            var imovelViewModel = ImovelMapper.ToViewModel(imovelDto);
-            
-            // Carrega o nome do locador para exibição
-            var locador = await _context.Locadors.FindAsync(imovelViewModel.LocadorId);
-            imovelViewModel.LocadorNome = locador?.Nome;
-
-            return View(imovelViewModel);
+            var viewModel = mapper.Map<ImovelViewModel>(imovel);
+            return View(viewModel);
         }
 
         // GET: Imovel/Create
@@ -68,25 +54,19 @@ namespace AlugueLinkWEB.Controllers
         // POST: Imovel/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ImovelViewModel imovelViewModel)
+        public IActionResult Create(ImovelViewModel viewModel)
         {
-            // Garantir que existe pelo menos um locador
-            var locadorId = await EnsureLocadorExists();
-            if (locadorId == 0)
-            {
-                ModelState.AddModelError("", "Erro ao configurar locador padrão no sistema.");
-                return View(imovelViewModel);
-            }
-
-            // Definir o LocadorId
-            imovelViewModel.LocadorId = locadorId;
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var imovelDto = ImovelMapper.ToDTO(imovelViewModel);
-                    await _imovelService.CreateAsync(imovelDto);
+                    if (viewModel.LocadorId == null || viewModel.LocadorId == 0)
+                    {
+                        viewModel.LocadorId = 1; // locador padrão
+                    }
+                    var imovel = mapper.Map<Imovel>(viewModel);
+                    imovelService.Create(imovel);
+                    TempData["SuccessMessage"] = "Imóvel criado com sucesso!";
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
@@ -94,35 +74,28 @@ namespace AlugueLinkWEB.Controllers
                     ModelState.AddModelError("", "Erro ao salvar o imóvel: " + ex.Message);
                 }
             }
-
-            return View(imovelViewModel);
+            return View(viewModel);
         }
 
         // GET: Imovel/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
+            var imovel = imovelService.Get(id);
+            if (imovel == null)
             {
                 return NotFound();
             }
 
-            var imovelDto = await _imovelService.GetByIdAsync(id.Value);
-            if (imovelDto == null)
-            {
-                return NotFound();
-            }
-
-            var imovelViewModel = ImovelMapper.ToViewModel(imovelDto);
-            await PopulateLocadoresDropDownList(imovelViewModel.LocadorId);
-            return View(imovelViewModel);
+            var viewModel = mapper.Map<ImovelViewModel>(imovel);
+            return View(viewModel);
         }
 
         // POST: Imovel/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ImovelViewModel imovelViewModel)
+        public IActionResult Edit(int id, ImovelViewModel viewModel)
         {
-            if (id != imovelViewModel.Id)
+            if (id != viewModel.Id)
             {
                 return NotFound();
             }
@@ -131,105 +104,46 @@ namespace AlugueLinkWEB.Controllers
             {
                 try
                 {
-                    var imovelDto = ImovelMapper.ToDTO(imovelViewModel);
-                    var result = await _imovelService.UpdateAsync(id, imovelDto);
-                    if (result == null)
+                    if (viewModel.LocadorId == null || viewModel.LocadorId == 0)
                     {
-                        return NotFound();
+                        viewModel.LocadorId = 1;
                     }
+                    var imovel = mapper.Map<Imovel>(viewModel);
+                    imovelService.Edit(imovel);
+                    TempData["SuccessMessage"] = "Imóvel atualizado com sucesso!";
                     return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception ex)
                 {
-                    var exists = await _imovelService.GetByIdAsync(id);
-                    if (exists == null)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    ModelState.AddModelError("", "Erro ao atualizar o imóvel: " + ex.Message);
                 }
             }
-
-            await PopulateLocadoresDropDownList(imovelViewModel.LocadorId);
-            return View(imovelViewModel);
+            return View(viewModel);
         }
 
         // GET: Imovel/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null)
+            var imovel = imovelService.Get(id);
+            if (imovel == null)
             {
                 return NotFound();
             }
 
-            var imovelDto = await _imovelService.GetByIdAsync(id.Value);
-            if (imovelDto == null)
-            {
-                return NotFound();
-            }
-
-            var imovelViewModel = ImovelMapper.ToViewModel(imovelDto);
-            
-            // Carrega o nome do locador para exibição
-            var locador = await _context.Locadors.FindAsync(imovelViewModel.LocadorId);
-            imovelViewModel.LocadorNome = locador?.Nome;
-
-            return View(imovelViewModel);
+            var viewModel = mapper.Map<ImovelViewModel>(imovel);
+            return View(viewModel);
         }
 
         // POST: Imovel/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var result = await _imovelService.DeleteAsync(id);
-            if (!result)
-            {
-                return NotFound();
-            }
+            imovelService.Delete(id);
+            TempData["SuccessMessage"] = "Imóvel excluído com sucesso!";
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task PopulateLocadoresDropDownList(object? selectedLocador = null)
-        {
-            var locadores = await _context.Locadors
-                .OrderBy(l => l.Nome)
-                .Select(l => new { l.Id, l.Nome })
-                .ToListAsync();
-
-            ViewBag.LocadorId = new SelectList(locadores, "Id", "Nome", selectedLocador);
-        }
-
-        private async Task<int> EnsureLocadorExists()
-        {
-            var locadorExistente = await _context.Locadors.FirstOrDefaultAsync();
-            if (locadorExistente != null)
-            {
-                return locadorExistente.Id;
-            }
-
-            try
-            {
-                var locadorPadrao = new Locador
-                {
-                    Nome = "Locador Padrão",
-                    Email = "padrao@aluguelink.com",
-                    Cpf = "00000000000",
-                    Telefone = "00000000000"
-                };
-
-                _context.Locadors.Add(locadorPadrao);
-                await _context.SaveChangesAsync();
-
-                return locadorPadrao.Id;
-            }
-            catch (Exception)
-            {
-                return 0;
-            }
-        }
+        private bool PopulateLocadoresDropDownList(object? selectedLocador = null) => true; // método legacy mantido por compatibilidade
     }
 }

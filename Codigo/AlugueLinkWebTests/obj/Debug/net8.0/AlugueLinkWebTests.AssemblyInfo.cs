@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AlugueLinkWebTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0adeead8750764535373cc052f54a203b5f04b4c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+18d65c6d5cdeef961d94e7f67a0eec3b1c2ab155")]
 [assembly: System.Reflection.AssemblyProductAttribute("AlugueLinkWebTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AlugueLinkWebTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

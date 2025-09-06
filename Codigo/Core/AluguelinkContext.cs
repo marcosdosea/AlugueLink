@@ -30,10 +30,8 @@ public partial class AluguelinkContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=Carira1010!;database=aluguelink", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.41-mysql"));
-        }
+        // Removido hardcode da connection string
+        // A configuração agora vem do appsettings.json via DI
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

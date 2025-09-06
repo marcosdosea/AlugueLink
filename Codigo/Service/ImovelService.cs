@@ -1,0 +1,224 @@
+using Core.DTO;
+using Core;
+using Core.Service;
+using Microsoft.EntityFrameworkCore;
+
+namespace Service
+{
+    public class ImovelService : IImovelService
+    {
+        private readonly AluguelinkContext _context;
+
+        public ImovelService(AluguelinkContext context)
+        {
+            _context = context;
+        }
+
+        /// <summary>
+        /// Criar um novo imóvel na base de dados
+        /// </summary>
+        /// <param name="imovel">Dados do Imóvel</param>
+        /// <returns>ID do Imóvel</returns>
+        public int Create(Imovel imovel)
+        {
+            // Se nenhum locador foi informado (0), atribui locador padrão (ex: 1)
+            if (imovel.IdLocador == 0)
+            {
+                // Verificar se locador padrão existe; se não, criar um mínimo
+                var padrao = _context.Locadors.FirstOrDefault(l => l.Id == 1);
+                if (padrao == null)
+                {
+                    padrao = new Locador
+                    {
+                        Id = 1,
+                        Nome = "Locador Padrão",
+                        Email = "locador@padrao.com",
+                        Telefone = "0000000000",
+                        Cpf = "00000000000"
+                    };
+                    _context.Locadors.Add(padrao);
+                    _context.SaveChanges();
+                }
+                imovel.IdLocador = padrao.Id;
+            }
+            _context.Imovels.Add(imovel);
+            _context.SaveChanges();
+            return imovel.Id;
+        }
+
+        /// <summary>
+        /// Editar um imóvel existente na base de dados
+        /// </summary>
+        /// <param name="imovel">Dados do Imóvel</param>
+        public void Edit(Imovel imovel)
+        {
+            if (imovel.IdLocador == 0)
+            {
+                var padrao = _context.Locadors.FirstOrDefault(l => l.Id == 1) ?? new Locador
+                {
+                    Id = 1,
+                    Nome = "Locador Padrão",
+                    Email = "locador@padrao.com",
+                    Telefone = "0000000000",
+                    Cpf = "00000000000"
+                };
+                if (padrao.Id == 0)
+                {
+                    _context.Locadors.Add(padrao);
+                    _context.SaveChanges();
+                }
+                imovel.IdLocador = padrao.Id;
+            }
+            _context.Imovels.Update(imovel);
+            _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Deletar um imóvel da base de dados
+        /// </summary>
+        /// <param name="id">ID do Imóvel</param>
+        public void Delete(int id)
+        {
+            var imovel = _context.Imovels.Find(id);
+            if (imovel != null)
+            {
+                _context.Imovels.Remove(imovel);
+                _context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Buscar um imóvel na base de dados
+        /// </summary>
+        /// <param name="id">ID do Imóvel</param>
+        /// <returns>Dados do Imóvel</returns>
+        public Imovel? Get(int id)
+        {
+            return _context.Imovels
+                .Include(i => i.IdLocadorNavigation)
+                .FirstOrDefault(i => i.Id == id);
+        }
+
+        /// <summary>
+        /// Buscar todos os imóveis na base de dados com paginação
+        /// </summary>
+        /// <param name="page">Página</param>
+        /// <param name="pageSize">Tamanho da página</param>
+        /// <returns>Lista de Imóveis</returns>
+        public IEnumerable<Imovel> GetAll(int page, int pageSize)
+        {
+            return _context.Imovels
+                .Include(i => i.IdLocadorNavigation)
+                .OrderBy(i => i.Id)
+                .AsNoTracking()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
+        }
+
+        /// <summary>
+        /// Buscar imóveis por locador
+        /// </summary>
+        /// <param name="idLocador">ID do locador</param>
+        /// <returns>Lista de ImovelDTO</returns>
+        public IEnumerable<ImovelDTO> GetByLocador(int idLocador)
+        {
+            return _context.Imovels
+                .Include(i => i.IdLocadorNavigation)
+                .Where(i => i.IdLocador == idLocador)
+                .AsNoTracking()
+                .Select(i => new ImovelDTO
+                {
+                    Id = i.Id,
+                    Cep = i.Cep,
+                    Logradouro = i.Logradouro,
+                    Numero = i.Numero,
+                    Complemento = i.Complemento,
+                    Bairro = i.Bairro,
+                    Cidade = i.Cidade,
+                    Estado = i.Estado,
+                    Tipo = i.Tipo,
+                    Quartos = i.Quartos,
+                    Banheiros = i.Banheiros,
+                    Area = i.Area,
+                    VagasGaragem = i.VagasGaragem,
+                    Valor = i.Valor,
+                    Descricao = i.Descricao,
+                    IdLocador = i.IdLocador
+                });
+        }
+
+        /// <summary>
+        /// Buscar imóveis por tipo
+        /// </summary>
+        /// <param name="tipo">Tipo do imóvel</param>
+        /// <returns>Lista de ImovelDTO</returns>
+        public IEnumerable<ImovelDTO> GetByTipo(string tipo)
+        {
+            return _context.Imovels
+                .Include(i => i.IdLocadorNavigation)
+                .Where(i => i.Tipo == tipo)
+                .AsNoTracking()
+                .Select(i => new ImovelDTO
+                {
+                    Id = i.Id,
+                    Cep = i.Cep,
+                    Logradouro = i.Logradouro,
+                    Numero = i.Numero,
+                    Complemento = i.Complemento,
+                    Bairro = i.Bairro,
+                    Cidade = i.Cidade,
+                    Estado = i.Estado,
+                    Tipo = i.Tipo,
+                    Quartos = i.Quartos,
+                    Banheiros = i.Banheiros,
+                    Area = i.Area,
+                    VagasGaragem = i.VagasGaragem,
+                    Valor = i.Valor,
+                    Descricao = i.Descricao,
+                    IdLocador = i.IdLocador
+                });
+        }
+
+        /// <summary>
+        /// Buscar imóveis por faixa de valor
+        /// </summary>
+        /// <param name="valorMin">Valor mínimo</param>
+        /// <param name="valorMax">Valor máximo</param>
+        /// <returns>Lista de ImovelDTO</returns>
+        public IEnumerable<ImovelDTO> GetByValorRange(decimal valorMin, decimal valorMax)
+        {
+            return _context.Imovels
+                .Include(i => i.IdLocadorNavigation)
+                .Where(i => i.Valor >= valorMin && i.Valor <= valorMax)
+                .AsNoTracking()
+                .Select(i => new ImovelDTO
+                {
+                    Id = i.Id,
+                    Cep = i.Cep,
+                    Logradouro = i.Logradouro,
+                    Numero = i.Numero,
+                    Complemento = i.Complemento,
+                    Bairro = i.Bairro,
+                    Cidade = i.Cidade,
+                    Estado = i.Estado,
+                    Tipo = i.Tipo,
+                    Quartos = i.Quartos,
+                    Banheiros = i.Banheiros,
+                    Area = i.Area,
+                    VagasGaragem = i.VagasGaragem,
+                    Valor = i.Valor,
+                    Descricao = i.Descricao,
+                    IdLocador = i.IdLocador
+                });
+        }
+
+        /// <summary>
+        /// Contar total de imóveis
+        /// </summary>
+        /// <returns>Número total de imóveis</returns>
+        public int GetCount()
+        {
+            return _context.Imovels.Count();
+        }
+    }
+}

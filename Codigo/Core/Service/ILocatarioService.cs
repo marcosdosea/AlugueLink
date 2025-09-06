@@ -4,10 +4,13 @@ namespace Core.Service
 {
     public interface ILocatarioService
     {
-        Task<IEnumerable<LocatarioDTO>> GetAllAsync();
-        Task<LocatarioDTO?> GetByIdAsync(int id);
-        Task<LocatarioDTO> CreateAsync(LocatarioDTO locatarioDto);
-        Task<LocatarioDTO?> UpdateAsync(int id, LocatarioDTO locatarioDto);
-        Task<bool> DeleteAsync(int id);
+        int Create(Locatario locatario);
+        void Edit(Locatario locatario);
+        void Delete(int id);
+        Locatario? Get(int id);
+        IEnumerable<Locatario> GetAll(int page, int pageSize);
+        IEnumerable<LocatarioDTO> GetByCpf(string cpf);
+        IEnumerable<LocatarioDTO> GetByNome(string nome);
+        int GetCount();
     }
 }

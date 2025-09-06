@@ -47,7 +47,7 @@ namespace AlugueLinkWEB.Mappers
                 VagasGaragem = viewModel.VagasGaragem,
                 Valor = viewModel.Valor,
                 Descricao = viewModel.Descricao,
-                IdLocador = viewModel.LocadorId
+                IdLocador = (viewModel.LocadorId ?? 1) // garante padrão
             };
         }
 

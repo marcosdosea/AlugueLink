@@ -1,9 +1,0 @@
-﻿@{
-    ViewData["Title"] = "Início";
-}
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title mb-3">Bem-vindo ao AlugueLink</h5>
-    <p class="text-muted mb-0">Use a barra lateral para acessar Cadastrar Imóvel e Meus Imóveis.</p>
-  </div>
-</div>

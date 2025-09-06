@@ -73,8 +73,7 @@ namespace AlugueLinkWEB.Models
         public string? Descricao { get; set; }
 
         [Display(Name = "Locador")]
-        [Required(ErrorMessage = "Locador é obrigatório")]
-        public int LocadorId { get; set; }
+        public int? LocadorId { get; set; } // deixamos opcional na view; backend atribui padrão
 
         public string? LocadorNome { get; set; }
     }

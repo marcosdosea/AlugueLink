@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlugueLinkWebTests", "AlugueLinkWebTests\AlugueLinkWebTests.csproj", "{B002CA09-340C-42BC-8ED6-8BB1EF09638C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util", "Util\Util.csproj", "{63B9B0DA-515E-444B-84A9-73D6595ABB10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{B002CA09-340C-42BC-8ED6-8BB1EF09638C}.Release|x64.Build.0 = Release|Any CPU
 		{B002CA09-340C-42BC-8ED6-8BB1EF09638C}.Release|x86.ActiveCfg = Release|Any CPU
 		{B002CA09-340C-42BC-8ED6-8BB1EF09638C}.Release|x86.Build.0 = Release|Any CPU
+		{63B9B0DA-515E-444B-84A9-73D6595ABB10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63B9B0DA-515E-444B-84A9-73D6595ABB10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63B9B0DA-515E-444B-84A9-73D6595ABB10}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{63B9B0DA-515E-444B-84A9-73D6595ABB10}.Debug|x64.Build.0 = Debug|Any CPU
+		{63B9B0DA-515E-444B-84A9-73D6595ABB10}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{63B9B0DA-515E-444B-84A9-73D6595ABB10}.Debug|x86.Build.0 = Debug|Any CPU
+		{63B9B0DA-515E-444B-84A9-73D6595ABB10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63B9B0DA-515E-444B-84A9-73D6595ABB10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63B9B0DA-515E-444B-84A9-73D6595ABB10}.Release|x64.ActiveCfg = Release|Any CPU
+		{63B9B0DA-515E-444B-84A9-73D6595ABB10}.Release|x64.Build.0 = Release|Any CPU
+		{63B9B0DA-515E-444B-84A9-73D6595ABB10}.Release|x86.ActiveCfg = Release|Any CPU
+		{63B9B0DA-515E-444B-84A9-73D6595ABB10}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
