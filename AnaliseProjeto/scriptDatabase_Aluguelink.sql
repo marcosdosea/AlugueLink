@@ -117,12 +117,12 @@ CREATE TABLE IF NOT EXISTS `aluguelink`.`locatariolocador` (
   INDEX `fk_locatariolocador_locatario1_idx` (`idlocatario` ASC) VISIBLE,
   CONSTRAINT `fk_locatariolocador_locador1`
     FOREIGN KEY (`idlocador`)
-    REFERENCES `aluguellink`.`locador` (`id`)
+    REFERENCES `aluguelink`.`locador` (`id`)
     ON DELETE RESTRICT
     ON UPDATE RESTRICT,
   CONSTRAINT `fk_locatariolocador_locatario1`
     FOREIGN KEY (`idlocatario`)
-    REFERENCES `aluguellink`.`locatario` (`id`)
+    REFERENCES `aluguelink`.`locatario` (`id`)
     ON DELETE RESTRICT
     ON UPDATE RESTRICT)
 ENGINE = InnoDB
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `aluguelink`.`manutencao` (
   INDEX `fk_manutencao_imovel1_idx` (`idImovel` ASC, `idLocador` ASC) VISIBLE,
   CONSTRAINT `fk_manutencao_imovel1`
     FOREIGN KEY (`idImovel` , `idLocador`)
-    REFERENCES `aluguellink`.`imovel` (`id` , `idLocador`))
+    REFERENCES `aluguelink`.`imovel` (`id` , `idLocador`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_ci;
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `aluguelink`.`pagamento` (
   INDEX `fk_pagamento_aluguel1_idx` (`idAluguel` ASC) VISIBLE,
   CONSTRAINT `fk_pagamento_aluguel1`
     FOREIGN KEY (`idAluguel`)
-    REFERENCES `aluguellink`.`aluguel` (`id`))
+    REFERENCES `aluguelink`.`aluguel` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_unicode_ci;
@@ -175,22 +175,22 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- =====================================================
--- Bloco adicional: Criação do banco de Identity (IdentityUsers)
+-- Bloco adicional: Criaï¿½ï¿½o do banco de Identity (IdentityUsers)
 -- =====================================================
 
--- Garantir charset padrão
+-- Garantir charset padrï¿½o
 SET NAMES utf8mb4;
 SET CHARACTER SET utf8mb4;
 SET collation_connection = 'utf8mb4_unicode_ci';
 
--- Criar database IdentityUsers se não existir
+-- Criar database IdentityUsers se nï¿½o existir
 CREATE DATABASE IF NOT EXISTS IdentityUsers
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
 USE IdentityUsers;
 
--- Tabela de papéis (roles)
+-- Tabela de papï¿½is (roles)
 CREATE TABLE IF NOT EXISTS `AspNetRoles` (
   `Id` varchar(255) NOT NULL,
   `Name` varchar(256) NULL,
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `AspNetRoles` (
   UNIQUE KEY `RoleNameIndex` (`NormalizedName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tabela de usuários
+-- Tabela de usuï¿½rios
 CREATE TABLE IF NOT EXISTS `AspNetUsers` (
   `Id` varchar(255) NOT NULL,
   `UserName` varchar(256) NULL,
@@ -239,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `AspNetRoleClaims` (
     FOREIGN KEY (`RoleId`) REFERENCES `AspNetRoles` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Claims de Usuários
+-- Claims de Usuï¿½rios
 CREATE TABLE IF NOT EXISTS `AspNetUserClaims` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `UserId` varchar(255) NOT NULL,
@@ -263,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `AspNetUserLogins` (
     FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Relação Usuário-Role
+-- Relaï¿½ï¿½o Usuï¿½rio-Role
 CREATE TABLE IF NOT EXISTS `AspNetUserRoles` (
   `UserId` varchar(255) NOT NULL,
   `RoleId` varchar(255) NOT NULL,
@@ -275,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `AspNetUserRoles` (
     FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tokens de usuário
+-- Tokens de usuï¿½rio
 CREATE TABLE IF NOT EXISTS `AspNetUserTokens` (
   `UserId` varchar(255) NOT NULL,
   `LoginProvider` varchar(128) NOT NULL,
@@ -286,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `AspNetUserTokens` (
     FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Histórico de migrações do EF (marcando como aplicadas)
+-- Histï¿½rico de migraï¿½ï¿½es do EF (marcando como aplicadas)
 CREATE TABLE IF NOT EXISTS `__EFMigrationsHistory` (
   `MigrationId` varchar(150) NOT NULL,
   `ProductVersion` varchar(32) NOT NULL,
@@ -298,9 +298,9 @@ INSERT IGNORE INTO `__EFMigrationsHistory` (`MigrationId`,`ProductVersion`) VALU
  ('20250908231347_AddUserProfileFields','8.0.18'),
  ('20250908234117_RemoveTipoUsuario','8.0.18');
 
--- (Opcional) Usuário seed (descomentando exige hash válido de senha)
+-- (Opcional) Usuï¿½rio seed (descomentando exige hash vï¿½lido de senha)
 -- INSERT INTO AspNetUsers (Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, Ativo, DataCadastro, NomeCompleto)
 -- VALUES ('seed-user-1', 'admin', 'ADMIN', 'admin@aluguelink.com', 'ADMIN@ALUGUELINK.COM', 1, '<HASH_AQUI>', UUID(), UUID(), 0, 0, 0, 0, 1, NOW(6), 'Administrador');
 
--- Retorna ao banco principal se desejar continuar operações nele
+-- Retorna ao banco principal se desejar continuar operaï¿½ï¿½es nele
 USE aluguelink;
