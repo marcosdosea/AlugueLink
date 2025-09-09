@@ -14,6 +14,34 @@ namespace Service
             _context = context;
         }
 
+        private int EnsureLocador(int idLocador)
+        {
+            // Se veio um Id informado e existe, retorna
+            if (idLocador > 0)
+            {
+                if (_context.Locadors.Any(l => l.Id == idLocador))
+                    return idLocador;
+                throw new InvalidOperationException($"Locador informado (ID={idLocador}) não existe.");
+            }
+
+            // Tentar pegar qualquer locador existente
+            var existente = _context.Locadors.AsNoTracking().FirstOrDefault();
+            if (existente != null)
+                return existente.Id;
+
+            // Criar locador padrão
+            var padrao = new Locador
+            {
+                Nome = "Locador Padrão",
+                Email = $"locador.padrao@aluguelink.com",
+                Telefone = "11999999999",
+                Cpf = DateTime.UtcNow.Ticks.ToString().PadLeft(11, '0').Substring(0,11) // gera cpf dummy único
+            };
+            _context.Locadors.Add(padrao);
+            _context.SaveChanges();
+            return padrao.Id;
+        }
+
         /// <summary>
         /// Criar um novo imóvel na base de dados
         /// </summary>
@@ -21,26 +49,7 @@ namespace Service
         /// <returns>ID do Imóvel</returns>
         public int Create(Imovel imovel)
         {
-            // Se nenhum locador foi informado (0), atribui locador padrão (ex: 1)
-            if (imovel.IdLocador == 0)
-            {
-                // Verificar se locador padrão existe; se não, criar um mínimo
-                var padrao = _context.Locadors.FirstOrDefault(l => l.Id == 1);
-                if (padrao == null)
-                {
-                    padrao = new Locador
-                    {
-                        Id = 1,
-                        Nome = "Locador Padrão",
-                        Email = "locador@padrao.com",
-                        Telefone = "0000000000",
-                        Cpf = "00000000000"
-                    };
-                    _context.Locadors.Add(padrao);
-                    _context.SaveChanges();
-                }
-                imovel.IdLocador = padrao.Id;
-            }
+            imovel.IdLocador = EnsureLocador(imovel.IdLocador);
             _context.Imovels.Add(imovel);
             _context.SaveChanges();
             return imovel.Id;
@@ -52,23 +61,7 @@ namespace Service
         /// <param name="imovel">Dados do Imóvel</param>
         public void Edit(Imovel imovel)
         {
-            if (imovel.IdLocador == 0)
-            {
-                var padrao = _context.Locadors.FirstOrDefault(l => l.Id == 1) ?? new Locador
-                {
-                    Id = 1,
-                    Nome = "Locador Padrão",
-                    Email = "locador@padrao.com",
-                    Telefone = "0000000000",
-                    Cpf = "00000000000"
-                };
-                if (padrao.Id == 0)
-                {
-                    _context.Locadors.Add(padrao);
-                    _context.SaveChanges();
-                }
-                imovel.IdLocador = padrao.Id;
-            }
+            imovel.IdLocador = EnsureLocador(imovel.IdLocador);
             _context.Imovels.Update(imovel);
             _context.SaveChanges();
         }

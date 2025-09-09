@@ -1,159 +1,85 @@
 # Instruções de configuração e execução — AlugueLinkWEB
 
-Este documento descreve os passos para configurar e executar este repositório localmente.
+Este documento descreve os passos mínimos para configurar e executar este repositório localmente. O objetivo é deixar o projeto pronto para um novo usuário com o menor número de passos possíveis.
 
-Premissas do cenário informado:
-- Existe um banco `aluguelink` (base principal) — pode ser criado a partir de um arquivo .mwb ou manualmente.
-- A configuração padrão no projeto usa usuário `root` e senha `123456` para MySQL; ajuste se necessário.
-
-> Observação: as configurações de conexão estão em `AlugueLinkWEB/appsettings.json` (por padrão apontam para `localhost:3306`, usuário `root` e senha `123456`).
+Premissas e convenções usadas neste repositório:
+- O script SQL completo de criação do banco está em: sql/scriptDatabase_Aluguelink.sql — ele cria o schema `aluguelink` e também o schema `IdentityUsers` com as tabelas do ASP.NET Identity prontas para uso.
+- A configuração padrão usa MySQL em `localhost:3306` com usuário `root` e senha `123456`. Se o seu ambiente for diferente, ajuste `AlugueLinkWEB/appsettings.json` antes de executar.
+- **Este projeto NÃO usa migrations** - apenas o script SQL como fonte única da verdade do banco.
 
 ---
 
-## 1) Pré-requisitos (instalar se necessário)
+## 1) Pré-requisitos
 - .NET 8 SDK: https://dotnet.microsoft.com/download
-- MySQL Server (rodando localmente) e cliente (MySQL Workbench opcional)
-- dotnet-ef tool (caso não tenha):
-
-  Windows / macOS / Linux:
-  ```bash
-  dotnet tool install --global dotnet-ef
-  ```
-
-  Ou atualizar:
-  ```bash
-  dotnet tool update --global dotnet-ef
-  ```
-
-- (Opcional) Visual Studio 2022 / VS Code com C#
+- MySQL Server (rodando localmente) e cliente (MySQL Workbench recomendado)
 
 ---
 
-## 2) Abrir o projeto
-Abra a pasta do repositório no terminal ou na IDE. Exemplo de caminho local:
-```bash
-cd C:\Projetos\AlugueLink\Codigo
-```
+## 2) Preparar o banco (passo único obrigatório)
+1. Abra o MySQL Workbench (ou outro cliente) conectado ao seu servidor MySQL (padrão: localhost:3306, usuário: root, senha: 123456).
+2. Abra o arquivo `sql/scriptDatabase_Aluguelink.sql` e execute-o. Este script irá:
+   - Criar o schema `aluguelink` e todas as tabelas necessárias pela aplicação (locador, imovel, locatario, aluguel, manutencao, pagamento, etc.).
+   - Criar o schema `IdentityUsers` com as tabelas do ASP.NET Identity completas.
+   - Inserir dados iniciais necessários e deixar o banco pronto para uso.
+
+**?? IMPORTANTE: Este é o único método suportado para criação do banco. Migrations foram removidas do projeto.**
 
 ---
 
-## 3) Restaurar pacotes
-```bash
-dotnet restore
-```
+## 3) Ajustar connection strings (se necessário)
+Abra `AlugueLinkWEB/appsettings.json` e verifique as connection strings:
 
----
-
-## 4) Criar o banco do Identity (se ainda não existir)
-O projeto usa um banco separado para Identity chamado `IdentityUsers`.
-No MySQL execute:
-
-```sql
-CREATE DATABASE IF NOT EXISTS IdentityUsers CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
-
-> Se já existir, apenas confirme que as credenciais e host em `appsettings.json` batem com a instalação do MySQL.
-
----
-
-## 5) Verificar / ajustar ConnectionStrings (opcional)
-Abra `AlugueLinkWEB/appsettings.json` e confirme as connection strings:
 ```json
 "ConnectionStrings": {
   "AluguelinkDatabase": "server=localhost;port=3306;user=root;password=123456;database=aluguelink",
   "IdentityDatabase": "server=localhost;port=3306;user=root;password=123456;database=IdentityUsers"
 }
 ```
-Substitua `123456` se a senha do MySQL for diferente.
+
+Altere `user`/`password`/`server` se o seu MySQL não usar as credenciais padrão.
 
 ---
 
-## 6) Aplicar migrações / criar esquema do Identity
-Navegue para o projeto web e execute as migrações:
+## 4) Build e execução
+No terminal, a partir da pasta raiz do repositório (`Codigo`):
 
 ```bash
 cd AlugueLinkWEB
-
-# Aplicar migrações existentes para o contexto Identity
-dotnet ef database update --context IdentityContext
-```
-
-- Se o repositório já contém migrações, esse comando criará as tabelas do Identity (`AspNetUsers`, `AspNetRoles`, etc.).
-- Se não houver migrações no repositório, crie uma migração e aplique (apenas se necessário):
-
-```bash
-# criar migração (gera arquivos em Migrations/ para IdentityContext)
-dotnet ef migrations add InitialIdentityCreate --context IdentityContext
-# aplicar
-dotnet ef database update --context IdentityContext
-```
-
----
-
-## 7) Aplicar migrações / criar esquema do banco principal (Aluguelink)
-Se o banco `aluguelink` já existe e contém esquema (por exemplo vindo de um .mwb), talvez não seja necessário aplicar migrações; caso queira garantir que as tabelas usadas pelo projeto existam, execute:
-
-```bash
-# aplicar migrações para o contexto principal
-dotnet ef database update --context AluguelinkContext
-```
-
-Se não houver migrações no repositório, pode ser preciso gerar uma migração `InitialAluguelinkCreate` e rodá-la (opcional).
-
----
-
-## 8) Build e execução
-```bash
-# a partir da pasta AlugueLinkWEB
-dotnet build
-dotnet run
-```
-A aplicação abrirá em `https://localhost:5001` (ou `http://localhost:5000`).
-
----
-
-## 9) Testes rápidos
-- Abra o browser em `https://localhost:5001`.
-- Na landing page: clique em **Criar Conta Grátis** e registre um usuário.
-- Faça login com o usuário criado.
-- Verifique que a sidebar aparece e o dashboard funciona.
-
----
-
-## 10) Observações sobre SMTP / envio de email
-- O arquivo `appsettings.json` inclui seção `Smtp` com credenciais para envio de email. No repositório essas credenciais são placeholders (`no-reply@aluguelink.com`, `change_me`).
-- Para desenvolvimento, não é obrigatório configurar SMTP — o sistema aceita registros sem confirmação se a aplicação estiver configurada assim (ver `Program.cs`).
-- Se quiser ativar envio real, use credenciais reais (ou variáveis de ambiente / user-secrets) e atualize `appsettings.json`.
-
----
-
-## 11) Solução de problemas comuns
-- Erro de conexão MySQL: verifique se o serviço MySQL está rodando e credenciais em `appsettings.json`.
-- Comando `dotnet ef` não encontrado: instale `dotnet-ef` globalmente (veja seção 1).
-- Migration exception: confira permissões do usuário MySQL (GRANT) e charset/collation do banco.
-
----
-
-## 12) Resumo dos comandos (rápido)
-```bash
-# 1. Restore
 dotnet restore
-
-# 2. Criar banco Identity (se necessário) - no MySQL
-# CREATE DATABASE IdentityUsers ...
-
-# 3. Aplicar migrações Identity
-cd AlugueLinkWEB
-dotnet ef database update --context IdentityContext
-
-# 4. Aplicar migrações do banco principal (opcional)
-dotnet ef database update --context AluguelinkContext
-
-# 5. Build e run
 dotnet build
 dotnet run
 ```
 
+A aplicação estará disponível em `https://localhost:5001` (ou `http://localhost:5000`).
+
 ---
+
+## 5) Acesso inicial
+- Um usuário administrador é criado automaticamente durante a inicialização da aplicação (se não existir).
+- Credenciais padrão configuradas em `appsettings.json` para facilitar testes:
+  - Email: `admin@aluguelink.com`
+  - Senha: `Admin1234!`
+
+Se desejar alterar essas credenciais, edite a seção `AdminUser` em `AlugueLinkWEB/appsettings.json` antes de rodar a aplicação.
+
+---
+
+## Solução de problemas rápidos
+- Erro de conexão MySQL: verifique se o serviço MySQL está rodando e as credenciais em `appsettings.json`.
+- Script SQL falha com erros de permissão: verifique se o usuário MySQL tem permissões para criar bases e tabelas (GRANT).
+- Usuário admin não aparece: confira os logs da aplicação; o seeding de dados tenta criar a role `Administrator` e o usuário admin se necessário.
+
+---
+
+## Resumo rápido (fluxo obrigatório)
+1. Executar `sql/scriptDatabase_Aluguelink.sql` no MySQL Workbench (usuário root / senha 123456)
+2. cd AlugueLinkWEB
+3. dotnet restore
+4. dotnet build
+5. dotnet run
+
+**Nota:** Migrations foram removidas - use apenas o script SQL.
+
+
 
 
