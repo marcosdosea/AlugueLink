@@ -1,0 +1,123 @@
+@using Microsoft.AspNetCore.Identity
+@using AlugueLinkWEB.Areas.Identity.Data
+
+@inject SignInManager<UsuarioIdentity> SignInManager
+@inject UserManager<UsuarioIdentity> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var displayName = user?.NomeCompleto ?? UserManager.GetUserName(User);
+    var isAuthenticated = SignInManager.IsSignedIn(User);
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty;
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? string.Empty;
+    var area = (ViewContext.RouteData.Values["area"] ?? string.Empty).ToString();
+    var path = Context.Request.Path.ToString().ToLowerInvariant();
+}
+
+@if (isAuthenticated)
+{
+    <div class="d-flex align-items-center">
+        <div class="dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user-circle me-2"></i>
+                <span>Olá, @(displayName?.Split(' ').FirstOrDefault() ?? "Usuário")</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+                <li>
+                    <a class="dropdown-item" asp-controller="Account" asp-action="Profile">
+                        <i class="fas fa-user me-2"></i>Meu Perfil
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
+                        <i class="fas fa-cog me-2"></i>Configurações
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post">
+                        <button type="submit" class="dropdown-item text-danger">
+                            <i class="fas fa-sign-out-alt me-2"></i>Sair
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    @* Hide topbar buttons on Home landing and on Identity login/register pages to avoid duplication *@
+    var onHomeLanding = string.Equals(currentController, "Home", StringComparison.OrdinalIgnoreCase) && string.Equals(currentAction, "Index", StringComparison.OrdinalIgnoreCase);
+    var onIdentityAuthPage = path.StartsWith("/identity/account/login") || path.StartsWith("/identity/account/register") || path.StartsWith("/identity/account/registerconfirmation");
+
+    if (!onHomeLanding && !onIdentityAuthPage)
+    {
+        <div class="d-flex gap-2">
+            <a class="btn btn-outline-dark btn-sm" asp-area="Identity" asp-page="/Account/Login">
+                <i class="fas fa-sign-in-alt me-1"></i>Entrar
+            </a>
+            <a class="btn btn-primary btn-sm" asp-area="Identity" asp-page="/Account/Register">
+                <i class="fas fa-user-plus me-1"></i>Registrar
+            </a>
+        </div>
+    }
+}
+
+<style>
+    .dropdown-menu {
+        border: none;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        border-radius: 0.5rem;
+    }
+    
+    .dropdown-item {
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        margin: 0.125rem;
+    }
+    
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .dropdown-item.text-danger:hover {
+        background-color: #f8d7da;
+        color: #721c24 !important;
+    }
+    
+    /* Dark mode styles */
+    body.dark-mode .btn-outline-dark {
+        border-color: #ffffff;
+        color: #ffffff;
+    }
+    
+    body.dark-mode .btn-outline-dark:hover {
+        background-color: #ffffff;
+        color: #000000;
+    }
+    
+    body.dark-mode .btn-outline-primary {
+        border-color: #ffffff;
+        color: #ffffff;
+    }
+    
+    body.dark-mode .btn-outline-primary:hover {
+        background-color: #ffffff;
+        color: #000000;
+    }
+    
+    body.dark-mode .dropdown-menu {
+        background-color: #1e1e1e;
+        border: 1px solid #333;
+    }
+    
+    body.dark-mode .dropdown-item {
+        color: #eaeaea;
+    }
+    
+    body.dark-mode .dropdown-item:hover {
+        background-color: #333;
+        color: #fff;
+    }
+</style>

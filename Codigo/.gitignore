@@ -1,6 +1,26 @@
-# .NET Core
-bin/
-obj/
+# Visual Studio
 .vs/
-*.suo
 *.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# Pacotes
+*.nupkg
+*.snupkg
+
+# Logs
+*.log
+
+# Configurações locais
+*.local

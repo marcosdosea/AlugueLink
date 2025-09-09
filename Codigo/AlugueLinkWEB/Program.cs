@@ -4,6 +4,13 @@ using AlugueLinkWEB.Filter;
 using Microsoft.EntityFrameworkCore;
 using Service;
 using System.Globalization;
+using AlugueLinkWEB.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using AlugueLinkWEB.Helpers;
 
 namespace AlugueLinkWEB
 {
@@ -13,17 +20,41 @@ namespace AlugueLinkWEB
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Configura��o de cultura para suportar v�rgula como separador decimal
+            // Configuração de cultura para suportar vírgula como separador decimal
             var cultureInfo = new CultureInfo("pt-BR");
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
+            // Configuração de autorização global
             builder.Services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<CustomExceptionFilter>();
+                options.Filters.Add<CustomAuthorizationFilter>();
+                
+                // Política de autorização global - requer autenticação por padrão
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
             });
 
-            // Services - seguindo padr�o do CuidaPet com Transient
+            // Configuração de autorização
+            builder.Services.AddAuthorization(options =>
+            {
+                // Política padrão - usuário autenticado
+                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+
+                // Política para administradores (futura expansão)
+                options.AddPolicy("AdminOnly", policy =>
+                    policy.RequireRole("Administrator"));
+
+                // Política para usuários proprietários (futura expansão)
+                options.AddPolicy("OwnerOnly", policy =>
+                    policy.RequireClaim("UserType", "Owner"));
+            });
+
             builder.Services.AddTransient<ILocatarioService, LocatarioService>();
             builder.Services.AddTransient<IImovelService, ImovelService>();
             builder.Services.AddTransient<ILocadorService, LocadorService>();
@@ -31,15 +62,75 @@ namespace AlugueLinkWEB
             builder.Services.AddTransient<IPagamentoService, PagamentoService>();
             builder.Services.AddTransient<IManutencaoService, ManutencaoService>();
 
-            // AutoMapper
+            // configuração do envio de emails para o usuário
+            builder.Services.AddTransient<Microsoft.AspNetCore.Identity.UI.Services.IEmailSender, EmailSender>();
+            builder.Services.AddTransient<Core.Service.IEmailSender>(provider => 
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                return new EmailService(
+                    configuration["Smtp:Host"]!,
+                    int.Parse(configuration["Smtp:Port"]!),
+                    configuration["Smtp:Username"]!,
+                    configuration["Smtp:Password"]!,
+                    configuration["Smtp:From"]!
+                );
+            });
+
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            // Database
             builder.Services.AddDbContext<AluguelinkContext>(
-                options => options.UseMySql(
-                    builder.Configuration.GetConnectionString("AluguelinkDatabase"),
-                    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("AluguelinkDatabase"))
-                ));
+                options => options.UseMySQL(builder.Configuration.GetConnectionString("AluguelinkDatabase")!));
+
+            builder.Services.AddDbContext<IdentityContext>(
+                options => options.UseMySQL(builder.Configuration.GetConnectionString("IdentityDatabase")!));
+
+            builder.Services.AddDefaultIdentity<UsuarioIdentity>(options =>
+            {
+                // SignIn Settings - configurações mais seguras
+                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+
+                // Password settings - políticas de senha mais robustas
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 1;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+
+                // Lockout settings - proteção contra ataques de força bruta
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+            }).AddEntityFrameworkStores<IdentityContext>();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.SlidingExpiration = true;
+                options.Cookie.Name = "AlugueLinkAuthCookie";
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+                options.Cookie.SameSite = SameSiteMode.Lax;
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+            });
+
+            // Configurações de segurança adicionais
+            builder.Services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
+                options.Cookie.Name = "__RequestVerificationToken";
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+            });
 
             var app = builder.Build();
 
@@ -48,11 +139,10 @@ namespace AlugueLinkWEB
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-
                 app.UseHsts();
             }
 
-            // Configurar localiza��o
+            // Configurar localização
             var supportedCultures = new[] { "pt-BR" };
             var localizationOptions = new RequestLocalizationOptions()
                 .SetDefaultCulture(supportedCultures[0])
@@ -66,7 +156,10 @@ namespace AlugueLinkWEB
 
             app.UseRouting();
 
+            app.UseAuthentication();    
             app.UseAuthorization();
+
+            app.MapRazorPages();
 
             app.MapControllerRoute(
                 name: "default",

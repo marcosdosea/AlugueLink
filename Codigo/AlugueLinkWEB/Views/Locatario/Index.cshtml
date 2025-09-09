@@ -32,7 +32,7 @@
         @if (Model.Any())
         {
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped locatario-table">
                     <thead>
                         <tr>
                             <th>@Html.DisplayNameFor(model => model.Nome)</th>
@@ -85,3 +85,49 @@
         }
     </div>
 </div>
+
+<style>
+    /* Ensure tenant table text contrasts correctly in dark and light themes */
+    /* Table header background should match surface in both themes */
+    .locatario-table thead th {
+        background-color: var(--color-surface) !important;
+        color: var(--color-text) !important;
+        border-bottom: 2px solid var(--color-border) !important;
+    }
+
+    body.dark-mode .locatario-table thead th {
+        background-color: var(--color-surface-alt) !important;
+        color: #ffffff !important;
+        border-bottom: 2px solid rgba(255,255,255,0.06) !important;
+    }
+
+    /* Table body text color */
+    body.dark-mode .locatario-table th,
+    body.dark-mode .locatario-table td {
+        color: #ffffff !important;
+        border-color: rgba(255,255,255,0.06) !important;
+    }
+
+    body:not(.dark-mode) .locatario-table th,
+    body:not(.dark-mode) .locatario-table td {
+        color: #000000 !important;
+        border-color: rgba(0,0,0,0.1) !important;
+    }
+
+    /* Override Bootstrap striped row backgrounds to match theme */
+    .locatario-table.table-striped tbody tr:nth-of-type(odd) {
+        background-color: transparent !important;
+    }
+
+    body.dark-mode .locatario-table.table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(255,255,255,0.015) !important;
+    }
+
+    body:not(.dark-mode) .locatario-table.table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0,0,0,0.02) !important;
+    }
+
+    /* Keep action buttons visible in both themes */
+    .locatario-table .btn-outline-info { color: var(--color-info) !important; border-color: var(--color-info) !important; }
+    body.dark-mode .locatario-table .btn-outline-info { color: #9ad1ff !important; border-color: #2c8bd6 !important; }
+</style>

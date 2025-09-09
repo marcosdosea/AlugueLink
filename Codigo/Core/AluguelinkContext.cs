@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
 namespace Core;
 
@@ -30,15 +29,13 @@ public partial class AluguelinkContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // Removido hardcode da connection string
-        // A configuração agora vem do appsettings.json via DI
+       
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
-            .UseCollation("utf8mb4_unicode_ci")
-            .HasCharSet("utf8mb4");
+            .UseCollation("utf8mb4_unicode_ci");
 
         modelBuilder.Entity<Aluguel>(entity =>
         {
