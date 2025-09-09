@@ -1,22 +1,50 @@
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using AlugueLinkWEB.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+using Core.Service;
 
 namespace AlugueLinkWEB.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> logger;
+        private readonly ILogger<HomeController> _logger;
+        private readonly IImovelService _imovelService;
+        private readonly ILocatarioService _locatarioService;
+        private readonly IAluguelService _aluguelService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,
+            IImovelService imovelService,
+            ILocatarioService locatarioService,
+            IAluguelService aluguelService)
         {
-            this.logger = logger;
+            _logger = logger;
+            _imovelService = imovelService;
+            _locatarioService = locatarioService;
+            _aluguelService = aluguelService;
         }
 
         [AllowAnonymous]
         public IActionResult Index()
         {
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                // Calcular estatísticas para usuários logados
+                var totalImoveis = _imovelService.GetCount();
+                var totalLocatarios = _locatarioService.GetCount();
+                var imoveisAlugados = _aluguelService.GetImoveisIndisponiveis().Count();
+                var locatariosOcupados = _aluguelService.GetLocatariosOcupados().Count();
+                var totalAlugueis = _aluguelService.GetCount();
+
+                ViewBag.TotalImoveis = totalImoveis;
+                ViewBag.ImoveisAlugados = imoveisAlugados;
+                ViewBag.ImoveisDisponiveis = totalImoveis - imoveisAlugados;
+                ViewBag.TotalLocatarios = totalLocatarios;
+                ViewBag.LocatariosOcupados = locatariosOcupados;
+                ViewBag.LocatariosDisponiveis = totalLocatarios - locatariosOcupados;
+                ViewBag.TotalAlugueis = totalAlugueis;
+            }
+
             return View();
         }
 

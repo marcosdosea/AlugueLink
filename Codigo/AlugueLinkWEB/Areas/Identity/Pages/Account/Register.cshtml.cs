@@ -61,19 +61,19 @@ namespace AlugueLinkWEB.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     This API supports the ASP.NET Core Identity default UI infraestrutura and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     This API supports the ASP.NET Core Identity default UI infraestrutura and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public class InputModel
         {
             /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     This API supports the ASP.NET Core Identity default UI infraestrutura and is not intended to be usado
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required(ErrorMessage = "Email é obrigatório")]
@@ -90,8 +90,8 @@ namespace AlugueLinkWEB.Areas.Identity.Pages.Account
             public string NomeCompleto { get; set; }
 
             /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
+            ///     This API supports the ASP.NET Core Identity default UI infraestrutura and is not intended to be usado
+            ///     directly from your code. This API may change ou be removed in future releases.
             /// </summary>
             [Required(ErrorMessage = "Senha é obrigatória")]
             [StringLength(100, ErrorMessage = "A senha deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 8)]
@@ -100,8 +100,8 @@ namespace AlugueLinkWEB.Areas.Identity.Pages.Account
             public string Password { get; set; }
 
             /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infraestrutura and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
+            ///     This API supports the ASP.NET Core Identity default UI infraestrutura and is not intended to be usado
+            ///     directly from your code. This API may change ou be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirmar Senha")]
@@ -171,8 +171,7 @@ namespace AlugueLinkWEB.Areas.Identity.Pages.Account
                     catch (Exception ex)
                     {
                         _logger.LogError(ex, "Erro ao enviar email de confirmação para {Email}", Input.Email);
-                        // Continua o processo mesmo se o email falhar - o usuário ainda pode usar a conta
-                        TempData["EmailWarning"] = "Não foi possível enviar o email de confirmação, mas sua conta foi criada com sucesso.";
+                        // Mensagem de alerta suprimida conforme solicitação do cliente.
                     }
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)

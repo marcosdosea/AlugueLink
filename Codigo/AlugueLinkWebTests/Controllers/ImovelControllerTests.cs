@@ -22,6 +22,7 @@ namespace AlugueLinkWEB.Controllers.Tests
             // Arrange
             var mockImovelService = new Mock<IImovelService>();
             var mockLocadorService = new Mock<ILocadorService>();
+            var mockAluguelService = new Mock<IAluguelService>();
 
             IMapper mapper = new MapperConfiguration(cfg =>
                 cfg.AddProfile(new ImovelProfile())).CreateMapper();
@@ -42,7 +43,7 @@ namespace AlugueLinkWEB.Controllers.Tests
             mockLocadorService.Setup(service => service.GetAll(1, 1000))
                 .Returns(GetTestLocadores());
 
-            controller = new ImovelController(mockImovelService.Object, mockLocadorService.Object, mapper);
+            controller = new ImovelController(mockImovelService.Object, mockLocadorService.Object, mockAluguelService.Object, mapper);
             
             // Setup TempData para evitar NullReferenceException
             var tempData = new Mock<ITempDataDictionary>();

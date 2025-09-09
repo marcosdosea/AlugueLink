@@ -12,12 +12,15 @@ namespace AlugueLinkWEB.Controllers
     {
         private readonly IImovelService imovelService;
         private readonly ILocadorService locadorService;
+        private readonly IAluguelService aluguelService;
         private readonly IMapper mapper;
 
-        public ImovelController(IImovelService imovelService, ILocadorService locadorService, IMapper mapper)
+        public ImovelController(IImovelService imovelService, ILocadorService locadorService, 
+            IAluguelService aluguelService, IMapper mapper)
         {
             this.imovelService = imovelService;
             this.locadorService = locadorService;
+            this.aluguelService = aluguelService;
             this.mapper = mapper;
         }
 
@@ -26,6 +29,25 @@ namespace AlugueLinkWEB.Controllers
         {
             var imoveis = imovelService.GetAll(page, pageSize);
             var viewModels = mapper.Map<IEnumerable<ImovelViewModel>>(imoveis);
+
+            // Adicionar informações de status de aluguel
+            var imoveisIndisponiveis = aluguelService.GetImoveisIndisponiveis().ToList();
+            
+            foreach (var viewModel in viewModels)
+            {
+                viewModel.IsAlugado = imoveisIndisponiveis.Contains(viewModel.Id);
+                
+                if (viewModel.IsAlugado)
+                {
+                    var aluguelAtivo = aluguelService.GetAluguelAtivoByImovel(viewModel.Id);
+                    if (aluguelAtivo != null)
+                    {
+                        viewModel.InquilinoAtual = aluguelAtivo.IdlocatarioNavigation?.Nome;
+                        viewModel.DataInicioAluguel = aluguelAtivo.DataInicio;
+                        viewModel.DataFimAluguel = aluguelAtivo.DataFim;
+                    }
+                }
+            }
 
             ViewBag.TotalItems = imovelService.GetCount();
             ViewBag.Page = page;
@@ -44,6 +66,20 @@ namespace AlugueLinkWEB.Controllers
             }
 
             var viewModel = mapper.Map<ImovelViewModel>(imovel);
+            
+            // Adicionar informações de status de aluguel
+            viewModel.IsAlugado = !aluguelService.IsImovelAvailable(id);
+            if (viewModel.IsAlugado)
+            {
+                var aluguelAtivo = aluguelService.GetAluguelAtivoByImovel(id);
+                if (aluguelAtivo != null)
+                {
+                    viewModel.InquilinoAtual = aluguelAtivo.IdlocatarioNavigation?.Nome;
+                    viewModel.DataInicioAluguel = aluguelAtivo.DataInicio;
+                    viewModel.DataFimAluguel = aluguelAtivo.DataFim;
+                }
+            }
+            
             return View(viewModel);
         }
 

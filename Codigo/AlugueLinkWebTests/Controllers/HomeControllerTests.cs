@@ -2,21 +2,36 @@ using AlugueLinkWEB.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using AlugueLinkWEB.Controllers;
+using Core.Service;
 
-namespace AlugueLinkWEB.Controllers.Tests
+namespace AlugueLinkWebTests.Controllers
 {
-    [TestClass()]
+    [TestClass]
     public class HomeControllerTests
     {
-        private static HomeController controller = null!;
+        private HomeController controller;
 
         [TestInitialize]
-        public void Initialize()
+        public void Setup()
         {
             // Arrange
             var mockLogger = new Mock<ILogger<HomeController>>();
-            controller = new HomeController(mockLogger.Object);
+            var mockImovelService = new Mock<IImovelService>();
+            var mockLocatarioService = new Mock<ILocatarioService>();
+            var mockAluguelService = new Mock<IAluguelService>();
+            
+            // Setup dos mocks para retornar valores padrão
+            mockImovelService.Setup(s => s.GetCount()).Returns(0);
+            mockLocatarioService.Setup(s => s.GetCount()).Returns(0);
+            mockAluguelService.Setup(s => s.GetCount()).Returns(0);
+            mockAluguelService.Setup(s => s.GetImoveisIndisponiveis()).Returns(new List<int>());
+            mockAluguelService.Setup(s => s.GetLocatariosOcupados()).Returns(new List<int>());
+            
+            controller = new HomeController(mockLogger.Object, mockImovelService.Object, 
+                mockLocatarioService.Object, mockAluguelService.Object);
             
             // Setup HttpContext para o método Error
             var httpContext = new Mock<HttpContext>();
@@ -27,7 +42,7 @@ namespace AlugueLinkWEB.Controllers.Tests
             };
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void IndexTest_Valido()
         {
             // Act
@@ -37,7 +52,7 @@ namespace AlugueLinkWEB.Controllers.Tests
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void PrivacyTest_Valido()
         {
             // Act
@@ -47,7 +62,7 @@ namespace AlugueLinkWEB.Controllers.Tests
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ErrorTest_Valido()
         {
             // Act

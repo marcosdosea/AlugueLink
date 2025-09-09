@@ -152,12 +152,12 @@
                     <a class="nav-link d-flex align-items-center @((currentController == "Locatario" && currentAction == "Index") ? "active" : string.Empty)" asp-controller="Locatario" asp-action="Index">
                         <span class="icon me-2"><i class="fas fa-users"></i></span>Meus Inquilinos
                     </a>
-                    <div class="nav-section mt-3 mb-2 px-2">BUSCAR IMÓVEIS</div>
-                    <a class="nav-link d-flex align-items-center" href="#" title="Em breve">
-                        <span class="icon me-2"><i class="fas fa-search"></i></span>Pesquisar Imóveis <span class="badge bg-secondary ms-auto small">Em breve</span>
+                    <div class="nav-section mt-3 mb-2 px-2">GESTÃO DE ALUGUÉIS</div>
+                    <a class="nav-link d-flex align-items-center @((currentController == "Aluguel" && currentAction == "Create") ? "active" : string.Empty)" asp-controller="Aluguel" asp-action="Create">
+                        <span class="icon me-2"><i class="fas fa-file-contract"></i></span>Novo Aluguel
                     </a>
-                    <a class="nav-link d-flex align-items-center" href="#" title="Em breve">
-                        <span class="icon me-2"><i class="fas fa-heart"></i></span>Favoritos <span class="badge bg-secondary ms-auto small">Em breve</span>
+                    <a class="nav-link d-flex align-items-center @((currentController == "Aluguel" && currentAction == "Index") ? "active" : string.Empty)" asp-controller="Aluguel" asp-action="Index">
+                        <span class="icon me-2"><i class="fas fa-clipboard-list"></i></span>Meus Aluguéis
                     </a>
                 </nav>
                 <div class="sidebar-footer small p-3 mt-auto">© @DateTime.Now.Year AlugueLink</div>

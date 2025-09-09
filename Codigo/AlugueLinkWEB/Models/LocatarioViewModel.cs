@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AlugueLinkWEB.Models
 {
-    public class LocatarioViewModel
+    public class LocatarioViewModel //: IValidatableObject
     {
         public int Id { get; set; }
 
@@ -19,25 +19,21 @@ namespace AlugueLinkWEB.Models
 
         [Display(Name = "Telefone Principal")]
         [Required(ErrorMessage = "Telefone principal é obrigatório")]
-        [StringLength(11, ErrorMessage = "Telefone deve ter até 11 caracteres")]
-        [RegularExpression(@"^\d{10,11}$", ErrorMessage = "Telefone deve conter apenas números (10 ou 11 dígitos)")]
+        [StringLength(11, ErrorMessage = "Telefone deve ter 11 caracteres")]
         public string Telefone1 { get; set; } = string.Empty;
 
         [Display(Name = "Telefone Secundário")]
-        [StringLength(11, ErrorMessage = "Telefone deve ter até 11 caracteres")]
-        [RegularExpression(@"^\d{10,11}$", ErrorMessage = "Telefone deve conter apenas números (10 ou 11 dígitos)")]
+        [StringLength(11, ErrorMessage = "Telefone deve ter 11 caracteres")]
         public string? Telefone2 { get; set; }
 
         [Display(Name = "CPF")]
         [Required(ErrorMessage = "CPF é obrigatório")]
         [StringLength(11, ErrorMessage = "CPF deve ter 11 caracteres")]
-        [RegularExpression(@"^\d{11}$", ErrorMessage = "CPF deve conter apenas números")]
         public string Cpf { get; set; } = string.Empty;
 
         [Display(Name = "CEP")]
         [Required(ErrorMessage = "CEP é obrigatório")]
         [StringLength(8, ErrorMessage = "CEP deve ter 8 caracteres")]
-        [RegularExpression(@"^\d{8}$", ErrorMessage = "CEP deve conter apenas números")]
         public string Cep { get; set; } = string.Empty;
 
         [Display(Name = "Logradouro")]
@@ -73,9 +69,25 @@ namespace AlugueLinkWEB.Models
         [StringLength(100, ErrorMessage = "Profissão não pode ter mais de 100 caracteres")]
         public string? Profissao { get; set; }
 
-        [Display(Name = "Renda (R$)")]
-        [Range(0, 999999.99, ErrorMessage = "Renda deve estar entre R$ 0,00 e R$ 999.999,99")]
+        [Display(Name = "Renda")]
+        [Range(0.01, 999999.99, ErrorMessage = "Renda deve ser um valor entre R$ 0,01 e R$ 999.999,99")]
         [DataType(DataType.Currency)]
         public decimal? Renda { get; set; }
+
+        // Propriedades para status de aluguel
+        public bool IsOcupado { get; set; }
+        public string? StatusTexto => IsOcupado ? "Ocupado" : "Disponível";
+        public string? ImovelAtual { get; set; }
+        public DateOnly? DataInicioAluguel { get; set; }
+        public DateOnly? DataFimAluguel { get; set; }
+
+        /*public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var results = new List<ValidationResult>();
+
+            // Validações customizadas podem ser adicionadas aqui
+
+            return results;
+        }*/
     }
 }

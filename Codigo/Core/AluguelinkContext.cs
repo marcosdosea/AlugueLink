@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Core.Converters;
 
 namespace Core;
 
@@ -30,6 +32,18 @@ public partial class AluguelinkContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
        
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        // Configurar conversores globalmente para DateOnly
+        configurationBuilder
+            .Properties<DateOnly>()
+            .HaveConversion(typeof(DateOnlyToDateTimeConverter));
+        
+        configurationBuilder
+            .Properties<DateOnly?>()
+            .HaveConversion(typeof(NullableDateOnlyToDateTimeConverter));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
