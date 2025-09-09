@@ -2,10 +2,12 @@ using AutoMapper;
 using Core;
 using Core.Service;
 using AlugueLinkWEB.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlugueLinkWEB.Controllers
 {
+    [Authorize]
     public class LocatarioController : Controller
     {
         private readonly ILocatarioService locatarioService;

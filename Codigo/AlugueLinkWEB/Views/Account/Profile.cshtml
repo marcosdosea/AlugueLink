@@ -1,0 +1,134 @@
+@model ProfileViewModel
+@{
+    ViewData["Title"] = "Meu Perfil";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0"><i class="fas fa-user me-2"></i>Meu Perfil</h3>
+                <p class="text-muted mb-0 small">Gerencie suas informações pessoais</p>
+            </div>
+            <div class="card-body">
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+                
+                <form asp-action="Profile" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">Email</label>
+                        <input asp-for="Email" class="form-control" readonly />
+                        <div class="form-text">
+                            <i class="fas fa-info-circle"></i> O email não pode ser alterado
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="NomeCompleto" class="form-label">Nome Completo <span class="text-danger">*</span></label>
+                        <input asp-for="NomeCompleto" class="form-control" placeholder="Seu nome completo" />
+                        <span asp-validation-for="NomeCompleto" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="DataNascimento" class="form-label">Data de Nascimento</label>
+                        <input asp-for="DataNascimento" class="form-control" type="date" />
+                        <span asp-validation-for="DataNascimento" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Data de Cadastro</label>
+                            <input value="@Model.DataCadastro.ToString("dd/MM/yyyy HH:mm")" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Último Login</label>
+                            <input value="@(Model.UltimoLogin?.ToString("dd/MM/yyyy HH:mm") ?? "Nunca")" class="form-control" readonly />
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a asp-action="ChangePassword" class="btn btn-outline-secondary">
+                            <i class="fas fa-key me-1"></i>Alterar Senha
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Salvar Alterações
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Informações da Conta</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info" role="alert">
+                    <i class="fas fa-home me-2"></i>
+                    <strong>Conta Unificada:</strong> Com sua conta você pode:
+                    <ul class="mb-0 mt-2">
+                        <li>Cadastrar imóveis para alugar (como proprietário)</li>
+                        <li>Gerenciar inquilinos dos seus imóveis</li>
+                        <li>Buscar imóveis para alugar (como inquilino)</li>
+                        <li>Favoritar imóveis de interesse</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .card {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        border: none;
+    }
+    
+    .card-header {
+        background: linear-gradient(45deg, #007bff, #0056b3);
+        color: white;
+        border-bottom: none;
+    }
+    
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    
+    .btn-primary {
+        background: linear-gradient(45deg, #007bff, #0056b3);
+        border: none;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(45deg, #0056b3, #004085);
+        transform: translateY(-1px);
+    }
+    
+    .alert {
+        border: none;
+        border-radius: 0.5rem;
+    }
+    
+    .alert-info {
+        background-color: #e3f2fd;
+        color: #1565c0;
+        border: 1px solid #bbdefb;
+    }
+    
+    .form-control[readonly] {
+        background-color: #f8f9fa;
+        border-color: #dee2e6;
+    }
+</style>
