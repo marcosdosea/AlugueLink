@@ -11,11 +11,13 @@ namespace AlugueLinkWEB.Controllers
     public class LocatarioController : Controller
     {
         private readonly ILocatarioService locatarioService;
+        private readonly IAluguelService aluguelService;
         private readonly IMapper mapper;
 
-        public LocatarioController(ILocatarioService locatarioService, IMapper mapper)
+        public LocatarioController(ILocatarioService locatarioService, IAluguelService aluguelService, IMapper mapper)
         {
             this.locatarioService = locatarioService;
+            this.aluguelService = aluguelService;
             this.mapper = mapper;
         }
 
@@ -24,6 +26,25 @@ namespace AlugueLinkWEB.Controllers
         {
             var locatarios = locatarioService.GetAll(page, pageSize);
             var viewModels = mapper.Map<IEnumerable<LocatarioViewModel>>(locatarios);
+
+            // Adicionar informações de status de ocupação
+            var locatariosOcupados = aluguelService.GetLocatariosOcupados().ToList();
+            
+            foreach (var viewModel in viewModels)
+            {
+                viewModel.IsOcupado = locatariosOcupados.Contains(viewModel.Id);
+                
+                if (viewModel.IsOcupado)
+                {
+                    var aluguelAtivo = aluguelService.GetAluguelAtivoByLocatario(viewModel.Id);
+                    if (aluguelAtivo != null)
+                    {
+                        viewModel.ImovelAtual = $"{aluguelAtivo.IdimovelNavigation?.Logradouro}, {aluguelAtivo.IdimovelNavigation?.Numero}";
+                        viewModel.DataInicioAluguel = aluguelAtivo.DataInicio;
+                        viewModel.DataFimAluguel = aluguelAtivo.DataFim;
+                    }
+                }
+            }
 
             ViewBag.TotalItems = locatarioService.GetCount();
             ViewBag.Page = page;
@@ -42,6 +63,20 @@ namespace AlugueLinkWEB.Controllers
             }
 
             var viewModel = mapper.Map<LocatarioViewModel>(locatario);
+            
+            // Adicionar informações de status de ocupação
+            viewModel.IsOcupado = !aluguelService.IsLocatarioAvailable(id);
+            if (viewModel.IsOcupado)
+            {
+                var aluguelAtivo = aluguelService.GetAluguelAtivoByLocatario(id);
+                if (aluguelAtivo != null)
+                {
+                    viewModel.ImovelAtual = $"{aluguelAtivo.IdimovelNavigation?.Logradouro}, {aluguelAtivo.IdimovelNavigation?.Numero}";
+                    viewModel.DataInicioAluguel = aluguelAtivo.DataInicio;
+                    viewModel.DataFimAluguel = aluguelAtivo.DataFim;
+                }
+            }
+            
             return View(viewModel);
         }
 

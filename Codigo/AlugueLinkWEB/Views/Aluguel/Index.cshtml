@@ -1,0 +1,80 @@
+@model IEnumerable<AlugueLinkWEB.Models.AluguelViewModel>
+@{
+    ViewData["Title"] = "Meus Aluguéis";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-secondary btn-sm active">Todos</button>
+        <button class="btn btn-outline-secondary btn-sm">Ativos</button>
+        <button class="btn btn-outline-secondary btn-sm">Finalizados</button>
+    </div>
+    <a asp-action="Create" class="btn btn-primary">+ Novo Aluguel</a>
+</div>
+
+<div class="row g-3">
+    @foreach (var item in Model)
+    {
+        <div class="col-12 col-md-6 col-xl-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h6 class="card-title mb-0">@item.ImovelEndereco</h6>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-link text-muted p-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                                </svg>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" asp-action="Edit" asp-route-id="@item.Id">Editar</a></li>
+                                <li><a class="dropdown-item" asp-action="Details" asp-route-id="@item.Id">Detalhes</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" asp-action="Delete" asp-route-id="@item.Id">Excluir</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="badge @(item.Status == "Ativo" ? "bg-success" : item.Status == "Finalizado" ? "bg-secondary" : "bg-warning")">
+                            @item.Status
+                        </span>
+                    </div>
+                    
+                    <p class="text-muted small mb-2">
+                        <strong>Locatário:</strong> @item.LocatarioNome
+                    </p>
+                    
+                    <div class="mb-3">
+                        <small class="text-muted">
+                            <strong>Período:</strong><br>
+                            @item.DataInicio?.ToString("dd/MM/yyyy") até @item.DataFim?.ToString("dd/MM/yyyy")
+                        </small>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="h6 text-primary fw-bold mb-0">R$ @item.ImovelValor?.ToString("N2")</span>
+                            <small class="text-muted d-block">/mês</small>
+                        </div>
+                        <small class="text-muted">
+                            Assinado em @item.DataAssinatura?.ToString("dd/MM/yyyy")
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <div class="text-center py-5">
+        <svg width="64" height="64" class="text-muted mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <h5 class="text-muted">Nenhum aluguel cadastrado</h5>
+        <p class="text-muted">Comece cadastrando seu primeiro contrato de aluguel.</p>
+        <a asp-action="Create" class="btn btn-primary">Cadastrar Aluguel</a>
+    </div>
+}

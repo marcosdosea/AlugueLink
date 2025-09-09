@@ -160,5 +160,122 @@ namespace Service
         {
             return _context.Aluguels.Count();
         }
+
+        /// <summary>
+        /// Verificar se um imóvel está disponível para aluguel em um período específico
+        /// </summary>
+        /// <param name="idImovel">ID do imóvel</param>
+        /// <param name="dataInicio">Data de início do período</param>
+        /// <param name="dataFim">Data de fim do período</param>
+        /// <param name="aluguelExcluir">ID do aluguel a excluir da verificação (para edição)</param>
+        /// <returns>True se disponível, False se ocupado</returns>
+        public bool IsImovelAvailable(int idImovel, DateOnly? dataInicio = null, DateOnly? dataFim = null, int? aluguelExcluir = null)
+        {
+            var query = _context.Aluguels
+                .Where(a => a.Idimovel == idImovel && a.Status == "A"); // Status "A" = Ativo
+
+            if (aluguelExcluir.HasValue)
+            {
+                query = query.Where(a => a.Id != aluguelExcluir.Value);
+            }
+
+            // Se não especificar período, verifica apenas aluguéis ativos atualmente
+            if (!dataInicio.HasValue || !dataFim.HasValue)
+            {
+                var hoje = DateOnly.FromDateTime(DateTime.Now);
+                return !query.Any(a => a.DataInicio <= hoje && a.DataFim >= hoje);
+            }
+
+            // Verifica conflito de período: há sobreposição se:
+            // (data_inicio_novo <= data_fim_existente) AND (data_fim_novo >= data_inicio_existente)
+            return !query.Any(a => dataInicio <= a.DataFim && dataFim >= a.DataInicio);
+        }
+
+        /// <summary>
+        /// Verificar se um locatário está disponível para aluguel em um período específico
+        /// </summary>
+        /// <param name="idLocatario">ID do locatário</param>
+        /// <param name="dataInicio">Data de início do período</param>
+        /// <param name="dataFim">Data de fim do período</param>
+        /// <param name="aluguelExcluir">ID do aluguel a excluir da verificação (para edição)</param>
+        /// <returns>True se disponível, False se ocupado</returns>
+        public bool IsLocatarioAvailable(int idLocatario, DateOnly? dataInicio = null, DateOnly? dataFim = null, int? aluguelExcluir = null)
+        {
+            var query = _context.Aluguels
+                .Where(a => a.Idlocatario == idLocatario && a.Status == "A"); // Status "A" = Ativo
+
+            if (aluguelExcluir.HasValue)
+            {
+                query = query.Where(a => a.Id != aluguelExcluir.Value);
+            }
+
+            // Se não especificar período, verifica apenas aluguéis ativos atualmente
+            if (!dataInicio.HasValue || !dataFim.HasValue)
+            {
+                var hoje = DateOnly.FromDateTime(DateTime.Now);
+                return !query.Any(a => a.DataInicio <= hoje && a.DataFim >= hoje);
+            }
+
+            // Verifica conflito de período
+            return !query.Any(a => dataInicio <= a.DataFim && dataFim >= a.DataInicio);
+        }
+
+        /// <summary>
+        /// Obter lista de IDs de imóveis que estão indisponíveis (com aluguel ativo)
+        /// </summary>
+        /// <returns>Lista de IDs de imóveis ocupados</returns>
+        public IEnumerable<int> GetImoveisIndisponiveis()
+        {
+            var hoje = DateOnly.FromDateTime(DateTime.Now);
+            return _context.Aluguels
+                .Where(a => a.Status == "A" && a.DataInicio <= hoje && a.DataFim >= hoje)
+                .Select(a => a.Idimovel)
+                .Distinct()
+                .ToList();
+        }
+
+        /// <summary>
+        /// Obter lista de IDs de locatários que estão ocupados (com aluguel ativo)
+        /// </summary>
+        /// <returns>Lista de IDs de locatários ocupados</returns>
+        public IEnumerable<int> GetLocatariosOcupados()
+        {
+            var hoje = DateOnly.FromDateTime(DateTime.Now);
+            return _context.Aluguels
+                .Where(a => a.Status == "A" && a.DataInicio <= hoje && a.DataFim >= hoje)
+                .Select(a => a.Idlocatario)
+                .Distinct()
+                .ToList();
+        }
+
+        /// <summary>
+        /// Obter aluguel ativo de um imóvel
+        /// </summary>
+        /// <param name="idImovel">ID do imóvel</param>
+        /// <returns>Aluguel ativo ou null</returns>
+        public Aluguel? GetAluguelAtivoByImovel(int idImovel)
+        {
+            var hoje = DateOnly.FromDateTime(DateTime.Now);
+            return _context.Aluguels
+                .Include(a => a.IdlocatarioNavigation)
+                .Include(a => a.IdimovelNavigation)
+                .Where(a => a.Idimovel == idImovel && a.Status == "A" && a.DataInicio <= hoje && a.DataFim >= hoje)
+                .FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Obter aluguel ativo de um locatário
+        /// </summary>
+        /// <param name="idLocatario">ID do locatário</param>
+        /// <returns>Aluguel ativo ou null</returns>
+        public Aluguel? GetAluguelAtivoByLocatario(int idLocatario)
+        {
+            var hoje = DateOnly.FromDateTime(DateTime.Now);
+            return _context.Aluguels
+                .Include(a => a.IdlocatarioNavigation)
+                .Include(a => a.IdimovelNavigation)
+                .Where(a => a.Idlocatario == idLocatario && a.Status == "A" && a.DataInicio <= hoje && a.DataFim >= hoje)
+                .FirstOrDefault();
+        }
     }
 }

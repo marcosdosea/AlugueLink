@@ -7,7 +7,7 @@
     <div class="d-flex gap-2">
         <button class="btn btn-outline-secondary btn-sm active">Todos</button>
         <button class="btn btn-outline-secondary btn-sm">Alugados</button>
-        <button class="btn btn-outline-secondary btn-sm">Desalugados</button>
+        <button class="btn btn-outline-secondary btn-sm">Disponíveis</button>
     </div>
     <a asp-action="Create" class="btn btn-primary">+ Novo</a>
 </div>
@@ -26,7 +26,7 @@
                         </svg>
                     </div>
                     <div class="property-status position-absolute top-0 end-0 m-2">
-                        <span class="badge bg-success">Desalugado</span>
+                        <span class="badge @(item.IsAlugado ? "bg-danger" : "bg-success")">@item.StatusTexto</span>
                     </div>
                 </div>
                 <div class="card-body">
@@ -48,6 +48,14 @@
                     </div>
                     <p class="property-type text-muted small mb-2">@item.Tipo?.ToUpper()</p>
                     <p class="property-address text-muted small mb-3">@item.Bairro, @item.Cidade - @item.Estado</p>
+                    
+                    @if (item.IsAlugado && !string.IsNullOrEmpty(item.InquilinoAtual))
+                    {
+                        <div class="alert alert-info small mb-3">
+                            <strong>Inquilino:</strong> @item.InquilinoAtual<br>
+                            <strong>Período:</strong> @item.DataInicioAluguel?.ToString("dd/MM/yyyy") até @item.DataFimAluguel?.ToString("dd/MM/yyyy")
+                        </div>
+                    }
                     
                     <div class="property-features d-flex gap-3 mb-3">
                         <span class="feature small">

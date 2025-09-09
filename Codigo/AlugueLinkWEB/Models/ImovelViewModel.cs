@@ -78,5 +78,12 @@ namespace AlugueLinkWEB.Models
         public int? LocadorId { get; set; } // deixamos opcional na view; backend atribui padrão
 
         public string? LocadorNome { get; set; }
+
+        // Propriedades para status de aluguel
+        public bool IsAlugado { get; set; }
+        public string? StatusTexto => IsAlugado ? "Alugado" : "Disponível";
+        public string? InquilinoAtual { get; set; }
+        public DateOnly? DataInicioAluguel { get; set; }
+        public DateOnly? DataFimAluguel { get; set; }
     }
 }
