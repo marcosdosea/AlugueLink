@@ -126,8 +126,8 @@
                                     <span asp-validation-for="Valor" class="text-danger"></span>
                                 </div>
                                 <div class="col-12">
-                                    <label asp-for="Descricao" class="form-label">Características</label>
-                                    <textarea asp-for="Descricao" class="form-control" rows="4" placeholder="Descreva as características do imóvel (mobiliado, reformado, etc.)"></textarea>
+                                    <label asp-for="Descricao" class="form-label">Características <span class="required">*</span></label>
+                                    <textarea asp-for="Descricao" class="form-control" rows="4" placeholder="Descreva as características do imóvel (mobiliado, reformado, etc.)" required></textarea>
                                     <span asp-validation-for="Descricao" class="text-danger"></span>
                                 </div>
                             </div>

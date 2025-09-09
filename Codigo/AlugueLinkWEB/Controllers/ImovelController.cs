@@ -62,10 +62,15 @@ namespace AlugueLinkWEB.Controllers
             {
                 try
                 {
-                    if (viewModel.LocadorId == null || viewModel.LocadorId == 0)
+                    // Garantir que existe um locador válido
+                    var locadorId = EnsureValidLocador(viewModel.LocadorId);
+                    if (locadorId == 0)
                     {
-                        viewModel.LocadorId = 1; // locador padrão
+                        ModelState.AddModelError("", "Erro: Nenhum locador encontrado. É necessário cadastrar um locador primeiro.");
+                        return View(viewModel);
                     }
+
+                    viewModel.LocadorId = locadorId;
                     var imovel = mapper.Map<Imovel>(viewModel);
                     imovelService.Create(imovel);
                     TempData["SuccessMessage"] = "Imóvel criado com sucesso!";
@@ -106,10 +111,15 @@ namespace AlugueLinkWEB.Controllers
             {
                 try
                 {
-                    if (viewModel.LocadorId == null || viewModel.LocadorId == 0)
+                    // Garantir que existe um locador válido
+                    var locadorId = EnsureValidLocador(viewModel.LocadorId);
+                    if (locadorId == 0)
                     {
-                        viewModel.LocadorId = 1;
+                        ModelState.AddModelError("", "Erro: Nenhum locador encontrado. É necessário cadastrar um locador primeiro.");
+                        return View(viewModel);
                     }
+
+                    viewModel.LocadorId = locadorId;
                     var imovel = mapper.Map<Imovel>(viewModel);
                     imovelService.Edit(imovel);
                     TempData["SuccessMessage"] = "Imóvel atualizado com sucesso!";
@@ -144,6 +154,45 @@ namespace AlugueLinkWEB.Controllers
             imovelService.Delete(id);
             TempData["SuccessMessage"] = "Imóvel excluído com sucesso!";
             return RedirectToAction(nameof(Index));
+        }
+
+        private int EnsureValidLocador(int? locadorId)
+        {
+            // Se foi fornecido um ID válido, verificar se existe
+            if (locadorId.HasValue && locadorId.Value > 0)
+            {
+                var existingLocador = locadorService.Get(locadorId.Value);
+                if (existingLocador != null)
+                {
+                    return locadorId.Value;
+                }
+            }
+
+            // Tentar encontrar o primeiro locador disponível
+            var locadores = locadorService.GetAll(1, 1);
+            var firstLocador = locadores.FirstOrDefault();
+            if (firstLocador != null)
+            {
+                return firstLocador.Id;
+            }
+
+            // Se não há locadores, criar um locador padrão
+            var defaultLocador = new Locador
+            {
+                Nome = "Locador Padrão",
+                Email = "locador@aluguelink.com",
+                Telefone = "11999999999",
+                Cpf = "00000000000"
+            };
+
+            try
+            {
+                return locadorService.Create(defaultLocador);
+            }
+            catch (Exception)
+            {
+                return 0; // Falha ao criar locador padrão
+            }
         }
 
         private bool PopulateLocadoresDropDownList(object? selectedLocador = null) => true; // método legacy mantido por compatibilidade

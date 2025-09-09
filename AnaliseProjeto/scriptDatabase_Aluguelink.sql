@@ -173,3 +173,134 @@ COLLATE = utf8mb4_unicode_ci;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- =====================================================
+-- Bloco adicional: Cria��o do banco de Identity (IdentityUsers)
+-- =====================================================
+
+-- Garantir charset padr�o
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
+SET collation_connection = 'utf8mb4_unicode_ci';
+
+-- Criar database IdentityUsers se n�o existir
+CREATE DATABASE IF NOT EXISTS IdentityUsers
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+USE IdentityUsers;
+
+-- Tabela de pap�is (roles)
+CREATE TABLE IF NOT EXISTS `AspNetRoles` (
+  `Id` varchar(255) NOT NULL,
+  `Name` varchar(256) NULL,
+  `NormalizedName` varchar(256) NULL,
+  `ConcurrencyStamp` longtext NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `RoleNameIndex` (`NormalizedName`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabela de usu�rios
+CREATE TABLE IF NOT EXISTS `AspNetUsers` (
+  `Id` varchar(255) NOT NULL,
+  `UserName` varchar(256) NULL,
+  `NormalizedUserName` varchar(256) NULL,
+  `Email` varchar(256) NULL,
+  `NormalizedEmail` varchar(256) NULL,
+  `EmailConfirmed` tinyint(1) NOT NULL,
+  `PasswordHash` longtext NULL,
+  `SecurityStamp` longtext NULL,
+  `ConcurrencyStamp` longtext NULL,
+  `PhoneNumber` longtext NULL,
+  `PhoneNumberConfirmed` tinyint(1) NOT NULL,
+  `TwoFactorEnabled` tinyint(1) NOT NULL,
+  `LockoutEnd` datetime NULL,
+  `LockoutEnabled` tinyint(1) NOT NULL,
+  `AccessFailedCount` int NOT NULL,
+  `Ativo` tinyint(1) NOT NULL DEFAULT 0,
+  `DataCadastro` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `DataNascimento` datetime(6) NULL,
+  `NomeCompleto` varchar(100) NULL,
+  `UltimoLogin` datetime(6) NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `UserNameIndex` (`NormalizedUserName`),
+  KEY `EmailIndex` (`NormalizedEmail`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Claims de Roles
+CREATE TABLE IF NOT EXISTS `AspNetRoleClaims` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `RoleId` varchar(255) NOT NULL,
+  `ClaimType` longtext NULL,
+  `ClaimValue` longtext NULL,
+  PRIMARY KEY (`Id`),
+  KEY `IX_AspNetRoleClaims_RoleId` (`RoleId`),
+  CONSTRAINT `FK_AspNetRoleClaims_AspNetRoles_RoleId`
+    FOREIGN KEY (`RoleId`) REFERENCES `AspNetRoles` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Claims de Usu�rios
+CREATE TABLE IF NOT EXISTS `AspNetUserClaims` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `UserId` varchar(255) NOT NULL,
+  `ClaimType` longtext NULL,
+  `ClaimValue` longtext NULL,
+  PRIMARY KEY (`Id`),
+  KEY `IX_AspNetUserClaims_UserId` (`UserId`),
+  CONSTRAINT `FK_AspNetUserClaims_AspNetUsers_UserId`
+    FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Logins externos
+CREATE TABLE IF NOT EXISTS `AspNetUserLogins` (
+  `LoginProvider` varchar(128) NOT NULL,
+  `ProviderKey` varchar(128) NOT NULL,
+  `ProviderDisplayName` longtext NULL,
+  `UserId` varchar(255) NOT NULL,
+  PRIMARY KEY (`LoginProvider`,`ProviderKey`),
+  KEY `IX_AspNetUserLogins_UserId` (`UserId`),
+  CONSTRAINT `FK_AspNetUserLogins_AspNetUsers_UserId`
+    FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Rela��o Usu�rio-Role
+CREATE TABLE IF NOT EXISTS `AspNetUserRoles` (
+  `UserId` varchar(255) NOT NULL,
+  `RoleId` varchar(255) NOT NULL,
+  PRIMARY KEY (`UserId`,`RoleId`),
+  KEY `IX_AspNetUserRoles_RoleId` (`RoleId`),
+  CONSTRAINT `FK_AspNetUserRoles_AspNetRoles_RoleId`
+    FOREIGN KEY (`RoleId`) REFERENCES `AspNetRoles` (`Id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_AspNetUserRoles_AspNetUsers_UserId`
+    FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tokens de usu�rio
+CREATE TABLE IF NOT EXISTS `AspNetUserTokens` (
+  `UserId` varchar(255) NOT NULL,
+  `LoginProvider` varchar(128) NOT NULL,
+  `Name` varchar(128) NOT NULL,
+  `Value` longtext NULL,
+  PRIMARY KEY (`UserId`,`LoginProvider`,`Name`),
+  CONSTRAINT `FK_AspNetUserTokens_AspNetUsers_UserId`
+    FOREIGN KEY (`UserId`) REFERENCES `AspNetUsers` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Hist�rico de migra��es do EF (marcando como aplicadas)
+CREATE TABLE IF NOT EXISTS `__EFMigrationsHistory` (
+  `MigrationId` varchar(150) NOT NULL,
+  `ProductVersion` varchar(32) NOT NULL,
+  PRIMARY KEY (`MigrationId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT IGNORE INTO `__EFMigrationsHistory` (`MigrationId`,`ProductVersion`) VALUES
+ ('20250908215603_CreateIdentitySchema','8.0.18'),
+ ('20250908231347_AddUserProfileFields','8.0.18'),
+ ('20250908234117_RemoveTipoUsuario','8.0.18');
+
+-- (Opcional) Usu�rio seed (descomentando exige hash v�lido de senha)
+-- INSERT INTO AspNetUsers (Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount, Ativo, DataCadastro, NomeCompleto)
+-- VALUES ('seed-user-1', 'admin', 'ADMIN', 'admin@aluguelink.com', 'ADMIN@ALUGUELINK.COM', 1, '<HASH_AQUI>', UUID(), UUID(), 0, 0, 0, 0, 1, NOW(6), 'Administrador');
+
+-- Retorna ao banco principal se desejar continuar opera��es nele
+USE aluguelink;

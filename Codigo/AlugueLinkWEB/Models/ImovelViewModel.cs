@@ -70,6 +70,8 @@ namespace AlugueLinkWEB.Models
         public decimal? Valor { get; set; }
 
         [Display(Name = "Descrição")]
+        [Required(ErrorMessage = "Descrição é obrigatória")]
+        [StringLength(200, ErrorMessage = "Descrição não pode ter mais de 200 caracteres")]
         public string? Descricao { get; set; }
 
         [Display(Name = "Locador")]

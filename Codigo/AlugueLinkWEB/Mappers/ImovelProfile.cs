@@ -12,7 +12,8 @@ namespace AlugueLinkWEB.Mappers
         public ImovelProfile()
         {
             CreateMap<ImovelViewModel, Imovel>()
-                .ForMember(dest => dest.IdLocador, opt => opt.MapFrom(src => src.LocadorId ?? 1))
+                // Não forçar mais IdLocador = 1; deixar 0 para o serviço tratar se vier nulo
+                .ForMember(dest => dest.IdLocador, opt => opt.MapFrom(src => src.LocadorId ?? 0))
                 .ForMember(dest => dest.Tipo, opt => opt.MapFrom(src => MapTipoToDatabase(src.Tipo)))
                 .ReverseMap()
                 .ForMember(dest => dest.LocadorId, opt => opt.MapFrom(src => (int?)src.IdLocador))
