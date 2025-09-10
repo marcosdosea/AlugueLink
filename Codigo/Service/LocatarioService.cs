@@ -42,11 +42,40 @@ namespace Service
         /// <param name="id">ID do Locatário</param>
         public void Delete(int id)
         {
-            var locatario = _context.Locatarios.Find(id);
-            if (locatario != null)
+            using var transaction = _context.Database.BeginTransaction();
+            try
             {
+                var locatario = _context.Locatarios
+                    .Include(l => l.Aluguels)
+                    .FirstOrDefault(l => l.Id == id);
+
+                if (locatario == null)
+                    return;
+
+                // Verificar se há aluguéis ativos
+                var alugueisAtivos = locatario.Aluguels.Where(a => a.Status == "A").Any();
+                if (alugueisAtivos)
+                {
+                    throw new InvalidOperationException("Não é possível excluir um inquilino que possui contratos de aluguel ativos.");
+                }
+
+                // Remover pagamentos relacionados aos aluguéis do locatário
+                var pagamentos = _context.Pagamentos.Where(p => locatario.Aluguels.Select(a => a.Id).Contains(p.Idaluguel));
+                _context.Pagamentos.RemoveRange(pagamentos);
+
+                // Remover aluguéis do locatário
+                _context.Aluguels.RemoveRange(locatario.Aluguels);
+
+                // Remover o locatário
                 _context.Locatarios.Remove(locatario);
+
                 _context.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                throw;
             }
         }
 

@@ -1,13 +1,30 @@
 @model IEnumerable<AlugueLinkWEB.Models.ImovelViewModel>
 @{
     ViewData["Title"] = "Meus Imóveis";
+    var filtro = (ViewBag.Filtro as string ?? "todos").ToLowerInvariant();
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div class="d-flex gap-2">
-        <button class="btn btn-outline-secondary btn-sm active">Todos</button>
-        <button class="btn btn-outline-secondary btn-sm">Alugados</button>
-        <button class="btn btn-outline-secondary btn-sm">Disponíveis</button>
+        <a class="btn btn-outline-secondary btn-sm @(filtro=="todos"?"active":"")" asp-action="Index" asp-route-filtro="todos">Todos</a>
+        <a class="btn btn-outline-secondary btn-sm @(filtro=="alugados"?"active":"")" asp-action="Index" asp-route-filtro="alugados">Alugados</a>
+        <a class="btn btn-outline-secondary btn-sm @(filtro=="disponiveis"||filtro=="disponíveis"?"active":"")" asp-action="Index" asp-route-filtro="disponiveis">Disponíveis</a>
     </div>
     <a asp-action="Create" class="btn btn-primary">+ Novo</a>
 </div>
@@ -46,7 +63,7 @@
                             </ul>
                         </div>
                     </div>
-                    <p class="property-type text-muted small mb-2">@item.Tipo?.ToUpper()</p>
+                    <p class="property-type text-muted small mb-2">@item.TipoTexto</p>
                     <p class="property-address text-muted small mb-3">@item.Bairro, @item.Cidade - @item.Estado</p>
                     
                     @if (item.IsAlugado && !string.IsNullOrEmpty(item.InquilinoAtual))
@@ -111,8 +128,8 @@
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
             <polyline points="9,22 9,12 15,12 15,22"/>
         </svg>
-        <h5 class="text-muted">Nenhum imóvel cadastrado</h5>
-        <p class="text-muted">Comece cadastrando seu primeiro imóvel.</p>
+        <h5 class="text-muted">Nenhum imóvel encontrado</h5>
+        <p class="text-muted">Ajuste os filtros ou cadastre um novo imóvel.</p>
         <a asp-action="Create" class="btn btn-primary">Cadastrar Imóvel</a>
     </div>
 }

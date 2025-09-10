@@ -21,5 +21,8 @@ namespace Core.Service
         IEnumerable<int> GetLocatariosOcupados();
         Aluguel? GetAluguelAtivoByImovel(int idImovel);
         Aluguel? GetAluguelAtivoByLocatario(int idLocatario);
+        
+        // Método para atualização automática de status
+        void AtualizarStatusAlugueis();
     }
 }

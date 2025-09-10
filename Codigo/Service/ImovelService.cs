@@ -72,11 +72,44 @@ namespace Service
         /// <param name="id">ID do Imóvel</param>
         public void Delete(int id)
         {
-            var imovel = _context.Imovels.Find(id);
-            if (imovel != null)
+            using var transaction = _context.Database.BeginTransaction();
+            try
             {
+                var imovel = _context.Imovels
+                    .Include(i => i.Aluguels)
+                    .Include(i => i.Manutencaos)
+                    .FirstOrDefault(i => i.Id == id);
+
+                if (imovel == null)
+                    return;
+
+                // Verificar se há aluguéis ativos
+                var alugueisAtivos = imovel.Aluguels.Where(a => a.Status == "A").Any();
+                if (alugueisAtivos)
+                {
+                    throw new InvalidOperationException("Não é possível excluir um imóvel que possui contratos de aluguel ativos.");
+                }
+
+                // Remover pagamentos relacionados aos aluguéis do imóvel
+                var pagamentos = _context.Pagamentos.Where(p => imovel.Aluguels.Select(a => a.Id).Contains(p.Idaluguel));
+                _context.Pagamentos.RemoveRange(pagamentos);
+
+                // Remover aluguéis do imóvel
+                _context.Aluguels.RemoveRange(imovel.Aluguels);
+
+                // Remover manutenções do imóvel
+                _context.Manutencaos.RemoveRange(imovel.Manutencaos);
+
+                // Remover o imóvel
                 _context.Imovels.Remove(imovel);
+
                 _context.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                throw;
             }
         }
 

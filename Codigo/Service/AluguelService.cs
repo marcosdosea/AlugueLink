@@ -21,6 +21,9 @@ namespace Service
         /// <returns>ID do Aluguel</returns>
         public int Create(Aluguel aluguel)
         {
+            // Normalizar status: "Ativo" -> "A"
+            NormalizeStatus(aluguel);
+            
             _context.Aluguels.Add(aluguel);
             _context.SaveChanges();
             return aluguel.Id;
@@ -32,8 +35,48 @@ namespace Service
         /// <param name="aluguel">Dados do Aluguel</param>
         public void Edit(Aluguel aluguel)
         {
+            // Normalizar status: "Ativo" -> "A"
+            NormalizeStatus(aluguel);
+            
             _context.Aluguels.Update(aluguel);
             _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Normalizar status do aluguel para garantir consistência no banco
+        /// </summary>
+        /// <param name="aluguel">Aluguel a ser normalizado</param>
+        private void NormalizeStatus(Aluguel aluguel)
+        {
+            if (!string.IsNullOrEmpty(aluguel.Status))
+            {
+                switch (aluguel.Status.ToUpper()) // Usar ToUpper para tratar códigos também
+                {
+                    case "ATIVO":
+                        aluguel.Status = "A";
+                        break;
+                    case "FINALIZADO":
+                        aluguel.Status = "F";
+                        break;
+                    case "PENDENTE":
+                        aluguel.Status = "P";
+                        break;
+                    case "A":
+                    case "F": 
+                    case "P":
+                        // Já está no formato correto, não precisa alterar
+                        break;
+                    default:
+                        // Se não reconhecer, manter como "A" (Ativo)
+                        aluguel.Status = "A";
+                        break;
+                }
+            }
+            else
+            {
+                // Se status vier nulo ou vazio, definir como Ativo por padrão
+                aluguel.Status = "A";
+            }
         }
 
         /// <summary>
@@ -81,7 +124,7 @@ namespace Service
         }
 
         /// <summary>
-        /// Buscar aluguels por locatário
+        /// Buscar alugueis por locatário
         /// </summary>
         /// <param name="idLocatario">ID do locatário</param>
         /// <returns>Lista de AluguelDTO</returns>
@@ -105,7 +148,7 @@ namespace Service
         }
 
         /// <summary>
-        /// Buscar aluguels por imóvel
+        /// Buscar alugueis por imóvel
         /// </summary>
         /// <param name="idImovel">ID do imóvel</param>
         /// <returns>Lista de AluguelDTO</returns>
@@ -129,7 +172,7 @@ namespace Service
         }
 
         /// <summary>
-        /// Buscar aluguels por status
+        /// Buscar alugueis por status
         /// </summary>
         /// <param name="status">Status do aluguel</param>
         /// <returns>Lista de AluguelDTO</returns>
@@ -276,6 +319,44 @@ namespace Service
                 .Include(a => a.IdimovelNavigation)
                 .Where(a => a.Idlocatario == idLocatario && a.Status == "A" && a.DataInicio <= hoje && a.DataFim >= hoje)
                 .FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Atualizar status dos aluguéis baseado nas datas atuais
+        /// Este método pode ser chamado periodicamente para manter o status consistente
+        /// </summary>
+        public void AtualizarStatusAlugueis()
+        {
+            var hoje = DateOnly.FromDateTime(DateTime.Now);
+            
+            // Buscar todos os aluguéis que precisam ter status atualizado
+            var alugueis = _context.Aluguels.Where(a => 
+                (a.Status == "A" && a.DataFim < hoje) || // Aluguéis ativos que já expiraram
+                (a.Status == "P" && a.DataInicio <= hoje && a.DataFim >= hoje) // Aluguéis pendentes que já começaram
+            ).ToList();
+
+            bool hasChanges = false;
+
+            foreach (var aluguel in alugueis)
+            {
+                if (aluguel.Status == "A" && aluguel.DataFim < hoje)
+                {
+                    // Aluguel expirado - marcar como finalizado
+                    aluguel.Status = "F";
+                    hasChanges = true;
+                }
+                else if (aluguel.Status == "P" && aluguel.DataInicio <= hoje && aluguel.DataFim >= hoje)
+                {
+                    // Aluguel pendente que já começou - marcar como ativo
+                    aluguel.Status = "A";
+                    hasChanges = true;
+                }
+            }
+
+            if (hasChanges)
+            {
+                _context.SaveChanges();
+            }
         }
     }
 }

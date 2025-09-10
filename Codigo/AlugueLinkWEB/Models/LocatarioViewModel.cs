@@ -76,7 +76,7 @@ namespace AlugueLinkWEB.Models
 
         // Propriedades para status de aluguel
         public bool IsOcupado { get; set; }
-        public string? StatusTexto => IsOcupado ? "Ocupado" : "Disponível";
+        public string? StatusTexto => IsOcupado ? "Ativo" : "Inativo";
         public string? ImovelAtual { get; set; }
         public DateOnly? DataInicioAluguel { get; set; }
         public DateOnly? DataFimAluguel { get; set; }

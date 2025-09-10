@@ -25,18 +25,26 @@ namespace AlugueLinkWEB.Controllers
         }
 
         // GET: Imovel
-        public IActionResult Index(int page = 1, int pageSize = 10)
+        public IActionResult Index(int page = 1, int pageSize = 10, string? filtro = "todos")
         {
-            var imoveis = imovelService.GetAll(page, pageSize);
-            var viewModels = mapper.Map<IEnumerable<ImovelViewModel>>(imoveis);
+            try
+            {
+                // Atualizar status dos aluguéis antes de verificar disponibilidade
+                aluguelService.AtualizarStatusAlugueis();
+            }
+            catch (Exception)
+            {
+                // Continua mesmo se houver erro na atualização
+            }
 
-            // Adicionar informações de status de aluguel
+            var imoveis = imovelService.GetAll(page, pageSize);
+            var viewModels = mapper.Map<IEnumerable<ImovelViewModel>>(imoveis).ToList();
+
+            // Informações de status de aluguel
             var imoveisIndisponiveis = aluguelService.GetImoveisIndisponiveis().ToList();
-            
             foreach (var viewModel in viewModels)
             {
                 viewModel.IsAlugado = imoveisIndisponiveis.Contains(viewModel.Id);
-                
                 if (viewModel.IsAlugado)
                 {
                     var aluguelAtivo = aluguelService.GetAluguelAtivoByImovel(viewModel.Id);
@@ -49,11 +57,29 @@ namespace AlugueLinkWEB.Controllers
                 }
             }
 
+            // Aplicar filtro
+            filtro = (filtro ?? "todos").ToLowerInvariant();
+            IEnumerable<ImovelViewModel> filtrados = viewModels;
+            switch (filtro)
+            {
+                case "alugados":
+                    filtrados = viewModels.Where(vm => vm.IsAlugado);
+                    break;
+                case "disponiveis":
+                case "disponíveis":
+                    filtrados = viewModels.Where(vm => !vm.IsAlugado);
+                    break;
+                default:
+                    filtrados = viewModels;
+                    break;
+            }
+
+            ViewBag.Filtro = filtro;
             ViewBag.TotalItems = imovelService.GetCount();
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 
-            return View(viewModels);
+            return View(filtrados);
         }
 
         // GET: Imovel/Details/5
@@ -94,6 +120,19 @@ namespace AlugueLinkWEB.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(ImovelViewModel viewModel)
         {
+            // Validação condicional para tipo comercial: quartos/banheiros não obrigatórios
+            if (!viewModel.IsComercial)
+            {
+                if (!viewModel.Quartos.HasValue)
+                {
+                    ModelState.AddModelError("Quartos", "Número de quartos é obrigatório para este tipo de imóvel");
+                }
+                if (!viewModel.Banheiros.HasValue)
+                {
+                    ModelState.AddModelError("Banheiros", "Número de banheiros é obrigatório para este tipo de imóvel");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -143,6 +182,19 @@ namespace AlugueLinkWEB.Controllers
                 return NotFound();
             }
 
+            // Validação condicional para tipo comercial: quartos/banheiros não obrigatórios
+            if (!viewModel.IsComercial)
+            {
+                if (!viewModel.Quartos.HasValue)
+                {
+                    ModelState.AddModelError("Quartos", "Número de quartos é obrigatório para este tipo de imóvel");
+                }
+                if (!viewModel.Banheiros.HasValue)
+                {
+                    ModelState.AddModelError("Banheiros", "Número de banheiros é obrigatório para este tipo de imóvel");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -187,8 +239,20 @@ namespace AlugueLinkWEB.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            imovelService.Delete(id);
-            TempData["SuccessMessage"] = "Imóvel excluído com sucesso!";
+            try
+            {
+                imovelService.Delete(id);
+                TempData["SuccessMessage"] = "Imóvel excluído com sucesso!";
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Erro ao excluir imóvel: " + ex.Message;
+            }
+            
             return RedirectToAction(nameof(Index));
         }
 

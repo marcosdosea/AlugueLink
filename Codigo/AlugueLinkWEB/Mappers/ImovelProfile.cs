@@ -27,7 +27,8 @@ namespace AlugueLinkWEB.Mappers
                 "C" => "casa",
                 "A" => "apartamento",
                 "PC" => "comercial",
-                _ => tipoDb
+                "COM" => "comercial", // fallback para possível variação
+                _ => tipoDb?.ToLower() // retorna como está se não encontrar mapeamento
             };
         }
 
@@ -37,8 +38,8 @@ namespace AlugueLinkWEB.Mappers
             {
                 "casa" => "C",
                 "apartamento" => "A",
-                "comercial" => "PC",
-                _ => tipoView
+                "comercial" => "COM", // usar COM ao invés de PC para comercial
+                _ => tipoView // retorna como está se não encontrar mapeamento
             };
         }
     }

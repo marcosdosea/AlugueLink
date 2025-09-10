@@ -45,12 +45,10 @@ namespace AlugueLinkWEB.Models
         public string? Tipo { get; set; }
 
         [Display(Name = "Quartos")]
-        [Required(ErrorMessage = "Número de quartos é obrigatório")]
         [Range(0, 50, ErrorMessage = "Número de quartos deve estar entre 0 e 50")]
         public int? Quartos { get; set; }
 
         [Display(Name = "Banheiros")]
-        [Required(ErrorMessage = "Número de banheiros é obrigatório")]
         [Range(0, 50, ErrorMessage = "Número de banheiros deve estar entre 0 e 50")]
         public int? Banheiros { get; set; }
 
@@ -85,5 +83,28 @@ namespace AlugueLinkWEB.Models
         public string? InquilinoAtual { get; set; }
         public DateOnly? DataInicioAluguel { get; set; }
         public DateOnly? DataFimAluguel { get; set; }
+
+        // Comercial: quartos/banheiros não obrigatórios
+        public bool IsComercial => !string.IsNullOrEmpty(Tipo) &&
+                                   Tipo.Equals("comercial", StringComparison.OrdinalIgnoreCase);
+
+        // Propriedade computed para exibir tipo amigável
+        public string TipoTexto
+        {
+            get
+            {
+                return Tipo switch
+                {
+                    "C" => "Casa",
+                    "A" => "Apartamento", 
+                    "COM" => "Comercial",
+                    "PC" => "Comercial",
+                    "casa" => "Casa",
+                    "apartamento" => "Apartamento",
+                    "comercial" => "Comercial",
+                    _ => Tipo ?? "Não informado"
+                };
+            }
+        }
     }
 }

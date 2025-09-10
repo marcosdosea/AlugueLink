@@ -29,6 +29,17 @@ namespace AlugueLinkWEB.Controllers
         {
             if (User.Identity?.IsAuthenticated == true)
             {
+                try
+                {
+                    // Atualizar status dos aluguéis antes de calcular estatísticas
+                    _aluguelService.AtualizarStatusAlugueis();
+                }
+                catch (Exception ex)
+                {
+                    // Log do erro mas não interrompe a aplicação
+                    _logger.LogWarning(ex, "Erro ao atualizar status dos aluguéis");
+                }
+
                 // Calcular estatísticas para usuários logados
                 var totalImoveis = _imovelService.GetCount();
                 var totalLocatarios = _locatarioService.GetCount();
