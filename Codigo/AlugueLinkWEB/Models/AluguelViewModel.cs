@@ -37,7 +37,42 @@ namespace AlugueLinkWEB.Models
         // Propriedades para exibição
         public string? LocatarioNome { get; set; }
         public string? ImovelEndereco { get; set; }
+        public string? ImovelTipo { get; set; }
         public decimal? ImovelValor { get; set; }
+
+        // Propriedade computed para exibir status amigável
+        public string StatusTexto
+        {
+            get
+            {
+                return Status switch
+                {
+                    "A" => "Ativo",
+                    "F" => "Finalizado",
+                    "P" => "Pendente",
+                    _ => Status ?? "Desconhecido"
+                };
+            }
+        }
+
+        // Propriedade computed para exibir tipo de imóvel amigável
+        public string ImovelTipoTexto
+        {
+            get
+            {
+                return ImovelTipo switch
+                {
+                    "A" => "Apartamento",
+                    "C" => "Casa", 
+                    "PC" => "Comercial",
+                    "COM" => "Comercial", // fallback para possível variação
+                    "casa" => "Casa",
+                    "apartamento" => "Apartamento",
+                    "comercial" => "Comercial",
+                    _ => ImovelTipo ?? "Não informado"
+                };
+            }
+        }
 
         // Para validação customizada
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

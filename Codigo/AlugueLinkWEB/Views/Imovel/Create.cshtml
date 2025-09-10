@@ -92,7 +92,7 @@
                             <div class="row g-3">
                                 <div class="col-12">
                                     <label asp-for="Tipo" class="form-label">Tipo de Imóvel <span class="required">*</span></label>
-                                    <select asp-for="Tipo" class="form-select" required>
+                                    <select asp-for="Tipo" class="form-select" required id="tipoImovel">
                                         <option value="">Selecione o tipo</option>
                                         <option value="casa">Casa</option>
                                         <option value="apartamento">Apartamento</option>
@@ -100,14 +100,14 @@
                                     </select>
                                     <span asp-validation-for="Tipo" class="text-danger"></span>
                                 </div>
-                                <div class="col-6 col-md-3">
-                                    <label asp-for="Quartos" class="form-label">Quartos <span class="required">*</span></label>
-                                    <input asp-for="Quartos" class="form-control" type="number" min="0" max="50" step="1" placeholder="0" required oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(parseInt(this.value) > 50) this.value = 50;" />
+                                <div class="col-6 col-md-3 conditional-field" id="quartosContainer">
+                                    <label asp-for="Quartos" class="form-label">Quartos <span class="required quartos-required">*</span></label>
+                                    <input asp-for="Quartos" class="form-control" type="number" min="0" max="50" step="1" placeholder="0" id="quartosField" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(parseInt(this.value) > 50) this.value = 50;" />
                                     <span asp-validation-for="Quartos" class="text-danger"></span>
                                 </div>
-                                <div class="col-6 col-md-3">
-                                    <label asp-for="Banheiros" class="form-label">Banheiros <span class="required">*</span></label>
-                                    <input asp-for="Banheiros" class="form-control" type="number" min="0" max="50" step="1" placeholder="0" required oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(parseInt(this.value) > 50) this.value = 50;" />
+                                <div class="col-6 col-md-3 conditional-field" id="banheirosContainer">
+                                    <label asp-for="Banheiros" class="form-label">Banheiros <span class="required banheiros-required">*</span></label>
+                                    <input asp-for="Banheiros" class="form-control" type="number" min="0" max="50" step="1" placeholder="0" id="banheirosField" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(parseInt(this.value) > 50) this.value = 50;" />
                                     <span asp-validation-for="Banheiros" class="text-danger"></span>
                                 </div>
                                 <div class="col-6 col-md-3">
@@ -167,105 +167,107 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-        // Função para formatar entrada decimal com vírgula
-        function formatDecimalInput(input) {
-            let value = input.value;
-            
-            // Remove tudo que não seja número ou vírgula
-            value = value.replace(/[^0-9,]/g, '');
-            
-            // Se há vírgula, garante apenas uma e limita a 2 dígitos após ela
-            if (value.includes(',')) {
-                let parts = value.split(',');
-                if (parts.length > 2) {
-                    // Remove vírgulas extras - mantém apenas a primeira
-                    value = parts[0] + ',' + parts.slice(1).join('');
-                    parts = value.split(',');
-                }
-                if (parts[1] && parts[1].length > 2) {
-                    parts[1] = parts[1].substring(0, 2);
-                    value = parts[0] + ',' + parts[1];
-                }
-            }
-            
-            input.value = value;
-            
-            // Remove mensagem de validação customizada se o campo tiver valor
-            if (value.trim()) {
-                input.setCustomValidity('');
+        // Função para controlar obrigatoriedade dos campos baseado no tipo do imóvel
+        function toggleFieldRequirements() {
+            const tipoImovel = document.getElementById('tipoImovel');
+            const quartosField = document.getElementById('quartosField');
+            const banheirosField = document.getElementById('banheirosField');
+            const quartosContainer = document.getElementById('quartosContainer');
+            const banheirosContainer = document.getElementById('banheirosContainer');
+            const quartosRequired = document.querySelector('.quartos-required');
+            const banheirosRequired = document.querySelector('.banheiros-required');
+
+            const isComercial = tipoImovel.value === 'comercial';
+
+            if (isComercial) {
+                quartosField.removeAttribute('required');
+                banheirosField.removeAttribute('required');
+                quartosRequired.style.display = 'none';
+                banheirosRequired.style.display = 'none';
+                quartosContainer.classList.add('optional');
+                banheirosContainer.classList.add('optional');
+                quartosField.placeholder = '0 (opcional)';
+                banheirosField.placeholder = '0 (opcional)';
+            } else {
+                quartosField.setAttribute('required', 'required');
+                banheirosField.setAttribute('required', 'required');
+                quartosRequired.style.display = 'inline';
+                banheirosRequired.style.display = 'inline';
+                quartosContainer.classList.remove('optional');
+                banheirosContainer.classList.remove('optional');
+                quartosField.placeholder = '0';
+                banheirosField.placeholder = '0';
             }
         }
 
-        // Função para validar campos decimais customizados
+        document.addEventListener('DOMContentLoaded', function() {
+            const tipoImovel = document.getElementById('tipoImovel');
+            tipoImovel.addEventListener('change', toggleFieldRequirements);
+            toggleFieldRequirements();
+        });
+
+        // Função para formatar entrada decimal com vírgula e uma vírgula no máximo
+        function formatDecimalInput(input) {
+            let value = input.value;
+            value = value.replace(/[^0-9,]/g, '');
+
+            // mantém apenas a primeira vírgula
+            const firstCommaIndex = value.indexOf(',');
+            if (firstCommaIndex !== -1) {
+                const before = value.substring(0, firstCommaIndex + 1);
+                const after = value.substring(firstCommaIndex + 1).replace(/,/g, '');
+                value = before + after;
+            }
+
+            // limita a duas casas decimais
+            if (value.includes(',')) {
+                const [intPart, decPartRaw] = value.split(',');
+                const decPart = (decPartRaw || '').slice(0, 2);
+                value = intPart + (decPart.length ? ',' + decPart : ',');
+            }
+
+            input.value = value;
+            if (value.trim()) input.setCustomValidity('');
+        }
+
         function validateDecimalField(input) {
             const value = input.value.trim();
-            
             if (input.hasAttribute('required') && !value) {
                 input.setCustomValidity('Este campo é obrigatório');
                 return false;
             }
-            
-            if (value && !/^[0-9]+(\,[0-9]{1,2})?$/.test(value)) {
+            if (value && !/^[0-9]+(\,[0-9]{0,2})?$/.test(value)) {
                 input.setCustomValidity('Digite um valor válido (ex: 1000,50)');
                 return false;
             }
-            
             input.setCustomValidity('');
             return true;
         }
 
-        // Validação de formulário com destaque
+        // Validação e conversão antes do envio
         document.getElementById('imovelForm').addEventListener('submit', function(e) {
             let isValid = true;
-            
-            // Validar campos decimais customizados
+
             const decimalFields = this.querySelectorAll('[data-decimal-field="true"]');
             decimalFields.forEach(field => {
                 if (!validateDecimalField(field)) {
                     isValid = false;
                     field.classList.add('field-error');
-                    setTimeout(() => {
-                        field.classList.remove('field-error');
-                    }, 3000);
                 }
             });
-            
-            // Validar outros campos obrigatórios
-            const requiredFields = this.querySelectorAll('[required]:not([data-decimal-field="true"])');
-            requiredFields.forEach(field => {
-                field.classList.remove('field-error');
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.classList.add('field-error');
-                    
-                    // Remove o destaque após 3 segundos
-                    setTimeout(() => {
-                        field.classList.remove('field-error');
-                    }, 3000);
-                }
-            });
-            
+
             if (!isValid) {
                 e.preventDefault();
-                // Scroll para o primeiro campo com erro
                 const firstError = this.querySelector('.field-error');
-                if (firstError) {
-                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    firstError.focus();
-                }
+                if (firstError) { firstError.focus(); }
+                return;
             }
-        });
 
-        // Listener para validação em tempo real nos campos decimais
-        document.querySelectorAll('[data-decimal-field="true"]').forEach(field => {
-            field.addEventListener('blur', function() {
-                validateDecimalField(this);
-            });
-            
-            field.addEventListener('input', function() {
-                // Remove mensagem de erro quando usuário começa a digitar
-                this.setCustomValidity('');
-                this.classList.remove('field-error');
+            // Converte vírgula para ponto
+            decimalFields.forEach(field => {
+                if (field.value && field.value.includes(',')) {
+                    field.value = field.value.replace('.', '').replace(',', '.');
+                }
             });
         });
     </script>

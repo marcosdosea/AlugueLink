@@ -15,10 +15,11 @@
                 <form asp-action="Create" method="post">
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
                     
-                    <div class="alert alert-info" role="alert">
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
                         <i class="fas fa-info-circle me-2"></i>
-                        <strong>Importante:</strong> Apenas inquilinos e imóveis disponíveis aparecem nas listas abaixo.
+                        <strong>Importante:</strong> Apenas imóveis disponíveis aparecem na lista abaixo.
                         Recursos já em uso por contratos ativos são automaticamente filtrados.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     
                     <div class="row">

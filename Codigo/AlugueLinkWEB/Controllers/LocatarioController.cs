@@ -177,8 +177,20 @@ namespace AlugueLinkWEB.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            locatarioService.Delete(id);
-            TempData["SuccessMessage"] = "Locatário excluído com sucesso!";
+            try
+            {
+                locatarioService.Delete(id);
+                TempData["SuccessMessage"] = "Inquilino excluído com sucesso!";
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Erro ao excluir inquilino: " + ex.Message;
+            }
+            
             return RedirectToAction(nameof(Index));
         }
     }

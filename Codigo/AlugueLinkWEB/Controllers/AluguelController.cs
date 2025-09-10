@@ -26,16 +26,46 @@ namespace AlugueLinkWEB.Controllers
         }
 
         // GET: Aluguel
-        public IActionResult Index(int page = 1, int pageSize = 10)
+        public IActionResult Index(int page = 1, int pageSize = 10, string? filtro = "todos")
         {
-            var aluguels = aluguelService.GetAll(page, pageSize);
-            var viewModels = mapper.Map<IEnumerable<AluguelViewModel>>(aluguels);
+            try
+            {
+                // Atualizar status dos aluguéis antes de listar
+                aluguelService.AtualizarStatusAlugueis();
+            }
+            catch (Exception)
+            {
+                // Continua mesmo se houver erro na atualização
+            }
 
+            var aluguels = aluguelService.GetAll(page, pageSize);
+            var viewModels = mapper.Map<IEnumerable<AluguelViewModel>>(aluguels).ToList();
+
+            // Aplicar filtro - agora usando códigos diretos do banco
+            filtro = (filtro ?? "todos").ToLowerInvariant();
+            IEnumerable<AluguelViewModel> filtrados = viewModels;
+            switch (filtro)
+            {
+                case "ativos":
+                    filtrados = viewModels.Where(vm => vm.Status == "A");
+                    break;
+                case "finalizados":
+                    filtrados = viewModels.Where(vm => vm.Status == "F");
+                    break;
+                case "pendentes":
+                    filtrados = viewModels.Where(vm => vm.Status == "P");
+                    break;
+                default:
+                    filtrados = viewModels;
+                    break;
+            }
+
+            ViewBag.Filtro = filtro;
             ViewBag.TotalItems = aluguelService.GetCount();
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
 
-            return View(viewModels);
+            return View(filtrados);
         }
 
         // GET: Aluguel/Details/5
@@ -172,24 +202,19 @@ namespace AlugueLinkWEB.Controllers
 
         private void PopulateDropDownLists(AluguelViewModel? viewModel = null)
         {
-            // Obter listas de indisponíveis
+            // Obter lista de imóveis indisponíveis
             var imoveisIndisponiveis = aluguelService.GetImoveisIndisponiveis().ToList();
-            var locatariosOcupados = aluguelService.GetLocatariosOcupados().ToList();
 
-            // Carregar locatários disponíveis
-            var todosLocatarios = locatarioService.GetAll(1, 1000); // Assumindo limite razoável
-            var locatariosDisponiveis = todosLocatarios.Where(l => 
-                !locatariosOcupados.Contains(l.Id) || 
-                (viewModel?.IdLocatario.HasValue == true && l.Id == viewModel.IdLocatario.Value)
-            );
+            // Carregar todos os locatários (agora podem ter múltiplos aluguéis)
+            var todosLocatarios = locatarioService.GetAll(1, 1000);
 
-            ViewBag.IdLocatario = new SelectList(locatariosDisponiveis.Select(l => new { 
+            ViewBag.IdLocatario = new SelectList(todosLocatarios.Select(l => new { 
                 Value = l.Id, 
-                Text = $"{l.Nome} - {l.Email}" + (locatariosOcupados.Contains(l.Id) ? " (Ocupado)" : "")
+                Text = $"{l.Nome} - {l.Email}"
             }), "Value", "Text", viewModel?.IdLocatario);
 
             // Carregar imóveis disponíveis
-            var todosImoveis = imovelService.GetAll(1, 1000); // Assumindo limite razoável
+            var todosImoveis = imovelService.GetAll(1, 1000);
             var imoveisDisponiveis = todosImoveis.Where(i => 
                 !imoveisIndisponiveis.Contains(i.Id) || 
                 (viewModel?.IdImovel.HasValue == true && i.Id == viewModel.IdImovel.Value)
@@ -200,12 +225,12 @@ namespace AlugueLinkWEB.Controllers
                 Text = $"{i.Logradouro}, {i.Numero} - {i.Bairro} (R$ {i.Valor:N2})" + (imoveisIndisponiveis.Contains(i.Id) ? " (Alugado)" : "")
             }), "Value", "Text", viewModel?.IdImovel);
 
-            // Status
+            // Status - usar códigos do banco mas exibir nomes amigáveis
             ViewBag.Status = new SelectList(new[]
             {
-                new { Value = "Ativo", Text = "Ativo" },
-                new { Value = "Finalizado", Text = "Finalizado" },
-                new { Value = "Pendente", Text = "Pendente" }
+                new { Value = "A", Text = "Ativo" },
+                new { Value = "F", Text = "Finalizado" },
+                new { Value = "P", Text = "Pendente" }
             }, "Value", "Text", viewModel?.Status);
         }
 
@@ -221,19 +246,6 @@ namespace AlugueLinkWEB.Controllers
                 {
                     ModelState.AddModelError("IdLocatario", "Locatário selecionado não existe.");
                     isValid = false;
-                }
-                else
-                {
-                    // Verificar se o locatário está disponível no período
-                    if (!aluguelService.IsLocatarioAvailable(
-                        viewModel.IdLocatario.Value,
-                        viewModel.DataInicio,
-                        viewModel.DataFim,
-                        viewModel.Id > 0 ? viewModel.Id : null))
-                    {
-                        ModelState.AddModelError("IdLocatario", "Este inquilino já possui um contrato ativo no período selecionado.");
-                        isValid = false;
-                    }
                 }
             }
 

@@ -29,10 +29,11 @@ namespace AlugueLinkWEB.Mappers
                 .ForMember(dest => dest.DataAssinatura, opt => opt.MapFrom(src => (DateOnly?)src.DataAssinatura))
                 .ForMember(dest => dest.IdLocatario, opt => opt.MapFrom(src => (int?)src.Idlocatario))
                 .ForMember(dest => dest.IdImovel, opt => opt.MapFrom(src => (int?)src.Idimovel))
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => MapStatusFromDatabase(src.Status)))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status)) // Usar código direto do banco (A, F, P)
                 .ForMember(dest => dest.LocatarioNome, opt => opt.MapFrom(src => src.IdlocatarioNavigation != null ? src.IdlocatarioNavigation.Nome : ""))
                 .ForMember(dest => dest.ImovelEndereco, opt => opt.MapFrom(src => src.IdimovelNavigation != null ? 
                     $"{src.IdimovelNavigation.Logradouro}, {src.IdimovelNavigation.Numero} - {src.IdimovelNavigation.Bairro}" : ""))
+                .ForMember(dest => dest.ImovelTipo, opt => opt.MapFrom(src => src.IdimovelNavigation != null ? src.IdimovelNavigation.Tipo : ""))
                 .ForMember(dest => dest.ImovelValor, opt => opt.MapFrom(src => src.IdimovelNavigation != null ? (decimal?)src.IdimovelNavigation.Valor : null));
         }
 
@@ -52,9 +53,12 @@ namespace AlugueLinkWEB.Mappers
             return statusView switch
             {
                 "Ativo" => "A",
-                "Finalizado" => "F",
+                "Finalizado" => "F", 
                 "Pendente" => "P",
-                _ => "A" // Default para Ativo se não especificado
+                "A" => "A", // Já está no formato correto
+                "F" => "F", // Já está no formato correto
+                "P" => "P", // Já está no formato correto
+                _ => statusView ?? "A" // Default para Ativo se não especificado
             };
         }
     }
