@@ -1,0 +1,102 @@
+/* Estilos para a integração com ViaCEP */
+
+/* Loading state for address fields during CEP lookup */
+.loading-address {
+    position: relative;
+    background-color: #f8f9fa !important;
+    color: #6c757d !important;
+    font-style: italic;
+}
+
+.loading-address::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid #dee2e6;
+    border-top: 2px solid #6c757d;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translateY(-50%) rotate(0deg); }
+    100% { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* Error state for invalid CEP */
+.is-invalid {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+/* Success state for valid CEP lookup */
+.is-valid {
+    border-color: #28a745 !important;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
+}
+
+/* Custom styling for CEP input */
+#Cep {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
+}
+
+/* Tooltip for CEP field */
+.cep-tooltip {
+    position: relative;
+}
+
+.cep-tooltip::after {
+    content: 'Digite o CEP para preenchimento automático';
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    background-color: #343a40;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+.cep-tooltip:hover::after {
+    opacity: 1;
+}
+
+/* Animation for form fields being populated */
+.field-populated {
+    animation: fieldPopulate 0.3s ease-in-out;
+}
+
+@keyframes fieldPopulate {
+    0% {
+        background-color: #e3f2fd;
+        transform: scale(1.02);
+    }
+    100% {
+        background-color: inherit;
+        transform: scale(1);
+    }
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .loading-address::after {
+        width: 14px;
+        height: 14px;
+        right: 10px;
+    }
+    
+    .cep-tooltip::after {
+        font-size: 11px;
+        bottom: -22px;
+    }
+}

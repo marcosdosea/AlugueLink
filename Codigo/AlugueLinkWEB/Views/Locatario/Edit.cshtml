@@ -58,12 +58,13 @@
                 <div class="row">
                     <div class="col-md-3 mb-3">
                         <label asp-for="Cep" class="form-label"></label>
-                        <input asp-for="Cep" class="form-control" placeholder="00000000" maxlength="8" />
+                        <input asp-for="Cep" class="form-control" placeholder="00000-000" maxlength="9" id="Cep" />
                         <span asp-validation-for="Cep" class="text-danger"></span>
+                        <div id="cep-error-message" class="text-danger small" style="display: none;"></div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label asp-for="Logradouro" class="form-label"></label>
-                        <input asp-for="Logradouro" class="form-control" placeholder="Rua, Avenida, etc." />
+                        <input asp-for="Logradouro" class="form-control" placeholder="Rua, Avenida, etc." id="Logradouro" />
                         <span asp-validation-for="Logradouro" class="text-danger"></span>
                     </div>
                     <div class="col-md-3 mb-3">
@@ -76,29 +77,29 @@
                 <div class="row">
                     <div class="col-md-3 mb-3">
                         <label asp-for="Complemento" class="form-label"></label>
-                        <input asp-for="Complemento" class="form-control" placeholder="Apt 101, Bloco A" />
+                        <input asp-for="Complemento" class="form-control" placeholder="Apt 101, Bloco A" id="Complemento" />
                         <span asp-validation-for="Complemento" class="text-danger"></span>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label asp-for="Bairro" class="form-label"></label>
-                        <input asp-for="Bairro" class="form-control" placeholder="Centro, Vila Nova" />
+                        <input asp-for="Bairro" class="form-control" placeholder="Centro, Vila Nova" id="Bairro" />
                         <span asp-validation-for="Bairro" class="text-danger"></span>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label asp-for="Cidade" class="form-label"></label>
-                        <input asp-for="Cidade" class="form-control" placeholder="São Paulo" />
+                        <input asp-for="Cidade" class="form-control" placeholder="São Paulo" id="Cidade" />
                         <span asp-validation-for="Cidade" class="text-danger"></span>
                     </div>
                     <div class="col-md-2 mb-3">
                         <label asp-for="Estado" class="form-label"></label>
-                        <select asp-for="Estado" class="form-select">
+                        <select asp-for="Estado" class="form-select" id="Estado">
                             <option value="">UF</option>
-                            <option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option>
-                            <option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option>
-                            <option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option>
-                            <option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
-                            <option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option>
-                            <option>SE</option><option>TO</option>
+                            <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option>
+                            <option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option>
+                            <option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option>
+                            <option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option>
+                            <option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option>
+                            <option value="SE">SE</option><option value="TO">TO</option>
                         </select>
                         <span asp-validation-for="Estado" class="text-danger"></span>
                     </div>
@@ -137,4 +138,18 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/viacep-util.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar ViaCEP
+            ViaCepUtil.init({
+                cep: 'Cep',
+                logradouro: 'Logradouro',
+                complemento: 'Complemento',
+                bairro: 'Bairro',
+                cidade: 'Cidade',
+                estado: 'Estado'
+            });
+        });
+    </script>
 }
