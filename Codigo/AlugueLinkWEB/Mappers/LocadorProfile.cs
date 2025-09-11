@@ -12,7 +12,7 @@ namespace AlugueLinkWEB.Mappers
     {
         public LocadorProfile()
         {
-            CreateMap<LocadorDTO, Locador>()
+            CreateMap<LocadorDto, Locador>()
                 .ReverseMap();
             
             CreateMap<LocadorViewModel, Locador>()

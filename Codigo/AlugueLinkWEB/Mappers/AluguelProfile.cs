@@ -12,7 +12,7 @@ namespace AlugueLinkWEB.Mappers
     {
         public AluguelProfile()
         {
-            CreateMap<AluguelDTO, Aluguel>()
+            CreateMap<AluguelDto, Aluguel>()
                 .ReverseMap();
 
             CreateMap<AluguelViewModel, Aluguel>()
@@ -33,32 +33,18 @@ namespace AlugueLinkWEB.Mappers
                 .ForMember(dest => dest.LocatarioNome, opt => opt.MapFrom(src => src.IdlocatarioNavigation != null ? src.IdlocatarioNavigation.Nome : ""))
                 .ForMember(dest => dest.ImovelEndereco, opt => opt.MapFrom(src => src.IdimovelNavigation != null ? 
                     $"{src.IdimovelNavigation.Logradouro}, {src.IdimovelNavigation.Numero} - {src.IdimovelNavigation.Bairro}" : ""))
-                .ForMember(dest => dest.ImovelTipo, opt => opt.MapFrom(src => src.IdimovelNavigation != null ? src.IdimovelNavigation.Tipo : ""))
-                .ForMember(dest => dest.ImovelValor, opt => opt.MapFrom(src => src.IdimovelNavigation != null ? (decimal?)src.IdimovelNavigation.Valor : null));
+                .ForMember(dest => dest.ImovelTipo, opt => opt.MapFrom(src => src.IdimovelNavigation != null ? src.IdimovelNavigation.Tipo : ""));
         }
 
-        private static string? MapStatusFromDatabase(string? statusDb)
+        private static string MapStatusToDatabase(string? status)
         {
-            return statusDb switch
+            return status?.ToUpper() switch
             {
-                "A" => "Ativo",
-                "F" => "Finalizado",
-                "P" => "Pendente",
-                _ => statusDb
-            };
-        }
-
-        private static string? MapStatusToDatabase(string? statusView)
-        {
-            return statusView switch
-            {
-                "Ativo" => "A",
-                "Finalizado" => "F", 
-                "Pendente" => "P",
-                "A" => "A", // Já está no formato correto
-                "F" => "F", // Já está no formato correto
-                "P" => "P", // Já está no formato correto
-                _ => statusView ?? "A" // Default para Ativo se não especificado
+                "ATIVO" => "A",
+                "FINALIZADO" => "F", 
+                "PENDENTE" => "P",
+                "A" or "F" or "P" => status,
+                _ => "A" // padrão
             };
         }
     }

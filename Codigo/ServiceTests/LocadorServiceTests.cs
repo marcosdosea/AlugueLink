@@ -1,4 +1,5 @@
 using Core;
+using Core.DTO;
 using Core.Service;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +18,7 @@ namespace Service.Tests
         {
             //Arrange
             var builder = new DbContextOptionsBuilder<AluguelinkContext>();
-            builder.UseInMemoryDatabase("aluguelinkdb_locador");
+            builder.UseInMemoryDatabase("aluguelinkdb");
             var options = builder.Options;
 
             context = new AluguelinkContext(options);
@@ -39,6 +40,13 @@ namespace Service.Tests
                     Email = "maria@gmail.com",
                     Cpf = "98765432100",
                     Telefone = "21987654321"
+                },
+                new() {
+                    Id = 3,
+                    Nome = "Carlos Silva",
+                    Email = "carlos@gmail.com",
+                    Cpf = "11122233344",
+                    Telefone = "11888888888"
                 }
             };
 
@@ -51,22 +59,153 @@ namespace Service.Tests
         [TestMethod()]
         public void CreateTest()
         {
-            // TODO: Implementar teste de criação de locador
-            Assert.IsTrue(true);
+            // Act
+            var novoLocador = locadorService.Create(new Locador()
+            {
+                Nome = "Ana Proprietária",
+                Email = "ana@gmail.com",
+                Cpf = "55566677788",
+                Telefone = "31999999999"
+            });
+
+            // Assert
+            Assert.AreEqual(4, novoLocador);
+            Assert.AreEqual(4, locadorService.GetAll(page, pageSize).Count());
+            var locador = locadorService.Get(4);
+            Assert.IsNotNull(locador);
+            Assert.AreEqual(4, locador.Id);
+            Assert.AreEqual("Ana Proprietária", locador.Nome);
+            Assert.AreEqual("ana@gmail.com", locador.Email);
+            Assert.AreEqual("55566677788", locador.Cpf);
+            Assert.AreEqual("31999999999", locador.Telefone);
+        }
+
+        [TestMethod()]
+        public void DeleteTest()
+        {
+            // Act
+            locadorService.Delete(2);
+
+            // Assert
+            Assert.AreEqual(2, locadorService.GetAll(page, pageSize).Count());
+            var locador = locadorService.Get(2);
+            Assert.IsNull(locador);
+        }
+
+        [TestMethod()]
+        public void EditTest()
+        {
+            //Act 
+            var locador = locadorService.Get(3);
+            Assert.IsNotNull(locador);
+            locador.Nome = "Carlos Silva Editado";
+            locador.Email = "carlos.editado@gmail.com";
+            locador.Telefone = "11777777777";
+            locadorService.Edit(locador);
+
+            //Assert
+            locador = locadorService.Get(3);
+            Assert.IsNotNull(locador);
+            Assert.AreEqual("Carlos Silva Editado", locador.Nome);
+            Assert.AreEqual("carlos.editado@gmail.com", locador.Email);
+            Assert.AreEqual("11777777777", locador.Telefone);
+            Assert.AreEqual(3, locador.Id);
         }
 
         [TestMethod()]
         public void GetTest()
         {
-            // TODO: Implementar teste de busca de locador
-            Assert.IsTrue(true);
+            // Act
+            var locador = locadorService.Get(1);
+
+            // Assert
+            Assert.IsNotNull(locador);
+            Assert.AreEqual("João Proprietário", locador.Nome);
+            Assert.AreEqual("joao@gmail.com", locador.Email);
+            Assert.AreEqual("12345678901", locador.Cpf);
+            Assert.AreEqual("11999999999", locador.Telefone);
+            Assert.AreEqual(1, locador.Id);
         }
 
         [TestMethod()]
         public void GetAllTest()
         {
-            // TODO: Implementar teste de listagem de locadores
-            Assert.IsTrue(true);
+            // Act
+            var listaLocadores = locadorService.GetAll(page, pageSize);
+
+            // Assert
+            Assert.IsInstanceOfType(listaLocadores, typeof(IEnumerable<Locador>));
+            Assert.IsNotNull(listaLocadores);
+            Assert.AreEqual(3, listaLocadores.Count());
+            Assert.AreEqual(1, listaLocadores.First().Id);
+            Assert.AreEqual("João Proprietário", listaLocadores.First().Nome);
+        }
+
+        [TestMethod()]
+        public void GetByCpfTest()
+        {
+            //Act
+            var locadores = locadorService.GetByCpf("12345678901");
+
+            //Assert
+            Assert.IsInstanceOfType(locadores, typeof(IEnumerable<LocadorDto>));
+            Assert.IsNotNull(locadores);
+            Assert.AreEqual(1, locadores.Count());
+            var locador = locadores.First();
+            Assert.AreEqual("João Proprietário", locador.Nome);
+            Assert.AreEqual("12345678901", locador.Cpf);
+            Assert.AreEqual("joao@gmail.com", locador.Email);
+        }
+
+        [TestMethod()]
+        public void GetByCpfTest_Inexistente_DeveRetornarVazio()
+        {
+            //Act
+            var locadores = locadorService.GetByCpf("00000000000");
+
+            //Assert
+            Assert.IsInstanceOfType(locadores, typeof(IEnumerable<LocadorDto>));
+            Assert.IsNotNull(locadores);
+            Assert.AreEqual(0, locadores.Count());
+        }
+
+        [TestMethod()]
+        public void GetByNomeTest()
+        {
+            //Act
+            var locadores = locadorService.GetByNome("Maria");
+
+            //Assert
+            Assert.IsInstanceOfType(locadores, typeof(IEnumerable<LocadorDto>));
+            Assert.IsNotNull(locadores);
+            Assert.AreEqual(1, locadores.Count());
+            var locador = locadores.First();
+            Assert.AreEqual("Maria Proprietária", locador.Nome);
+            Assert.AreEqual("maria@gmail.com", locador.Email);
+        }
+
+        [TestMethod()]
+        public void GetByNomeTest_BuscaParcial()
+        {
+            //Act
+            var locadores = locadorService.GetByNome("Silva");
+
+            //Assert
+            Assert.IsInstanceOfType(locadores, typeof(IEnumerable<LocadorDto>));
+            Assert.IsNotNull(locadores);
+            Assert.AreEqual(1, locadores.Count());
+            var locador = locadores.First();
+            Assert.AreEqual("Carlos Silva", locador.Nome);
+        }
+
+        [TestMethod()]
+        public void GetCountTest()
+        {
+            // Act
+            var count = locadorService.GetCount();
+
+            // Assert
+            Assert.AreEqual(3, count);
         }
     }
 }

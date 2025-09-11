@@ -9,8 +9,8 @@ namespace Core.Service
         void Delete(int id);
         Locador? Get(int id);
         IEnumerable<Locador> GetAll(int page, int pageSize);
-        IEnumerable<LocadorDTO> GetByCpf(string cpf);
-        IEnumerable<LocadorDTO> GetByNome(string nome);
+        IEnumerable<LocadorDto> GetByCpf(string cpf);
+        IEnumerable<LocadorDto> GetByNome(string nome);
         int GetCount();
     }
 }

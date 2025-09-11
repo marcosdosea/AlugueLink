@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Util;
 
 namespace AlugueLinkWEB.Models
 {
@@ -28,12 +29,13 @@ namespace AlugueLinkWEB.Models
 
         [Display(Name = "CPF")]
         [Required(ErrorMessage = "CPF é obrigatório")]
-        [StringLength(11, ErrorMessage = "CPF deve ter 11 caracteres")]
+        [CPF(ErrorMessage = "CPF inválido")]
+        [StringLength(14, ErrorMessage = "CPF deve ter no máximo 14 caracteres")]
         public string Cpf { get; set; } = string.Empty;
 
         [Display(Name = "CEP")]
         [Required(ErrorMessage = "CEP é obrigatório")]
-        [StringLength(8, ErrorMessage = "CEP deve ter 8 caracteres")]
+        [StringLength(9, ErrorMessage = "CEP deve ter no máximo 9 caracteres")]
         public string Cep { get; set; } = string.Empty;
 
         [Display(Name = "Logradouro")]

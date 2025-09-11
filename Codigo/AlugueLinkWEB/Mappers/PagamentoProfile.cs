@@ -11,7 +11,7 @@ namespace AlugueLinkWEB.Mappers
     {
         public PagamentoProfile()
         {
-            CreateMap<PagamentoDTO, Pagamento>()
+            CreateMap<PagamentoDto, Pagamento>()
                 .ReverseMap();
         }
     }

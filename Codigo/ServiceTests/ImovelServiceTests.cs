@@ -17,7 +17,7 @@ namespace Service.Tests
         {
             //Arrange
             var builder = new DbContextOptionsBuilder<AluguelinkContext>();
-            builder.UseInMemoryDatabase("aluguelinkdb_imovel");
+            builder.UseInMemoryDatabase("aluguelinkdb");
             var options = builder.Options;
 
             context = new AluguelinkContext(options);
@@ -232,7 +232,7 @@ namespace Service.Tests
             var imoveis = imovelService.GetByLocador(1);
 
             //Assert
-            Assert.IsInstanceOfType(imoveis, typeof(IEnumerable<Core.DTO.ImovelDTO>));
+            Assert.IsInstanceOfType(imoveis, typeof(IEnumerable<Core.DTO.ImovelDto>));
             Assert.IsNotNull(imoveis);
             Assert.AreEqual(2, imoveis.Count());
             Assert.IsTrue(imoveis.Any(i => i.Logradouro == "Rua das Flores"));
@@ -246,7 +246,7 @@ namespace Service.Tests
             var imoveis = imovelService.GetByTipo("A");
 
             //Assert
-            Assert.IsInstanceOfType(imoveis, typeof(IEnumerable<Core.DTO.ImovelDTO>));
+            Assert.IsInstanceOfType(imoveis, typeof(IEnumerable<Core.DTO.ImovelDto>));
             Assert.IsNotNull(imoveis);
             Assert.AreEqual(2, imoveis.Count());
             Assert.IsTrue(imoveis.All(i => i.Tipo == "A"));
@@ -259,7 +259,7 @@ namespace Service.Tests
             var imoveis = imovelService.GetByValorRange(2000.00m, 3000.00m);
 
             //Assert
-            Assert.IsInstanceOfType(imoveis, typeof(IEnumerable<Core.DTO.ImovelDTO>));
+            Assert.IsInstanceOfType(imoveis, typeof(IEnumerable<Core.DTO.ImovelDto>));
             Assert.IsNotNull(imoveis);
             Assert.AreEqual(2, imoveis.Count());
             Assert.IsTrue(imoveis.All(i => i.Valor >= 2000.00m && i.Valor <= 3000.00m));

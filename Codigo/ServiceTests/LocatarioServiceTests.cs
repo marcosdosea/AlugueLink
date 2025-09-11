@@ -206,7 +206,7 @@ namespace Service.Tests
             var locatarios = locatarioService.GetByCpf("12345678901");
 
             //Assert
-            Assert.IsInstanceOfType(locatarios, typeof(IEnumerable<Core.DTO.LocatarioDTO>));
+            Assert.IsInstanceOfType(locatarios, typeof(IEnumerable<Core.DTO.LocatarioDto>));
             Assert.IsNotNull(locatarios);
             Assert.AreEqual(1, locatarios.Count());
             var locatario = locatarios.First();
@@ -221,7 +221,7 @@ namespace Service.Tests
             var locatarios = locatarioService.GetByNome("Maria");
 
             //Assert
-            Assert.IsInstanceOfType(locatarios, typeof(IEnumerable<Core.DTO.LocatarioDTO>));
+            Assert.IsInstanceOfType(locatarios, typeof(IEnumerable<Core.DTO.LocatarioDto>));
             Assert.IsNotNull(locatarios);
             Assert.AreEqual(1, locatarios.Count());
             var locatario = locatarios.First();

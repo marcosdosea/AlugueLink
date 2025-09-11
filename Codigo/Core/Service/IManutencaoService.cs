@@ -9,9 +9,9 @@ namespace Core.Service
         void Delete(int id);
         Manutencao? Get(int id);
         IEnumerable<Manutencao> GetAll(int page, int pageSize);
-        IEnumerable<ManutencaoDTO> GetByImovel(int idImovel);
-        IEnumerable<ManutencaoDTO> GetByStatus(string status);
-        IEnumerable<ManutencaoDTO> GetByPeriodo(DateTime dataInicio, DateTime dataFim);
+        IEnumerable<ManutencaoDto> GetByImovel(int idImovel);
+        IEnumerable<ManutencaoDto> GetByStatus(string status);
+        IEnumerable<ManutencaoDto> GetByPeriodo(DateTime dataInicio, DateTime dataFim);
         int GetCount();
     }
 }

@@ -127,15 +127,15 @@ namespace Service
         /// Buscar alugueis por locatário
         /// </summary>
         /// <param name="idLocatario">ID do locatário</param>
-        /// <returns>Lista de AluguelDTO</returns>
-        public IEnumerable<AluguelDTO> GetByLocatario(int idLocatario)
+        /// <returns>Lista de AluguelDto</returns>
+        public IEnumerable<AluguelDto> GetByLocatario(int idLocatario)
         {
             return _context.Aluguels
                 .Include(a => a.IdlocatarioNavigation)
                 .Include(a => a.IdimovelNavigation)
                 .Where(a => a.Idlocatario == idLocatario)
                 .AsNoTracking()
-                .Select(a => new AluguelDTO
+                .Select(a => new AluguelDto
                 {
                     Id = a.Id,
                     DataInicio = a.DataInicio,
@@ -151,15 +151,15 @@ namespace Service
         /// Buscar alugueis por imóvel
         /// </summary>
         /// <param name="idImovel">ID do imóvel</param>
-        /// <returns>Lista de AluguelDTO</returns>
-        public IEnumerable<AluguelDTO> GetByImovel(int idImovel)
+        /// <returns>Lista de AluguelDto</returns>
+        public IEnumerable<AluguelDto> GetByImovel(int idImovel)
         {
             return _context.Aluguels
                 .Include(a => a.IdlocatarioNavigation)
                 .Include(a => a.IdimovelNavigation)
                 .Where(a => a.Idimovel == idImovel)
                 .AsNoTracking()
-                .Select(a => new AluguelDTO
+                .Select(a => new AluguelDto
                 {
                     Id = a.Id,
                     DataInicio = a.DataInicio,
@@ -175,15 +175,15 @@ namespace Service
         /// Buscar alugueis por status
         /// </summary>
         /// <param name="status">Status do aluguel</param>
-        /// <returns>Lista de AluguelDTO</returns>
-        public IEnumerable<AluguelDTO> GetByStatus(string status)
+        /// <returns>Lista de AluguelDto</returns>
+        public IEnumerable<AluguelDto> GetByStatus(string status)
         {
             return _context.Aluguels
                 .Include(a => a.IdlocatarioNavigation)
                 .Include(a => a.IdimovelNavigation)
                 .Where(a => a.Status == status)
                 .AsNoTracking()
-                .Select(a => new AluguelDTO
+                .Select(a => new AluguelDto
                 {
                     Id = a.Id,
                     DataInicio = a.DataInicio,

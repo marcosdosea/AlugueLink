@@ -79,13 +79,13 @@ namespace Service
         /// Buscar locadores por CPF
         /// </summary>
         /// <param name="cpf">CPF do locador</param>
-        /// <returns>Lista de LocadorDTO</returns>
-        public IEnumerable<LocadorDTO> GetByCpf(string cpf)
+        /// <returns>Lista de LocadorDto</returns>
+        public IEnumerable<LocadorDto> GetByCpf(string cpf)
         {
             return _context.Locadors
                 .Where(l => l.Cpf == cpf)
                 .AsNoTracking()
-                .Select(l => new LocadorDTO
+                .Select(l => new LocadorDto
                 {
                     Id = l.Id,
                     Nome = l.Nome,
@@ -99,13 +99,13 @@ namespace Service
         /// Buscar locadores por nome
         /// </summary>
         /// <param name="nome">Nome do locador</param>
-        /// <returns>Lista de LocadorDTO</returns>
-        public IEnumerable<LocadorDTO> GetByNome(string nome)
+        /// <returns>Lista de LocadorDto</returns>
+        public IEnumerable<LocadorDto> GetByNome(string nome)
         {
             return _context.Locadors
                 .Where(l => l.Nome.Contains(nome))
                 .AsNoTracking()
-                .Select(l => new LocadorDTO
+                .Select(l => new LocadorDto
                 {
                     Id = l.Id,
                     Nome = l.Nome,
