@@ -82,14 +82,14 @@ namespace Service
         /// Buscar manutenções por imóvel
         /// </summary>
         /// <param name="idImovel">ID do imóvel</param>
-        /// <returns>Lista de ManutencaoDTO</returns>
-        public IEnumerable<ManutencaoDTO> GetByImovel(int idImovel)
+        /// <returns>Lista de ManutencaoDto</returns>
+        public IEnumerable<ManutencaoDto> GetByImovel(int idImovel)
         {
             return _context.Manutencaos
                 .Include(m => m.IdimovelNavigation)
                 .Where(m => m.Idimovel == idImovel)
                 .AsNoTracking()
-                .Select(m => new ManutencaoDTO
+                .Select(m => new ManutencaoDto
                 {
                     Id = m.Id,
                     DataSolicitacao = m.DataSolicitacao,
@@ -104,14 +104,14 @@ namespace Service
         /// Buscar manutenções por status
         /// </summary>
         /// <param name="status">Status da manutenção</param>
-        /// <returns>Lista de ManutencaoDTO</returns>
-        public IEnumerable<ManutencaoDTO> GetByStatus(string status)
+        /// <returns>Lista de ManutencaoDto</returns>
+        public IEnumerable<ManutencaoDto> GetByStatus(string status)
         {
             return _context.Manutencaos
                 .Include(m => m.IdimovelNavigation)
                 .Where(m => m.Status == status)
                 .AsNoTracking()
-                .Select(m => new ManutencaoDTO
+                .Select(m => new ManutencaoDto
                 {
                     Id = m.Id,
                     DataSolicitacao = m.DataSolicitacao,
@@ -127,14 +127,14 @@ namespace Service
         /// </summary>
         /// <param name="dataInicio">Data de início do período</param>
         /// <param name="dataFim">Data de fim do período</param>
-        /// <returns>Lista de ManutencaoDTO</returns>
-        public IEnumerable<ManutencaoDTO> GetByPeriodo(DateTime dataInicio, DateTime dataFim)
+        /// <returns>Lista de ManutencaoDto</returns>
+        public IEnumerable<ManutencaoDto> GetByPeriodo(DateTime dataInicio, DateTime dataFim)
         {
             return _context.Manutencaos
                 .Include(m => m.IdimovelNavigation)
                 .Where(m => m.DataSolicitacao >= dataInicio && m.DataSolicitacao <= dataFim)
                 .AsNoTracking()
-                .Select(m => new ManutencaoDTO
+                .Select(m => new ManutencaoDto
                 {
                     Id = m.Id,
                     DataSolicitacao = m.DataSolicitacao,

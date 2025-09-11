@@ -11,7 +11,7 @@ namespace AlugueLinkWEB.Mappers
     {
         public ManutencaoProfile()
         {
-            CreateMap<ManutencaoDTO, Manutencao>()
+            CreateMap<ManutencaoDto, Manutencao>()
                 .ReverseMap();
         }
     }

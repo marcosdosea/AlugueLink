@@ -42,6 +42,19 @@ namespace AlugueLinkWEB.Controllers.Tests
             
             mockLocadorService.Setup(service => service.GetAll(1, 1000))
                 .Returns(GetTestLocadores());
+            mockLocadorService.Setup(service => service.GetAll(1, 1))
+                .Returns(GetTestLocadores().Take(1));
+            mockLocadorService.Setup(service => service.Get(It.IsAny<int>()))
+                .Returns((int id) => GetTestLocadores().FirstOrDefault(l => l.Id == id));
+            mockLocadorService.Setup(service => service.Create(It.IsAny<Locador>()))
+                .Returns(3);
+
+            mockAluguelService.Setup(service => service.AtualizarStatusAlugueis())
+                .Verifiable();
+            mockAluguelService.Setup(service => service.GetImoveisIndisponiveis())
+                .Returns(new List<int>());
+            mockAluguelService.Setup(service => service.IsImovelAvailable(It.IsAny<int>(), It.IsAny<DateOnly?>(), It.IsAny<DateOnly?>(), It.IsAny<int?>()))
+                .Returns(true);
 
             controller = new ImovelController(mockImovelService.Object, mockLocadorService.Object, mockAluguelService.Object, mapper);
             
@@ -198,7 +211,9 @@ namespace AlugueLinkWEB.Controllers.Tests
                 Quartos = 3,
                 Banheiros = 2,
                 Area = 150.00m,
+                VagasGaragem = 2,
                 Valor = 4000.00m,
+                Descricao = "Casa moderna",
                 LocadorId = 1
             };
         }
@@ -238,7 +253,9 @@ namespace AlugueLinkWEB.Controllers.Tests
                 Quartos = 3,
                 Banheiros = 2,
                 Area = 120.50m,
+                VagasGaragem = 1,
                 Valor = 3500.00m,
+                Descricao = "Apartamento amplo",
                 LocadorId = 1
             };
         }

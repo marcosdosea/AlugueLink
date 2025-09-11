@@ -9,9 +9,9 @@ namespace Core.Service
         void Delete(int id);
         Aluguel? Get(int id);
         IEnumerable<Aluguel> GetAll(int page, int pageSize);
-        IEnumerable<AluguelDTO> GetByLocatario(int idLocatario);
-        IEnumerable<AluguelDTO> GetByImovel(int idImovel);
-        IEnumerable<AluguelDTO> GetByStatus(string status);
+        IEnumerable<AluguelDto> GetByLocatario(int idLocatario);
+        IEnumerable<AluguelDto> GetByImovel(int idImovel);
+        IEnumerable<AluguelDto> GetByStatus(string status);
         int GetCount();
         
         // Novos métodos para verificação de disponibilidade

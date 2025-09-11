@@ -82,14 +82,14 @@ namespace Service
         /// Buscar pagamentos por aluguel
         /// </summary>
         /// <param name="idAluguel">ID do aluguel</param>
-        /// <returns>Lista de PagamentoDTO</returns>
-        public IEnumerable<PagamentoDTO> GetByAluguel(int idAluguel)
+        /// <returns>Lista de PagamentoDto</returns>
+        public IEnumerable<PagamentoDto> GetByAluguel(int idAluguel)
         {
             return _context.Pagamentos
                 .Include(p => p.IdaluguelNavigation)
                 .Where(p => p.Idaluguel == idAluguel)
                 .AsNoTracking()
-                .Select(p => new PagamentoDTO
+                .Select(p => new PagamentoDto
                 {
                     Id = p.Id,
                     DataPagamento = p.DataPagamento,
@@ -103,14 +103,14 @@ namespace Service
         /// Buscar pagamentos por tipo de pagamento
         /// </summary>
         /// <param name="tipoPagamento">Tipo do pagamento</param>
-        /// <returns>Lista de PagamentoDTO</returns>
-        public IEnumerable<PagamentoDTO> GetByTipoPagamento(string tipoPagamento)
+        /// <returns>Lista de PagamentoDto</returns>
+        public IEnumerable<PagamentoDto> GetByTipoPagamento(string tipoPagamento)
         {
             return _context.Pagamentos
                 .Include(p => p.IdaluguelNavigation)
                 .Where(p => p.TipoPagamento == tipoPagamento)
                 .AsNoTracking()
-                .Select(p => new PagamentoDTO
+                .Select(p => new PagamentoDto
                 {
                     Id = p.Id,
                     DataPagamento = p.DataPagamento,
@@ -125,14 +125,14 @@ namespace Service
         /// </summary>
         /// <param name="dataInicio">Data de início do período</param>
         /// <param name="dataFim">Data de fim do período</param>
-        /// <returns>Lista de PagamentoDTO</returns>
-        public IEnumerable<PagamentoDTO> GetByPeriodo(DateTime dataInicio, DateTime dataFim)
+        /// <returns>Lista de PagamentoDto</returns>
+        public IEnumerable<PagamentoDto> GetByPeriodo(DateTime dataInicio, DateTime dataFim)
         {
             return _context.Pagamentos
                 .Include(p => p.IdaluguelNavigation)
                 .Where(p => p.DataPagamento >= dataInicio && p.DataPagamento <= dataFim)
                 .AsNoTracking()
-                .Select(p => new PagamentoDTO
+                .Select(p => new PagamentoDto
                 {
                     Id = p.Id,
                     DataPagamento = p.DataPagamento,

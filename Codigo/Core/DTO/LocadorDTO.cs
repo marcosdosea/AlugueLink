@@ -1,11 +1,11 @@
 namespace Core.DTO
 {
-    public class LocadorDTO
+    public class LocadorDto
     {
         public int Id { get; set; }
-        public string Nome { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string Telefone { get; set; } = string.Empty;
-        public string Cpf { get; set; } = string.Empty;
+        public string Nome { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string Telefone { get; set; } = null!;
+        public string Cpf { get; set; } = null!;
     }
 }

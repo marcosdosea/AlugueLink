@@ -42,41 +42,31 @@ namespace Service
         /// <param name="id">ID do Locatário</param>
         public void Delete(int id)
         {
-            using var transaction = _context.Database.BeginTransaction();
-            try
+            var locatario = _context.Locatarios
+                .Include(l => l.Aluguels)
+                .FirstOrDefault(l => l.Id == id);
+
+            if (locatario == null)
+                return;
+
+            // Verificar se há aluguéis ativos
+            var alugueisAtivos = locatario.Aluguels.Where(a => a.Status == "A").Any();
+            if (alugueisAtivos)
             {
-                var locatario = _context.Locatarios
-                    .Include(l => l.Aluguels)
-                    .FirstOrDefault(l => l.Id == id);
-
-                if (locatario == null)
-                    return;
-
-                // Verificar se há aluguéis ativos
-                var alugueisAtivos = locatario.Aluguels.Where(a => a.Status == "A").Any();
-                if (alugueisAtivos)
-                {
-                    throw new InvalidOperationException("Não é possível excluir um inquilino que possui contratos de aluguel ativos.");
-                }
-
-                // Remover pagamentos relacionados aos aluguéis do locatário
-                var pagamentos = _context.Pagamentos.Where(p => locatario.Aluguels.Select(a => a.Id).Contains(p.Idaluguel));
-                _context.Pagamentos.RemoveRange(pagamentos);
-
-                // Remover aluguéis do locatário
-                _context.Aluguels.RemoveRange(locatario.Aluguels);
-
-                // Remover o locatário
-                _context.Locatarios.Remove(locatario);
-
-                _context.SaveChanges();
-                transaction.Commit();
+                throw new ServiceException("Não é possível excluir um locatário que possui contratos de aluguel ativos.");
             }
-            catch (Exception)
-            {
-                transaction.Rollback();
-                throw;
-            }
+
+            // Remover pagamentos relacionados aos aluguéis do locatário
+            var pagamentos = _context.Pagamentos.Where(p => locatario.Aluguels.Select(a => a.Id).Contains(p.Idaluguel));
+            _context.Pagamentos.RemoveRange(pagamentos);
+
+            // Remover aluguéis do locatário
+            _context.Aluguels.RemoveRange(locatario.Aluguels);
+
+            // Remover o locatário
+            _context.Locatarios.Remove(locatario);
+
+            _context.SaveChanges();
         }
 
         /// <summary>
@@ -108,13 +98,13 @@ namespace Service
         /// Buscar locatários por CPF
         /// </summary>
         /// <param name="cpf">CPF do locatário</param>
-        /// <returns>Lista de LocatarioDTO</returns>
-        public IEnumerable<LocatarioDTO> GetByCpf(string cpf)
+        /// <returns>Lista de LocatarioDto</returns>
+        public IEnumerable<LocatarioDto> GetByCpf(string cpf)
         {
             return _context.Locatarios
                 .Where(l => l.Cpf == cpf)
                 .AsNoTracking()
-                .Select(l => new LocatarioDTO
+                .Select(l => new LocatarioDto
                 {
                     Id = l.Id,
                     Nome = l.Nome,
@@ -138,13 +128,13 @@ namespace Service
         /// Buscar locatários por nome
         /// </summary>
         /// <param name="nome">Nome do locatário</param>
-        /// <returns>Lista de LocatarioDTO</returns>
-        public IEnumerable<LocatarioDTO> GetByNome(string nome)
+        /// <returns>Lista de LocatarioDto</returns>
+        public IEnumerable<LocatarioDto> GetByNome(string nome)
         {
             return _context.Locatarios
                 .Where(l => l.Nome.Contains(nome))
                 .AsNoTracking()
-                .Select(l => new LocatarioDTO
+                .Select(l => new LocatarioDto
                 {
                     Id = l.Id,
                     Nome = l.Nome,

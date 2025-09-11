@@ -21,7 +21,7 @@ namespace Service
             {
                 if (_context.Locadors.Any(l => l.Id == idLocador))
                     return idLocador;
-                throw new InvalidOperationException($"Locador informado (ID={idLocador}) não existe.");
+                throw new ServiceException($"Locador informado (ID={idLocador}) não existe.");
             }
 
             // Tentar pegar qualquer locador existente
@@ -72,45 +72,35 @@ namespace Service
         /// <param name="id">ID do Imóvel</param>
         public void Delete(int id)
         {
-            using var transaction = _context.Database.BeginTransaction();
-            try
+            var imovel = _context.Imovels
+                .Include(i => i.Aluguels)
+                .Include(i => i.Manutencaos)
+                .FirstOrDefault(i => i.Id == id);
+
+            if (imovel == null)
+                return;
+
+            // Verificar se há aluguéis ativos
+            var alugueisAtivos = imovel.Aluguels.Where(a => a.Status == "A").Any();
+            if (alugueisAtivos)
             {
-                var imovel = _context.Imovels
-                    .Include(i => i.Aluguels)
-                    .Include(i => i.Manutencaos)
-                    .FirstOrDefault(i => i.Id == id);
-
-                if (imovel == null)
-                    return;
-
-                // Verificar se há aluguéis ativos
-                var alugueisAtivos = imovel.Aluguels.Where(a => a.Status == "A").Any();
-                if (alugueisAtivos)
-                {
-                    throw new InvalidOperationException("Não é possível excluir um imóvel que possui contratos de aluguel ativos.");
-                }
-
-                // Remover pagamentos relacionados aos aluguéis do imóvel
-                var pagamentos = _context.Pagamentos.Where(p => imovel.Aluguels.Select(a => a.Id).Contains(p.Idaluguel));
-                _context.Pagamentos.RemoveRange(pagamentos);
-
-                // Remover aluguéis do imóvel
-                _context.Aluguels.RemoveRange(imovel.Aluguels);
-
-                // Remover manutenções do imóvel
-                _context.Manutencaos.RemoveRange(imovel.Manutencaos);
-
-                // Remover o imóvel
-                _context.Imovels.Remove(imovel);
-
-                _context.SaveChanges();
-                transaction.Commit();
+                throw new ServiceException("Não é possível excluir um imóvel que possui contratos de aluguel ativos.");
             }
-            catch (Exception)
-            {
-                transaction.Rollback();
-                throw;
-            }
+
+            // Remover pagamentos relacionados aos aluguéis do imóvel
+            var pagamentos = _context.Pagamentos.Where(p => imovel.Aluguels.Select(a => a.Id).Contains(p.Idaluguel));
+            _context.Pagamentos.RemoveRange(pagamentos);
+
+            // Remover aluguéis do imóvel
+            _context.Aluguels.RemoveRange(imovel.Aluguels);
+
+            // Remover manutenções do imóvel
+            _context.Manutencaos.RemoveRange(imovel.Manutencaos);
+
+            // Remover o imóvel
+            _context.Imovels.Remove(imovel);
+
+            _context.SaveChanges();
         }
 
         /// <summary>
@@ -145,14 +135,14 @@ namespace Service
         /// Buscar imóveis por locador
         /// </summary>
         /// <param name="idLocador">ID do locador</param>
-        /// <returns>Lista de ImovelDTO</returns>
-        public IEnumerable<ImovelDTO> GetByLocador(int idLocador)
+        /// <returns>Lista de ImovelDto</returns>
+        public IEnumerable<ImovelDto> GetByLocador(int idLocador)
         {
             return _context.Imovels
                 .Include(i => i.IdLocadorNavigation)
                 .Where(i => i.IdLocador == idLocador)
                 .AsNoTracking()
-                .Select(i => new ImovelDTO
+                .Select(i => new ImovelDto
                 {
                     Id = i.Id,
                     Cep = i.Cep,
@@ -177,14 +167,14 @@ namespace Service
         /// Buscar imóveis por tipo
         /// </summary>
         /// <param name="tipo">Tipo do imóvel</param>
-        /// <returns>Lista de ImovelDTO</returns>
-        public IEnumerable<ImovelDTO> GetByTipo(string tipo)
+        /// <returns>Lista de ImovelDto</returns>
+        public IEnumerable<ImovelDto> GetByTipo(string tipo)
         {
             return _context.Imovels
                 .Include(i => i.IdLocadorNavigation)
                 .Where(i => i.Tipo == tipo)
                 .AsNoTracking()
-                .Select(i => new ImovelDTO
+                .Select(i => new ImovelDto
                 {
                     Id = i.Id,
                     Cep = i.Cep,
@@ -210,14 +200,14 @@ namespace Service
         /// </summary>
         /// <param name="valorMin">Valor mínimo</param>
         /// <param name="valorMax">Valor máximo</param>
-        /// <returns>Lista de ImovelDTO</returns>
-        public IEnumerable<ImovelDTO> GetByValorRange(decimal valorMin, decimal valorMax)
+        /// <returns>Lista de ImovelDto</returns>
+        public IEnumerable<ImovelDto> GetByValorRange(decimal valorMin, decimal valorMax)
         {
             return _context.Imovels
                 .Include(i => i.IdLocadorNavigation)
                 .Where(i => i.Valor >= valorMin && i.Valor <= valorMax)
                 .AsNoTracking()
-                .Select(i => new ImovelDTO
+                .Select(i => new ImovelDto
                 {
                     Id = i.Id,
                     Cep = i.Cep,

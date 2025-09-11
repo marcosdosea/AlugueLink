@@ -9,9 +9,9 @@ namespace Core.Service
         void Delete(int id);
         Imovel? Get(int id);
         IEnumerable<Imovel> GetAll(int page, int pageSize);
-        IEnumerable<ImovelDTO> GetByLocador(int idLocador);
-        IEnumerable<ImovelDTO> GetByTipo(string tipo);
-        IEnumerable<ImovelDTO> GetByValorRange(decimal valorMin, decimal valorMax);
+        IEnumerable<ImovelDto> GetByLocador(int idLocador);
+        IEnumerable<ImovelDto> GetByTipo(string tipo);
+        IEnumerable<ImovelDto> GetByValorRange(decimal valorMin, decimal valorMax);
         int GetCount();
     }
 }
