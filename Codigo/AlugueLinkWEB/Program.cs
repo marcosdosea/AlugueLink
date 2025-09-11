@@ -51,6 +51,9 @@ namespace AlugueLinkWEB
             builder.Services.AddTransient<IAluguelService, AluguelService>();
             builder.Services.AddTransient<IPagamentoService, PagamentoService>();
             builder.Services.AddTransient<IManutencaoService, ManutencaoService>();
+            
+            // Adicionar HttpClient e ViaCepService
+            builder.Services.AddHttpClient<IViaCepService, ViaCepService>();
 
             builder.Services.AddTransient<Microsoft.AspNetCore.Identity.UI.Services.IEmailSender, EmailSender>();
             builder.Services.AddTransient<Core.Service.IEmailSender>(provider =>
