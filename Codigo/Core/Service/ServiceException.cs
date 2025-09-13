@@ -17,8 +17,10 @@ namespace Core.Service
         {
         }
 
-        protected ServiceException(SerializationInfo info, StreamingContext context) : base(info, context)
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
+        protected ServiceException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context)
         {
         }
+#pragma warning restore SYSLIB0051 // Type or member is obsolete
     }
 }
