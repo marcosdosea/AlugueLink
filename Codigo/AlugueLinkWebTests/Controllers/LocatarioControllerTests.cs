@@ -9,7 +9,7 @@ using Moq;
 
 namespace AlugueLinkWEB.Controllers.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class LocatarioControllerTests
     {
         private static LocatarioController controller = null!;
@@ -19,7 +19,6 @@ namespace AlugueLinkWEB.Controllers.Tests
         [TestInitialize]
         public void Initialize()
         {
-            // Arrange
             var mockService = new Mock<ILocatarioService>();
             var mockAluguelService = new Mock<IAluguelService>();
 
@@ -41,145 +40,124 @@ namespace AlugueLinkWEB.Controllers.Tests
 
             controller = new LocatarioController(mockService.Object, mockAluguelService.Object, mapper);
             
-            // Setup TempData para evitar NullReferenceException
             var tempData = new Mock<ITempDataDictionary>();
             controller.TempData = tempData.Object;
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void IndexTest_Valido()
         {
-            // Act
             var result = controller.Index();
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(IEnumerable<LocatarioViewModel>));
 
-            var listaLocatarios = (IEnumerable<LocatarioViewModel>)viewResult.ViewData.Model;
-            Assert.AreEqual(3, listaLocatarios.Count());
+            var lista = (IEnumerable<LocatarioViewModel>)viewResult.ViewData.Model;
+            Assert.AreEqual(3, lista.Count());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DetailsTest_Valido()
         {
-            // Act
             var result = controller.Details(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(LocatarioViewModel));
-            LocatarioViewModel locatarioModel = (LocatarioViewModel)viewResult.ViewData.Model;
-            Assert.IsTrue(1 == locatarioModel.Id);
-            Assert.AreEqual("João Silva", locatarioModel.Nome);
+            
+            var model = (LocatarioViewModel)viewResult.ViewData.Model;
+            Assert.AreEqual(1, model.Id);
+            Assert.AreEqual("João Silva", model.Nome);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Get_Valido()
         {
-            // Act
             var result = controller.Create();
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Post_Valido()
         {
-            // Arrange
-            // Forçar ModelState válido
             controller.ModelState.Clear();
 
-            // Act
-            var result = controller.Create(GetNewLocatario());
+            var result = controller.Create(GetNewLocatarioModel());
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-            RedirectToActionResult redirectToActionResult = (RedirectToActionResult)result;
-            Assert.IsNull(redirectToActionResult.ControllerName);
-            Assert.AreEqual("Index", redirectToActionResult.ActionName);
+            var redirect = (RedirectToActionResult)result;
+            Assert.IsNull(redirect.ControllerName);
+            Assert.AreEqual("Index", redirect.ActionName);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Post_Invalido()
         {
-            // Arrange
             controller.ModelState.AddModelError("Nome", "Campo requerido");
 
-            // Act
-            var result = controller.Create(GetNewLocatario());
+            var result = controller.Create(GetNewLocatarioModel());
 
-            // Assert
             Assert.AreEqual(1, controller.ModelState.ErrorCount);
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(LocatarioViewModel));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest_Get_Valido()
         {
-            // Act
             var result = controller.Edit(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(LocatarioViewModel));
-            LocatarioViewModel locatarioModel = (LocatarioViewModel)viewResult.ViewData.Model;
-            Assert.IsTrue(1 == locatarioModel.Id);
-            Assert.AreEqual("João Silva", locatarioModel.Nome);
+            
+            var model = (LocatarioViewModel)viewResult.ViewData.Model;
+            Assert.AreEqual(1, model.Id);
+            Assert.AreEqual("João Silva", model.Nome);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest_Post_Valido()
         {
-            // Arrange
-            // Forçar ModelState válido
             controller.ModelState.Clear();
 
-            // Act
             var result = controller.Edit(1, GetTargetLocatarioModel());
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-            RedirectToActionResult redirectToActionResult = (RedirectToActionResult)result;
-            Assert.IsNull(redirectToActionResult.ControllerName);
-            Assert.AreEqual("Index", redirectToActionResult.ActionName);
+            var redirect = (RedirectToActionResult)result;
+            Assert.IsNull(redirect.ControllerName);
+            Assert.AreEqual("Index", redirect.ActionName);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DeleteTest_Get_Valido()
         {
-            // Act
             var result = controller.Delete(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(LocatarioViewModel));
-            LocatarioViewModel locatarioModel = (LocatarioViewModel)viewResult.ViewData.Model;
-            Assert.IsTrue(1 == locatarioModel.Id);
-            Assert.AreEqual("João Silva", locatarioModel.Nome);
+            
+            var model = (LocatarioViewModel)viewResult.ViewData.Model;
+            Assert.AreEqual(1, model.Id);
+            Assert.AreEqual("João Silva", model.Nome);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DeleteTest_Post_Valido()
         {
-            // Act
             var result = controller.DeleteConfirmed(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-            RedirectToActionResult redirectToActionResult = (RedirectToActionResult)result;
-            Assert.IsNull(redirectToActionResult.ControllerName);
-            Assert.AreEqual("Index", redirectToActionResult.ActionName);
+            var redirect = (RedirectToActionResult)result;
+            Assert.IsNull(redirect.ControllerName);
+            Assert.AreEqual("Index", redirect.ActionName);
         }
 
-        private LocatarioViewModel GetNewLocatario()
+        private static LocatarioViewModel GetNewLocatarioModel()
         {
             return new LocatarioViewModel
             {
@@ -194,6 +172,16 @@ namespace AlugueLinkWEB.Controllers.Tests
                 Bairro = "Moinhos",
                 Cidade = "Porto Alegre",
                 Estado = "RS"
+            };
+        }
+
+        private static List<Locatario> GetTestLocatarios()
+        {
+            return new List<Locatario>
+            {
+                new Locatario { Id = 1, Nome = "João Silva", Email = "joao@gmail.com", Cpf = "12345678901" },
+                new Locatario { Id = 2, Nome = "Maria Santos", Email = "maria@gmail.com", Cpf = "98765432100" },
+                new Locatario { Id = 3, Nome = "Carlos Pereira", Email = "carlos@gmail.com", Cpf = "11122233344" }
             };
         }
 
@@ -215,7 +203,7 @@ namespace AlugueLinkWEB.Controllers.Tests
             };
         }
 
-        private LocatarioViewModel GetTargetLocatarioModel()
+        private static LocatarioViewModel GetTargetLocatarioModel()
         {
             return new LocatarioViewModel
             {
@@ -231,16 +219,6 @@ namespace AlugueLinkWEB.Controllers.Tests
                 Cidade = "São Paulo",
                 Estado = "SP"
             };
-        }
-
-        private static IEnumerable<Locatario> GetTestLocatarios()
-        {
-            return
-            [
-                new Locatario { Id = 1, Nome = "João Silva", Email = "joao@gmail.com", Cpf = "12345678901" },
-                new Locatario { Id = 2, Nome = "Maria Santos", Email = "maria@gmail.com", Cpf = "98765432100" },
-                new Locatario { Id = 3, Nome = "Carlos Pereira", Email = "carlos@gmail.com", Cpf = "11122233344" }
-            ];
         }
     }
 }

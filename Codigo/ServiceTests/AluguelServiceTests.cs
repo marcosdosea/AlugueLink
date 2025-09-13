@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Service.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class AluguelServiceTests
     {
         private AluguelinkContext context = null!;
@@ -16,16 +16,14 @@ namespace Service.Tests
         [TestInitialize]
         public void Initialize()
         {
-            //Arrange
-            var builder = new DbContextOptionsBuilder<AluguelinkContext>();
-            builder.UseInMemoryDatabase("aluguelinkdb");
+            var builder = new DbContextOptionsBuilder<AluguelinkContext>()
+                .UseInMemoryDatabase("aluguelinkdb");
             var options = builder.Options;
 
             context = new AluguelinkContext(options);
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            // Criar dados de apoio
             var locadores = new List<Locador>
             {
                 new() { Id = 1, Nome = "João", Email = "joao@gmail.com", Cpf = "12345678901", Telefone = "11999999999" }
@@ -95,10 +93,9 @@ namespace Service.Tests
             aluguelService = new Service.AluguelService(context);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest()
         {
-            // Act
             var novoAluguel = aluguelService.Create(new Aluguel()
             {
                 Idlocatario = 1,
@@ -109,7 +106,6 @@ namespace Service.Tests
                 Status = "P"
             });
 
-            // Assert
             Assert.AreEqual(4, novoAluguel);
             Assert.AreEqual(4, aluguelService.GetAll(page, pageSize).Count());
             var aluguel = aluguelService.Get(4);
@@ -120,29 +116,25 @@ namespace Service.Tests
             Assert.AreEqual("P", aluguel.Status);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DeleteTest()
         {
-            // Act
             aluguelService.Delete(2);
 
-            // Assert
             Assert.AreEqual(2, aluguelService.GetAll(page, pageSize).Count());
             var aluguel = aluguelService.Get(2);
             Assert.IsNull(aluguel);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest()
         {
-            //Act 
             var aluguel = aluguelService.Get(3);
             Assert.IsNotNull(aluguel);
             aluguel.Status = "A"; 
             aluguel.DataInicio = DateOnly.FromDateTime(DateTime.Now);
             aluguelService.Edit(aluguel);
 
-            //Assert
             aluguel = aluguelService.Get(3);
             Assert.IsNotNull(aluguel);
             Assert.AreEqual("A", aluguel.Status);
@@ -150,13 +142,11 @@ namespace Service.Tests
             Assert.AreEqual(3, aluguel.Id);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetTest()
         {
-            // Act
             var aluguel = aluguelService.Get(1);
 
-            // Assert
             Assert.IsNotNull(aluguel);
             Assert.AreEqual(1, aluguel.Idlocatario);
             Assert.AreEqual(1, aluguel.Idimovel);
@@ -164,13 +154,11 @@ namespace Service.Tests
             Assert.AreEqual(1, aluguel.Id);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetAllTest()
         {
-            // Act
             var listaAlugueis = aluguelService.GetAll(page, pageSize);
 
-            // Assert
             Assert.IsInstanceOfType(listaAlugueis, typeof(IEnumerable<Aluguel>));
             Assert.IsNotNull(listaAlugueis);
             Assert.AreEqual(3, listaAlugueis.Count());
@@ -178,13 +166,11 @@ namespace Service.Tests
             Assert.AreEqual("A", listaAlugueis.First().Status);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetByLocatarioTest()
         {
-            //Act
             var alugueis = aluguelService.GetByLocatario(1);
 
-            //Assert
             Assert.IsInstanceOfType(alugueis, typeof(IEnumerable<AluguelDto>));
             Assert.IsNotNull(alugueis);
             Assert.AreEqual(1, alugueis.Count());
@@ -193,26 +179,22 @@ namespace Service.Tests
             Assert.AreEqual("A", aluguel.Status);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetByImovelTest()
         {
-            //Act
             var alugueis = aluguelService.GetByImovel(1);
 
-            //Assert
             Assert.IsInstanceOfType(alugueis, typeof(IEnumerable<AluguelDto>));
             Assert.IsNotNull(alugueis);
             Assert.AreEqual(2, alugueis.Count());
             Assert.IsTrue(alugueis.All(a => a.Idimovel == 1));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetByStatusTest()
         {
-            //Act
             var alugueis = aluguelService.GetByStatus("A");
 
-            //Assert
             Assert.IsInstanceOfType(alugueis, typeof(IEnumerable<AluguelDto>));
             Assert.IsNotNull(alugueis);
             Assert.AreEqual(1, alugueis.Count());
@@ -220,103 +202,85 @@ namespace Service.Tests
             Assert.AreEqual("A", aluguel.Status);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void IsImovelAvailableTest_ImovelDisponivel()
         {
-            //Act
             var disponivel = aluguelService.IsImovelAvailable(2);
 
-            //Assert
             Assert.IsTrue(disponivel);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void IsImovelAvailableTest_ImovelOcupado()
         {
-            //Act
             var disponivel = aluguelService.IsImovelAvailable(1);
 
-            //Assert
             Assert.IsFalse(disponivel);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void IsLocatarioAvailableTest_LocatarioDisponivel()
         {
-            //Act
             var disponivel = aluguelService.IsLocatarioAvailable(2);
 
-            //Assert
             Assert.IsTrue(disponivel);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void IsLocatarioAvailableTest_LocatarioOcupado()
         {
-            //Act
             var disponivel = aluguelService.IsLocatarioAvailable(1);
 
-            //Assert
             Assert.IsFalse(disponivel);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetImoveisIndisponiveisTest()
         {
-            //Act
             var imoveisOcupados = aluguelService.GetImoveisIndisponiveis();
 
-            //Assert
             Assert.IsInstanceOfType(imoveisOcupados, typeof(IEnumerable<int>));
             Assert.IsNotNull(imoveisOcupados);
             Assert.AreEqual(1, imoveisOcupados.Count());
             Assert.IsTrue(imoveisOcupados.Contains(1));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetLocatariosOcupadosTest()
         {
-            //Act
             var locatariosOcupados = aluguelService.GetLocatariosOcupados();
 
-            //Assert
             Assert.IsInstanceOfType(locatariosOcupados, typeof(IEnumerable<int>));
             Assert.IsNotNull(locatariosOcupados);
             Assert.AreEqual(1, locatariosOcupados.Count());
             Assert.IsTrue(locatariosOcupados.Contains(1));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetAluguelAtivoByImovelTest()
         {
-            //Act
             var aluguelAtivo = aluguelService.GetAluguelAtivoByImovel(1);
 
-            //Assert
             Assert.IsNotNull(aluguelAtivo);
             Assert.AreEqual(1, aluguelAtivo.Id);
             Assert.AreEqual("A", aluguelAtivo.Status);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetAluguelAtivoByLocatarioTest()
         {
-            //Act
             var aluguelAtivo = aluguelService.GetAluguelAtivoByLocatario(1);
 
-            //Assert
             Assert.IsNotNull(aluguelAtivo);
             Assert.AreEqual(1, aluguelAtivo.Id);
             Assert.AreEqual("A", aluguelAtivo.Status);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetCountTest()
         {
-            // Act
             var count = aluguelService.GetCount();
 
-            // Assert
             Assert.AreEqual(3, count);
         }
     }

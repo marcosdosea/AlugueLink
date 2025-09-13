@@ -2,7 +2,6 @@ using AlugueLinkWEB.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using AlugueLinkWEB.Controllers;
 using Core.Service;
@@ -19,13 +18,11 @@ namespace AlugueLinkWebTests.Controllers
         [TestInitialize]
         public void Setup()
         {
-            // Arrange
             var mockLogger = new Mock<ILogger<HomeController>>();
             var mockImovelService = new Mock<IImovelService>();
             var mockLocatarioService = new Mock<ILocatarioService>();
             var mockAluguelService = new Mock<IAluguelService>();
             
-            // Setup dos mocks para retornar valores padrão
             mockImovelService.Setup(s => s.GetCount()).Returns(10);
             mockLocatarioService.Setup(s => s.GetCount()).Returns(5);
             mockAluguelService.Setup(s => s.GetCount()).Returns(3);
@@ -36,7 +33,6 @@ namespace AlugueLinkWebTests.Controllers
             controller = new HomeController(mockLogger.Object, mockImovelService.Object, 
                 mockLocatarioService.Object, mockAluguelService.Object);
             
-            // Setup HttpContext e User para simular usuário não autenticado
             var httpContext = new Mock<HttpContext>();
             var identity = new Mock<IIdentity>();
             identity.Setup(x => x.IsAuthenticated).Returns(false);
@@ -54,17 +50,14 @@ namespace AlugueLinkWebTests.Controllers
         [TestMethod]
         public void IndexTest_Valido()
         {
-            // Act
             var result = controller.Index();
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
         [TestMethod]
         public void IndexTest_UsuarioAutenticado()
         {
-            // Arrange - Setup usuário autenticado
             var httpContext = new Mock<HttpContext>();
             var identity = new Mock<IIdentity>();
             identity.Setup(x => x.IsAuthenticated).Returns(true);
@@ -77,14 +70,11 @@ namespace AlugueLinkWebTests.Controllers
                 HttpContext = httpContext.Object
             };
 
-            // Act
             var result = controller.Index();
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             
-            // Verificar se ViewBag foi populado para usuário autenticado
             Assert.IsNotNull(controller.ViewBag.TotalImoveis);
             Assert.AreEqual(10, controller.ViewBag.TotalImoveis);
         }
@@ -92,27 +82,23 @@ namespace AlugueLinkWebTests.Controllers
         [TestMethod]
         public void PrivacyTest_Valido()
         {
-            // Act
             var result = controller.Privacy();
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
         [TestMethod]
         public void ErrorTest_Valido()
         {
-            // Act
             var result = controller.Error();
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(ErrorViewModel));
             
-            var errorModel = (ErrorViewModel)viewResult.ViewData.Model;
-            Assert.IsNotNull(errorModel);
-            Assert.AreEqual("test-trace-id", errorModel.RequestId);
+            var model = (ErrorViewModel)viewResult.ViewData.Model;
+            Assert.IsNotNull(model);
+            Assert.AreEqual("test-trace-id", model.RequestId);
         }
     }
 }
