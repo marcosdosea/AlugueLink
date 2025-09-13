@@ -24,6 +24,7 @@ namespace AlugueLinkWEB.Controllers
             _logger = logger;
         }
 
+
         // GET: Account/Profile
         public async Task<IActionResult> Profile()
         {
@@ -45,6 +46,7 @@ namespace AlugueLinkWEB.Controllers
 
             return View(model);
         }
+
 
         // POST: Account/Profile
         [HttpPost]
@@ -80,11 +82,13 @@ namespace AlugueLinkWEB.Controllers
             return View(model);
         }
 
+
         // GET: Account/ChangePassword
         public IActionResult ChangePassword()
         {
             return View();
         }
+
 
         // POST: Account/ChangePassword
         [HttpPost]

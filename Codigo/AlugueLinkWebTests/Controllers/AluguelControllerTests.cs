@@ -1,4 +1,4 @@
-using AutoMapper;
+ï»¿using AutoMapper;
 using Core;
 using Core.Service;
 using AlugueLinkWEB.Mappers;
@@ -53,14 +53,14 @@ namespace AlugueLinkWEB.Controllers.Tests
                 .Returns(GetTestLocatarios());
             mockLocatarioService.Setup(service => service.Get(It.IsAny<int>()))
                 .Returns((int id) => GetTestLocatarios().FirstOrDefault(l => l.Id == id));
-            
+
             mockImovelService.Setup(service => service.GetAll(1, 1000))
                 .Returns(GetTestImoveis());
             mockImovelService.Setup(service => service.Get(It.IsAny<int>()))
                 .Returns((int id) => GetTestImoveis().FirstOrDefault(i => i.Id == id));
 
             controller = new AluguelController(mockAluguelService.Object, mockLocatarioService.Object, mockImovelService.Object, mapper);
-            
+
             // Setup TempData para evitar NullReferenceException
             var tempData = new Mock<ITempDataDictionary>();
             controller.TempData = tempData.Object;
@@ -115,7 +115,7 @@ namespace AlugueLinkWEB.Controllers.Tests
             var mockAluguelService = new Mock<IAluguelService>();
             var mockLocatarioService = new Mock<ILocatarioService>();
             var mockImovelService = new Mock<IImovelService>();
-            
+
             mockAluguelService.Setup(service => service.Get(It.IsAny<int>()))
                 .Returns((Aluguel?)null);
 
@@ -145,7 +145,7 @@ namespace AlugueLinkWEB.Controllers.Tests
         public void CreateTest_Post_Valido()
         {
             // Arrange
-            // Forçar ModelState válido
+            // For ar ModelState v lido
             controller.ModelState.Clear();
 
             // Act
@@ -196,7 +196,7 @@ namespace AlugueLinkWEB.Controllers.Tests
             var mockAluguelService = new Mock<IAluguelService>();
             var mockLocatarioService = new Mock<ILocatarioService>();
             var mockImovelService = new Mock<IImovelService>();
-            
+
             mockAluguelService.Setup(service => service.Get(It.IsAny<int>()))
                 .Returns((Aluguel?)null);
 
@@ -216,7 +216,7 @@ namespace AlugueLinkWEB.Controllers.Tests
         public void EditTest_Post_Valido()
         {
             // Arrange
-            // Forçar ModelState válido
+            // For ar ModelState v lido
             controller.ModelState.Clear();
 
             // Act
@@ -235,7 +235,7 @@ namespace AlugueLinkWEB.Controllers.Tests
             // Arrange
             controller.ModelState.Clear();
             var model = GetTargetAluguelModel();
-            model.Id = 2; // ID diferente do parâmetro
+            model.Id = 2; // ID diferente do par metro
 
             // Act
             var result = controller.Edit(1, model);
@@ -266,7 +266,7 @@ namespace AlugueLinkWEB.Controllers.Tests
             var mockAluguelService = new Mock<IAluguelService>();
             var mockLocatarioService = new Mock<ILocatarioService>();
             var mockImovelService = new Mock<IImovelService>();
-            
+
             mockAluguelService.Setup(service => service.Get(It.IsAny<int>()))
                 .Returns((Aluguel?)null);
 
@@ -341,19 +341,19 @@ namespace AlugueLinkWEB.Controllers.Tests
         {
             return
             [
-                new Aluguel { 
+                new Aluguel {
                     Id = 1, Idlocatario = 1, Idimovel = 1, Status = "A",
                     DataInicio = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
                     DataFim = DateOnly.FromDateTime(DateTime.Now.AddMonths(10)),
                     DataAssinatura = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2))
                 },
-                new Aluguel { 
+                new Aluguel {
                     Id = 2, Idlocatario = 2, Idimovel = 2, Status = "F",
                     DataInicio = DateOnly.FromDateTime(DateTime.Now.AddMonths(-12)),
                     DataFim = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
                     DataAssinatura = DateOnly.FromDateTime(DateTime.Now.AddMonths(-12))
                 },
-                new Aluguel { 
+                new Aluguel {
                     Id = 3, Idlocatario = 1, Idimovel = 2, Status = "P",
                     DataInicio = DateOnly.FromDateTime(DateTime.Now.AddMonths(1)),
                     DataFim = DateOnly.FromDateTime(DateTime.Now.AddMonths(13)),
@@ -366,7 +366,7 @@ namespace AlugueLinkWEB.Controllers.Tests
         {
             return
             [
-                new Locatario { Id = 1, Nome = "João Silva", Email = "joao@gmail.com", Cpf = "12345678901" },
+                new Locatario { Id = 1, Nome = "Jo o Silva", Email = "joao@gmail.com", Cpf = "12345678901" },
                 new Locatario { Id = 2, Nome = "Maria Santos", Email = "maria@gmail.com", Cpf = "98765432100" }
             ];
         }
@@ -375,7 +375,7 @@ namespace AlugueLinkWEB.Controllers.Tests
         {
             return
             [
-                new Imovel { Id = 1, Logradouro = "Rua das Flores", Cidade = "São Paulo", Tipo = "A", Valor = 3500.00m },
+                new Imovel { Id = 1, Logradouro = "Rua das Flores", Cidade = "S o Paulo", Tipo = "A", Valor = 3500.00m },
                 new Imovel { Id = 2, Logradouro = "Av. Copacabana", Cidade = "Rio de Janeiro", Tipo = "C", Valor = 5000.00m }
             ];
         }

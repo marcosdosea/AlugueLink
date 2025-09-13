@@ -24,6 +24,7 @@ namespace AlugueLinkWEB.Controllers
             _aluguelService = aluguelService;
         }
 
+        // GET: Home
         [AllowAnonymous]
         public IActionResult Index()
         {
@@ -31,16 +32,13 @@ namespace AlugueLinkWEB.Controllers
             {
                 try
                 {
-                    // Atualizar status dos aluguéis antes de calcular estatísticas
                     _aluguelService.AtualizarStatusAlugueis();
                 }
                 catch (Exception ex)
                 {
-                    // Log do erro mas não interrompe a aplicação
                     _logger.LogWarning(ex, "Erro ao atualizar status dos aluguéis");
                 }
 
-                // Calcular estatísticas para usuários logados
                 var totalImoveis = _imovelService.GetCount();
                 var totalLocatarios = _locatarioService.GetCount();
                 var imoveisAlugados = _aluguelService.GetImoveisIndisponiveis().Count();
@@ -59,12 +57,14 @@ namespace AlugueLinkWEB.Controllers
             return View();
         }
 
+        // GET: Home/Privacy
         [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
         }
 
+        // GET: Home/Error
         [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

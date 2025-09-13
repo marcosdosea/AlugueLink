@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace AlugueLinkWEB.Models
 {
@@ -8,7 +9,7 @@ namespace AlugueLinkWEB.Models
 
         [Display(Name = "CEP")]
         [Required(ErrorMessage = "CEP é obrigatório")]
-        [StringLength(8, ErrorMessage = "CEP deve ter 8 caracteres")]
+        [RegularExpression(@"^\d{5}-?\d{3}$", ErrorMessage = "CEP deve ter o formato 00000-000 ou 00000000")]
         public string? Cep { get; set; }
 
         [Display(Name = "Logradouro")]
@@ -54,7 +55,9 @@ namespace AlugueLinkWEB.Models
 
         [Display(Name = "Área (m²)")]
         [Required(ErrorMessage = "Área é obrigatória")]
-        [Range(0.01, 99999.99, ErrorMessage = "Área deve ser um valor entre 0,01 e 99.999,99 m²")]
+        [RegularExpression(@"^\d+,\d{1,2}$", ErrorMessage = "Área deve estar no formato 0,0 ou 0,00")]        
+        public string? AreaStr { get; set; }
+
         public decimal? Area { get; set; }
 
         [Display(Name = "Vagas Garagem")]
@@ -63,8 +66,9 @@ namespace AlugueLinkWEB.Models
 
         [Display(Name = "Valor (R$)")]
         [Required(ErrorMessage = "Valor do aluguel é obrigatório")]
-        [Range(0.01, 999999.99, ErrorMessage = "Valor deve estar entre R$ 0,01 e R$ 999.999,99")]
-        [DataType(DataType.Currency)]
+        [RegularExpression(@"^\d+,\d{1,2}$", ErrorMessage = "Valor deve estar no formato 0,0 ou 0,00")]        
+        public string? ValorStr { get; set; }
+
         public decimal? Valor { get; set; }
 
         [Display(Name = "Descrição")]
@@ -73,22 +77,19 @@ namespace AlugueLinkWEB.Models
         public string? Descricao { get; set; }
 
         [Display(Name = "Locador")]
-        public int? LocadorId { get; set; } // deixamos opcional na view; backend atribui padrão
+        public int? LocadorId { get; set; }
 
         public string? LocadorNome { get; set; }
 
-        // Propriedades para status de aluguel
         public bool IsAlugado { get; set; }
         public string? StatusTexto => IsAlugado ? "Alugado" : "Disponível";
         public string? InquilinoAtual { get; set; }
         public DateOnly? DataInicioAluguel { get; set; }
         public DateOnly? DataFimAluguel { get; set; }
 
-        // Comercial: quartos/banheiros não obrigatórios
         public bool IsComercial => !string.IsNullOrEmpty(Tipo) &&
                                    Tipo.Equals("comercial", StringComparison.OrdinalIgnoreCase);
 
-        // Propriedade computed para exibir tipo amigável
         public string TipoTexto
         {
             get
@@ -106,5 +107,7 @@ namespace AlugueLinkWEB.Models
                 };
             }
         }
+
+        public string? CepLimpo => string.IsNullOrWhiteSpace(Cep) ? null : Regex.Replace(Cep, @"\D", "");
     }
 }

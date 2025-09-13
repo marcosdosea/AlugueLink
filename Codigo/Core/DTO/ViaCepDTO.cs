@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Core.DTO;
 
-public class ViaCepDTO
+public class ViaCepDto
 {
     [JsonPropertyName("cep")]
     public string Cep { get; set; } = null!;
@@ -13,6 +13,9 @@ public class ViaCepDTO
     [JsonPropertyName("complemento")]
     public string Complemento { get; set; } = "";
 
+    [JsonPropertyName("unidade")]
+    public string Unidade { get; set; } = "";
+
     [JsonPropertyName("bairro")]
     public string Bairro { get; set; } = null!;
 
@@ -21,6 +24,12 @@ public class ViaCepDTO
 
     [JsonPropertyName("uf")]
     public string Uf { get; set; } = null!;
+
+    [JsonPropertyName("estado")]
+    public string Estado { get; set; } = null!;
+
+    [JsonPropertyName("regiao")]
+    public string Regiao { get; set; } = null!;
 
     [JsonPropertyName("ibge")]
     public string Ibge { get; set; } = null!;

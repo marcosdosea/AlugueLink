@@ -34,13 +34,11 @@ namespace AlugueLinkWEB.Models
         [Required(ErrorMessage = "Imóvel é obrigatório")]
         public int? IdImovel { get; set; }
 
-        // Propriedades para exibição
         public string? LocatarioNome { get; set; }
         public string? ImovelEndereco { get; set; }
         public string? ImovelTipo { get; set; }
         public decimal? ImovelValor { get; set; }
 
-        // Propriedade computed para exibir status amigável
         public string StatusTexto
         {
             get
@@ -55,7 +53,6 @@ namespace AlugueLinkWEB.Models
             }
         }
 
-        // Propriedade computed para exibir tipo de imóvel amigável
         public string ImovelTipoTexto
         {
             get
@@ -65,7 +62,7 @@ namespace AlugueLinkWEB.Models
                     "A" => "Apartamento",
                     "C" => "Casa", 
                     "PC" => "Comercial",
-                    "COM" => "Comercial", // fallback para possível variação
+                    "COM" => "Comercial",
                     "casa" => "Casa",
                     "apartamento" => "Apartamento",
                     "comercial" => "Comercial",
@@ -74,7 +71,6 @@ namespace AlugueLinkWEB.Models
             }
         }
 
-        // Para validação customizada
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var results = new List<ValidationResult>();

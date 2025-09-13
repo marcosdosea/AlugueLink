@@ -2,9 +2,6 @@ using System.Runtime.Serialization;
 
 namespace Core.Service
 {
-    /// <summary>
-    /// Exceção personalizada para erros de serviço
-    /// </summary>
     [Serializable]
     public class ServiceException : Exception
     {

@@ -160,6 +160,9 @@
                     <a class="nav-link d-flex align-items-center @((currentController == "Aluguel" && currentAction == "Index") ? "active" : string.Empty)" asp-controller="Aluguel" asp-action="Index">
                         <span class="icon me-2"><i class="fas fa-clipboard-list"></i></span>Meus Aluguéis
                     </a>
+                    <a class="nav-link d-flex align-items-center @((currentController == "Pagamento" && currentAction == "Index") ? "active" : string.Empty)" asp-controller="Pagamento" asp-action="Index">
+                        <span class="icon me-2"><i class="fas fa-money-bill-wave"></i></span>Pagamentos
+                    </a>
                 </nav>
                 <div class="sidebar-footer small p-3 mt-auto">© @DateTime.Now.Year AlugueLink</div>
             </aside>

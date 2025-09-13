@@ -13,7 +13,7 @@
 
 <div class="card">
     <div class="card-body">
-        <form asp-action="Create" method="post">
+        <form asp-action="Create" method="post" id="locatarioForm">
             <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
             
             <!-- Dados Pessoais -->
@@ -149,6 +149,19 @@
                 cidade: 'Cidade',
                 estado: 'Estado'
             });
+        });
+
+        // Função para limpar CEP (remover hífen)
+        function cleanCep(cep) {
+            return cep ? cep.replace(/\D/g, '') : '';
+        }
+
+        // Limpar CEP antes do envio do formulário
+        document.getElementById('locatarioForm').addEventListener('submit', function(e) {
+            const cepField = document.getElementById('Cep');
+            if (cepField && cepField.value) {
+                cepField.value = cleanCep(cepField.value);
+            }
         });
     </script>
 }

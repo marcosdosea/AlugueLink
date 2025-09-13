@@ -1,0 +1,323 @@
+﻿using Core;
+using Core.DTO;
+using Core.Service;
+using Microsoft.EntityFrameworkCore;
+
+namespace Service.Tests
+{
+    [TestClass()]
+    public class AluguelServiceTests
+    {
+        private AluguelinkContext context = null!;
+        private IAluguelService aluguelService = null!;
+        private readonly int page = 1;
+        private readonly int pageSize = 10;
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            //Arrange
+            var builder = new DbContextOptionsBuilder<AluguelinkContext>();
+            builder.UseInMemoryDatabase("aluguelinkdb");
+            var options = builder.Options;
+
+            context = new AluguelinkContext(options);
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+
+            // Criar dados de apoio
+            var locadores = new List<Locador>
+            {
+                new() { Id = 1, Nome = "João", Email = "joao@gmail.com", Cpf = "12345678901", Telefone = "11999999999" }
+            };
+
+            var locatarios = new List<Locatario>
+            {
+                new() {
+                    Id = 1, Nome = "Maria Silva", Email = "maria@gmail.com", Cpf = "98765432100",
+                    Telefone1 = "11888888888", Telefone2 = "11777777777", Cep = "01234567",
+                    Logradouro = "Rua A", Numero = "100", Bairro = "Centro", Cidade = "São Paulo", Estado = "SP"
+                },
+                new() {
+                    Id = 2, Nome = "Carlos Santos", Email = "carlos@gmail.com", Cpf = "11122233344",
+                    Telefone1 = "11666666666", Telefone2 = "11555555555", Cep = "02345678",
+                    Logradouro = "Rua B", Numero = "200", Bairro = "Vila Nova", Cidade = "São Paulo", Estado = "SP"
+                }
+            };
+
+            var imoveis = new List<Imovel>
+            {
+                new() {
+                    Id = 1, IdLocador = 1, Cep = "01234567", Logradouro = "Rua A", Numero = "100",
+                    Bairro = "Centro", Cidade = "São Paulo", Estado = "SP", Tipo = "A",
+                    Quartos = 2, Banheiros = 1, Area = 80.0m, VagasGaragem = 1, Valor = 2000.00m,
+                    Descricao = "Apartamento teste"
+                },
+                new() {
+                    Id = 2, IdLocador = 1, Cep = "02345678", Logradouro = "Rua B", Numero = "200",
+                    Bairro = "Vila Nova", Cidade = "São Paulo", Estado = "SP", Tipo = "C",
+                    Quartos = 3, Banheiros = 2, Area = 120.0m, VagasGaragem = 2, Valor = 3000.00m,
+                    Descricao = "Casa teste"
+                }
+            };
+
+            var alugueis = new List<Aluguel>
+            {
+                new() {
+                    Id = 1, Idlocatario = 1, Idimovel = 1,
+                    DataInicio = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
+                    DataFim = DateOnly.FromDateTime(DateTime.Now.AddMonths(10)),
+                    DataAssinatura = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
+                    Status = "A"
+                },
+                new() {
+                    Id = 2, Idlocatario = 2, Idimovel = 2,
+                    DataInicio = DateOnly.FromDateTime(DateTime.Now.AddMonths(-12)),
+                    DataFim = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
+                    DataAssinatura = DateOnly.FromDateTime(DateTime.Now.AddMonths(-12)),
+                    Status = "F"
+                },
+                new() {
+                    Id = 3, Idlocatario = 2, Idimovel = 1,
+                    DataInicio = DateOnly.FromDateTime(DateTime.Now.AddMonths(1)),
+                    DataFim = DateOnly.FromDateTime(DateTime.Now.AddMonths(13)),
+                    DataAssinatura = DateOnly.FromDateTime(DateTime.Now),
+                    Status = "P"
+                }
+            };
+
+            context.AddRange(locadores);
+            context.AddRange(locatarios);
+            context.AddRange(imoveis);
+            context.AddRange(alugueis);
+            context.SaveChanges();
+
+            aluguelService = new Service.AluguelService(context);
+        }
+
+        [TestMethod()]
+        public void CreateTest()
+        {
+            // Act
+            var novoAluguel = aluguelService.Create(new Aluguel()
+            {
+                Idlocatario = 1,
+                Idimovel = 2,
+                DataInicio = DateOnly.FromDateTime(DateTime.Now.AddDays(30)),
+                DataFim = DateOnly.FromDateTime(DateTime.Now.AddDays(395)),
+                DataAssinatura = DateOnly.FromDateTime(DateTime.Now),
+                Status = "P"
+            });
+
+            // Assert
+            Assert.AreEqual(4, novoAluguel);
+            Assert.AreEqual(4, aluguelService.GetAll(page, pageSize).Count());
+            var aluguel = aluguelService.Get(4);
+            Assert.IsNotNull(aluguel);
+            Assert.AreEqual(4, aluguel.Id);
+            Assert.AreEqual(1, aluguel.Idlocatario);
+            Assert.AreEqual(2, aluguel.Idimovel);
+            Assert.AreEqual("P", aluguel.Status);
+        }
+
+        [TestMethod()]
+        public void DeleteTest()
+        {
+            // Act
+            aluguelService.Delete(2);
+
+            // Assert
+            Assert.AreEqual(2, aluguelService.GetAll(page, pageSize).Count());
+            var aluguel = aluguelService.Get(2);
+            Assert.IsNull(aluguel);
+        }
+
+        [TestMethod()]
+        public void EditTest()
+        {
+            //Act 
+            var aluguel = aluguelService.Get(3);
+            Assert.IsNotNull(aluguel);
+            aluguel.Status = "A"; 
+            aluguel.DataInicio = DateOnly.FromDateTime(DateTime.Now);
+            aluguelService.Edit(aluguel);
+
+            //Assert
+            aluguel = aluguelService.Get(3);
+            Assert.IsNotNull(aluguel);
+            Assert.AreEqual("A", aluguel.Status);
+            Assert.AreEqual(DateOnly.FromDateTime(DateTime.Now), aluguel.DataInicio);
+            Assert.AreEqual(3, aluguel.Id);
+        }
+
+        [TestMethod()]
+        public void GetTest()
+        {
+            // Act
+            var aluguel = aluguelService.Get(1);
+
+            // Assert
+            Assert.IsNotNull(aluguel);
+            Assert.AreEqual(1, aluguel.Idlocatario);
+            Assert.AreEqual(1, aluguel.Idimovel);
+            Assert.AreEqual("A", aluguel.Status);
+            Assert.AreEqual(1, aluguel.Id);
+        }
+
+        [TestMethod()]
+        public void GetAllTest()
+        {
+            // Act
+            var listaAlugueis = aluguelService.GetAll(page, pageSize);
+
+            // Assert
+            Assert.IsInstanceOfType(listaAlugueis, typeof(IEnumerable<Aluguel>));
+            Assert.IsNotNull(listaAlugueis);
+            Assert.AreEqual(3, listaAlugueis.Count());
+            Assert.AreEqual(1, listaAlugueis.First().Id);
+            Assert.AreEqual("A", listaAlugueis.First().Status);
+        }
+
+        [TestMethod()]
+        public void GetByLocatarioTest()
+        {
+            //Act
+            var alugueis = aluguelService.GetByLocatario(1);
+
+            //Assert
+            Assert.IsInstanceOfType(alugueis, typeof(IEnumerable<AluguelDto>));
+            Assert.IsNotNull(alugueis);
+            Assert.AreEqual(1, alugueis.Count());
+            var aluguel = alugueis.First();
+            Assert.AreEqual(1, aluguel.Idlocatario);
+            Assert.AreEqual("A", aluguel.Status);
+        }
+
+        [TestMethod()]
+        public void GetByImovelTest()
+        {
+            //Act
+            var alugueis = aluguelService.GetByImovel(1);
+
+            //Assert
+            Assert.IsInstanceOfType(alugueis, typeof(IEnumerable<AluguelDto>));
+            Assert.IsNotNull(alugueis);
+            Assert.AreEqual(2, alugueis.Count());
+            Assert.IsTrue(alugueis.All(a => a.Idimovel == 1));
+        }
+
+        [TestMethod()]
+        public void GetByStatusTest()
+        {
+            //Act
+            var alugueis = aluguelService.GetByStatus("A");
+
+            //Assert
+            Assert.IsInstanceOfType(alugueis, typeof(IEnumerable<AluguelDto>));
+            Assert.IsNotNull(alugueis);
+            Assert.AreEqual(1, alugueis.Count());
+            var aluguel = alugueis.First();
+            Assert.AreEqual("A", aluguel.Status);
+        }
+
+        [TestMethod()]
+        public void IsImovelAvailableTest_ImovelDisponivel()
+        {
+            //Act
+            var disponivel = aluguelService.IsImovelAvailable(2);
+
+            //Assert
+            Assert.IsTrue(disponivel);
+        }
+
+        [TestMethod()]
+        public void IsImovelAvailableTest_ImovelOcupado()
+        {
+            //Act
+            var disponivel = aluguelService.IsImovelAvailable(1);
+
+            //Assert
+            Assert.IsFalse(disponivel);
+        }
+
+        [TestMethod()]
+        public void IsLocatarioAvailableTest_LocatarioDisponivel()
+        {
+            //Act
+            var disponivel = aluguelService.IsLocatarioAvailable(2);
+
+            //Assert
+            Assert.IsTrue(disponivel);
+        }
+
+        [TestMethod()]
+        public void IsLocatarioAvailableTest_LocatarioOcupado()
+        {
+            //Act
+            var disponivel = aluguelService.IsLocatarioAvailable(1);
+
+            //Assert
+            Assert.IsFalse(disponivel);
+        }
+
+        [TestMethod()]
+        public void GetImoveisIndisponiveisTest()
+        {
+            //Act
+            var imoveisOcupados = aluguelService.GetImoveisIndisponiveis();
+
+            //Assert
+            Assert.IsInstanceOfType(imoveisOcupados, typeof(IEnumerable<int>));
+            Assert.IsNotNull(imoveisOcupados);
+            Assert.AreEqual(1, imoveisOcupados.Count());
+            Assert.IsTrue(imoveisOcupados.Contains(1));
+        }
+
+        [TestMethod()]
+        public void GetLocatariosOcupadosTest()
+        {
+            //Act
+            var locatariosOcupados = aluguelService.GetLocatariosOcupados();
+
+            //Assert
+            Assert.IsInstanceOfType(locatariosOcupados, typeof(IEnumerable<int>));
+            Assert.IsNotNull(locatariosOcupados);
+            Assert.AreEqual(1, locatariosOcupados.Count());
+            Assert.IsTrue(locatariosOcupados.Contains(1));
+        }
+
+        [TestMethod()]
+        public void GetAluguelAtivoByImovelTest()
+        {
+            //Act
+            var aluguelAtivo = aluguelService.GetAluguelAtivoByImovel(1);
+
+            //Assert
+            Assert.IsNotNull(aluguelAtivo);
+            Assert.AreEqual(1, aluguelAtivo.Id);
+            Assert.AreEqual("A", aluguelAtivo.Status);
+        }
+
+        [TestMethod()]
+        public void GetAluguelAtivoByLocatarioTest()
+        {
+            //Act
+            var aluguelAtivo = aluguelService.GetAluguelAtivoByLocatario(1);
+
+            //Assert
+            Assert.IsNotNull(aluguelAtivo);
+            Assert.AreEqual(1, aluguelAtivo.Id);
+            Assert.AreEqual("A", aluguelAtivo.Status);
+        }
+
+        [TestMethod()]
+        public void GetCountTest()
+        {
+            // Act
+            var count = aluguelService.GetCount();
+
+            // Assert
+            Assert.AreEqual(3, count);
+        }
+    }
+}

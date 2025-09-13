@@ -11,11 +11,7 @@ public partial class Manutencao
 
     public DateTime DataSolicitacao { get; set; }
 
-    /// <summary>
-    /// P - PEDIDO REALIZADO
-    /// A - ATENDIDA
-    /// C - CANCELADA
-    /// </summary>
+    // P - PEDIDO REALIZADO, A - ATENDIDA, C - CANCELADA
     public string Status { get; set; } = null!;
 
     public decimal Valor { get; set; }

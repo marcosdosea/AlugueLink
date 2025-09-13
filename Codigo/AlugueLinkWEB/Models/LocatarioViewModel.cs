@@ -3,7 +3,7 @@ using Util;
 
 namespace AlugueLinkWEB.Models
 {
-    public class LocatarioViewModel //: IValidatableObject
+    public class LocatarioViewModel
     {
         public int Id { get; set; }
 
@@ -76,20 +76,10 @@ namespace AlugueLinkWEB.Models
         [DataType(DataType.Currency)]
         public decimal? Renda { get; set; }
 
-        // Propriedades para status de aluguel
         public bool IsOcupado { get; set; }
         public string? StatusTexto => IsOcupado ? "Ativo" : "Inativo";
         public string? ImovelAtual { get; set; }
         public DateOnly? DataInicioAluguel { get; set; }
         public DateOnly? DataFimAluguel { get; set; }
-
-        /*public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var results = new List<ValidationResult>();
-
-            // Validações customizadas podem ser adicionadas aqui
-
-            return results;
-        }*/
     }
 }

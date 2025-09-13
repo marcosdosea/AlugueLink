@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AlugueLinkWEB.Areas.Identity.Data;
 
-// Add profile data for application users by adding properties to the UsuarioIdentity class
 public class UsuarioIdentity : IdentityUser
 {
     [Display(Name = "Nome Completo")]

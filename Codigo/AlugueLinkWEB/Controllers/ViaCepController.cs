@@ -6,7 +6,7 @@ namespace AlugueLinkWEB.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[AllowAnonymous] // Allow anonymous access for address lookup
+[AllowAnonymous]
 public class ViaCepController : ControllerBase
 {
     private readonly IViaCepService _viaCepService;
@@ -16,6 +16,7 @@ public class ViaCepController : ControllerBase
         _viaCepService = viaCepService;
     }
 
+    // GET: api/ViaCep/{cep}
     [HttpGet("{cep}")]
     public async Task<IActionResult> BuscarEnderecoPorCep(string cep)
     {
