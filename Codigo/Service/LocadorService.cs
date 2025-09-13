@@ -14,11 +14,6 @@ namespace Service
             _context = context;
         }
 
-        /// <summary>
-        /// Criar um novo locador na base de dados
-        /// </summary>
-        /// <param name="locador">Dados do Locador</param>
-        /// <returns>ID do Locador</returns>
         public int Create(Locador locador)
         {
             _context.Locadors.Add(locador);
@@ -26,20 +21,12 @@ namespace Service
             return locador.Id;
         }
 
-        /// <summary>
-        /// Editar um locador existente na base de dados
-        /// </summary>
-        /// <param name="locador">Dados do Locador</param>
         public void Edit(Locador locador)
         {
             _context.Locadors.Update(locador);
             _context.SaveChanges();
         }
 
-        /// <summary>
-        /// Deletar um locador da base de dados
-        /// </summary>
-        /// <param name="id">ID do Locador</param>
         public void Delete(int id)
         {
             var locador = _context.Locadors.Find(id);
@@ -50,22 +37,18 @@ namespace Service
             }
         }
 
-        /// <summary>
-        /// Buscar um locador na base de dados
-        /// </summary>
-        /// <param name="id">ID do Locador</param>
-        /// <returns>Dados do Locador</returns>
         public Locador? Get(int id)
         {
             return _context.Locadors.Find(id);
         }
 
-        /// <summary>
-        /// Buscar todos os locadores na base de dados com paginação
-        /// </summary>
-        /// <param name="page">Página</param>
-        /// <param name="pageSize">Tamanho da página</param>
-        /// <returns>Lista de Locadores</returns>
+        public Locador? GetByEmail(string email)
+        {
+            return _context.Locadors
+                .AsNoTracking()
+                .FirstOrDefault(l => l.Email == email);
+        }
+
         public IEnumerable<Locador> GetAll(int page, int pageSize)
         {
             return _context.Locadors
@@ -75,11 +58,6 @@ namespace Service
                 .Take(pageSize);
         }
 
-        /// <summary>
-        /// Buscar locadores por CPF
-        /// </summary>
-        /// <param name="cpf">CPF do locador</param>
-        /// <returns>Lista de LocadorDto</returns>
         public IEnumerable<LocadorDto> GetByCpf(string cpf)
         {
             return _context.Locadors
@@ -95,11 +73,6 @@ namespace Service
                 });
         }
 
-        /// <summary>
-        /// Buscar locadores por nome
-        /// </summary>
-        /// <param name="nome">Nome do locador</param>
-        /// <returns>Lista de LocadorDto</returns>
         public IEnumerable<LocadorDto> GetByNome(string nome)
         {
             return _context.Locadors
@@ -115,10 +88,6 @@ namespace Service
                 });
         }
 
-        /// <summary>
-        /// Contar total de locadores
-        /// </summary>
-        /// <returns>Número total de locadores</returns>
         public int GetCount()
         {
             return _context.Locadors.Count();

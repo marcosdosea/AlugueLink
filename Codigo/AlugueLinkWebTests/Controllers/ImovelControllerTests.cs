@@ -5,6 +5,8 @@ using AlugueLinkWEB.Mappers;
 using AlugueLinkWEB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using Moq;
 
 namespace AlugueLinkWEB.Controllers.Tests
@@ -13,6 +15,8 @@ namespace AlugueLinkWEB.Controllers.Tests
     public class ImovelControllerTests
     {
         private static ImovelController controller = null!;
+        private Mock<HttpContext> mockHttpContext = null!;
+        private Mock<HttpRequest> mockRequest = null!;
         private readonly int page = 1;
         private readonly int pageSize = 10;
 
@@ -58,9 +62,26 @@ namespace AlugueLinkWEB.Controllers.Tests
 
             controller = new ImovelController(mockImovelService.Object, mockLocadorService.Object, mockAluguelService.Object, mapper);
             
-            // Setup TempData para evitar NullReferenceException
             var tempData = new Mock<ITempDataDictionary>();
             controller.TempData = tempData.Object;
+
+            mockHttpContext = new Mock<HttpContext>();
+            mockRequest = new Mock<HttpRequest>();
+            var formCollection = new Mock<IFormCollection>();
+            
+            formCollection.Setup(f => f[It.IsAny<string>()])
+                .Returns(new StringValues());
+            
+            mockRequest.Setup(r => r.Form)
+                .Returns(formCollection.Object);
+            
+            mockHttpContext.Setup(c => c.Request)
+                .Returns(mockRequest.Object);
+            
+            controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = mockHttpContext.Object
+            };
         }
 
         [TestMethod()]
@@ -107,7 +128,7 @@ namespace AlugueLinkWEB.Controllers.Tests
         public void CreateTest_Post_Valido()
         {
             // Arrange
-            // Forçar ModelState válido
+            SetupValidFormData();
             controller.ModelState.Clear();
 
             // Act
@@ -124,6 +145,7 @@ namespace AlugueLinkWEB.Controllers.Tests
         public void CreateTest_Post_Invalido()
         {
             // Arrange
+            SetupValidFormData();
             controller.ModelState.AddModelError("Logradouro", "Campo requerido");
 
             // Act
@@ -131,6 +153,42 @@ namespace AlugueLinkWEB.Controllers.Tests
 
             // Assert
             Assert.AreEqual(1, controller.ModelState.ErrorCount);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            ViewResult viewResult = (ViewResult)result;
+            Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(ImovelViewModel));
+        }
+
+        [TestMethod()]
+        public void CreateTest_Post_ValorInvalido()
+        {
+            // Arrange
+            var imovelInvalido = GetNewImovel();
+            imovelInvalido.ValorStr = "invalid";
+            SetupInvalidFormData("ValorStr", "invalid");
+            controller.ModelState.Clear();
+
+            // Act
+            var result = controller.Create(imovelInvalido);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            ViewResult viewResult = (ViewResult)result;
+            Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(ImovelViewModel));
+        }
+
+        [TestMethod()]
+        public void CreateTest_Post_AreaInvalida()
+        {
+            // Arrange
+            var imovelInvalido = GetNewImovel();
+            imovelInvalido.AreaStr = "abc";
+            SetupInvalidFormData("AreaStr", "abc");
+            controller.ModelState.Clear();
+
+            // Act
+            var result = controller.Create(imovelInvalido);
+
+            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
             ViewResult viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(ImovelViewModel));
@@ -149,13 +207,15 @@ namespace AlugueLinkWEB.Controllers.Tests
             ImovelViewModel imovelModel = (ImovelViewModel)viewResult.ViewData.Model;
             Assert.IsTrue(1 == imovelModel.Id);
             Assert.AreEqual("Rua das Flores", imovelModel.Logradouro);
+            Assert.IsNotNull(imovelModel.AreaStr);
+            Assert.IsNotNull(imovelModel.ValorStr);
         }
 
         [TestMethod()]
         public void EditTest_Post_Valido()
         {
             // Arrange
-            // Forçar ModelState válido
+            SetupValidFormData();
             controller.ModelState.Clear();
 
             // Act
@@ -166,6 +226,24 @@ namespace AlugueLinkWEB.Controllers.Tests
             RedirectToActionResult redirectToActionResult = (RedirectToActionResult)result;
             Assert.IsNull(redirectToActionResult.ControllerName);
             Assert.AreEqual("Index", redirectToActionResult.ActionName);
+        }
+
+        [TestMethod()]
+        public void EditTest_Post_ValorInvalido()
+        {
+            // Arrange
+            var imovelInvalido = GetTargetImovelModel();
+            imovelInvalido.ValorStr = "3500.00";
+            SetupInvalidFormData("ValorStr", "3500.00");
+            controller.ModelState.Clear();
+
+            // Act
+            var result = controller.Edit(1, imovelInvalido);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            ViewResult viewResult = (ViewResult)result;
+            Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(ImovelViewModel));
         }
 
         [TestMethod()]
@@ -196,6 +274,30 @@ namespace AlugueLinkWEB.Controllers.Tests
             Assert.AreEqual("Index", redirectToActionResult.ActionName);
         }
 
+        private void SetupValidFormData()
+        {
+            var formCollection = new Mock<IFormCollection>();
+            formCollection.Setup(f => f["ValorStr"])
+                .Returns(new StringValues("4000,00"));
+            formCollection.Setup(f => f["AreaStr"])
+                .Returns(new StringValues("150,00"));
+            
+            mockRequest.Setup(r => r.Form)
+                .Returns(formCollection.Object);
+        }
+
+        private void SetupInvalidFormData(string fieldName, string value)
+        {
+            var formCollection = new Mock<IFormCollection>();
+            formCollection.Setup(f => f[fieldName])
+                .Returns(new StringValues(value));
+            formCollection.Setup(f => f[It.Is<string>(s => s != fieldName)])
+                .Returns(new StringValues());
+            
+            mockRequest.Setup(r => r.Form)
+                .Returns(formCollection.Object);
+        }
+
         private ImovelViewModel GetNewImovel()
         {
             return new ImovelViewModel
@@ -210,8 +312,10 @@ namespace AlugueLinkWEB.Controllers.Tests
                 Tipo = "casa",
                 Quartos = 3,
                 Banheiros = 2,
+                AreaStr = "150,00",
                 Area = 150.00m,
                 VagasGaragem = 2,
+                ValorStr = "4000,00",
                 Valor = 4000.00m,
                 Descricao = "Casa moderna",
                 LocadorId = 1
@@ -252,8 +356,10 @@ namespace AlugueLinkWEB.Controllers.Tests
                 Tipo = "apartamento",
                 Quartos = 3,
                 Banheiros = 2,
+                AreaStr = "120,5",
                 Area = 120.50m,
                 VagasGaragem = 1,
+                ValorStr = "3500,00",
                 Valor = 3500.00m,
                 Descricao = "Apartamento amplo",
                 LocadorId = 1

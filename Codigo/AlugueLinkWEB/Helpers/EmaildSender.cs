@@ -16,7 +16,7 @@ namespace AlugueLinkWEB.Helpers
         public EmailSender(IConfiguration configuration, IWebHostEnvironment environment)
         {
             _from = configuration["Smtp:From"]!;
-            _webRootPath = environment.WebRootPath; // Obtém o caminho
+            _webRootPath = environment.WebRootPath;
             _client = new SmtpClient
             {
                 Host = configuration["Smtp:Host"]!,

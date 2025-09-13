@@ -4,10 +4,11 @@ window.ViaCepUtil = (function() {
 
     // Configuração
     const CONFIG = {
-        apiBaseUrl: '/api/viacep/',
+        apiBaseUrl: '/api/ViaCep/',
         loadingText: 'Buscando...',
         errorClass: 'is-invalid',
-        loadingClass: 'loading-address'
+        loadingClass: 'loading-address',
+        emptyFieldClass: 'field-empty-after-lookup'
     };
 
     // Elementos do formulário (serão definidos dinamicamente)
@@ -74,28 +75,81 @@ window.ViaCepUtil = (function() {
     }
 
     /**
+     * Remove classes de estado dos campos
+     */
+    function limparClassesEstado() {
+        Object.values(elements).forEach(element => {
+            if (element) {
+                element.classList.remove(CONFIG.errorClass, CONFIG.emptyFieldClass, 'field-populated');
+            }
+        });
+    }
+
+    /**
      * Preenche os campos de endereço com os dados retornados
      */
     function preencherCamposEndereco(dados) {
-        if (elements.logradouro && dados.logradouro) {
-            elements.logradouro.value = dados.logradouro;
+        // Primeiro, limpar todos os campos e classes para remover qualquer estado anterior
+        limparCamposEndereco();
+        limparClassesEstado();
+        
+        const camposVazios = [];
+        
+        // Preencher e animar campos que têm dados válidos
+        if (elements.logradouro) {
+            if (dados.logradouro && dados.logradouro.trim()) {
+                elements.logradouro.value = dados.logradouro.trim();
+                elements.logradouro.classList.add('field-populated');
+            } else {
+                elements.logradouro.classList.add(CONFIG.emptyFieldClass);
+                camposVazios.push('Rua/Logradouro');
+            }
         }
         
-        if (elements.complemento && dados.complemento) {
-            elements.complemento.value = dados.complemento;
+        if (elements.complemento) {
+            if (dados.complemento && dados.complemento.trim()) {
+                elements.complemento.value = dados.complemento.trim();
+                elements.complemento.classList.add('field-populated');
+            }
+            // Complemento não é marcado como vazio pois é opcional
         }
         
-        if (elements.bairro && dados.bairro) {
-            elements.bairro.value = dados.bairro;
+        if (elements.bairro) {
+            if (dados.bairro && dados.bairro.trim()) {
+                elements.bairro.value = dados.bairro.trim();
+                elements.bairro.classList.add('field-populated');
+            } else {
+                elements.bairro.classList.add(CONFIG.emptyFieldClass);
+                camposVazios.push('Bairro');
+            }
         }
         
-        if (elements.cidade && dados.localidade) {
-            elements.cidade.value = dados.localidade;
+        if (elements.cidade) {
+            if (dados.localidade && dados.localidade.trim()) {
+                elements.cidade.value = dados.localidade.trim();
+                elements.cidade.classList.add('field-populated');
+            } else {
+                elements.cidade.classList.add(CONFIG.emptyFieldClass);
+                camposVazios.push('Cidade');
+            }
         }
         
-        if (elements.estado && dados.uf) {
-            elements.estado.value = dados.uf;
+        if (elements.estado) {
+            if (dados.uf && dados.uf.trim()) {
+                elements.estado.value = dados.uf.trim();
+                elements.estado.classList.add('field-populated');
+            } else {
+                elements.estado.classList.add(CONFIG.emptyFieldClass);
+                camposVazios.push('Estado');
+            }
         }
+
+        // Remover classes visuais após um tempo
+        setTimeout(() => {
+            limparClassesEstado();
+        }, 2000);
+
+        return camposVazios;
     }
 
     /**
@@ -141,25 +195,31 @@ window.ViaCepUtil = (function() {
     }
 
     /**
-     * Exibe mensagem de erro
+     * Exibe mensagem de erro ou informação
      */
-    function exibirErro(mensagem) {
-        // Pode ser customizado para usar toast, modal, etc.
-        console.warn('Erro ViaCEP:', mensagem);
+    function exibirMensagem(mensagem, tipo = 'erro') {
+        console.warn('ViaCEP:', mensagem);
         
-        // Procura por elemento para exibir erro
         const errorElement = document.getElementById('cep-error-message');
         if (errorElement) {
             errorElement.textContent = mensagem;
+            
+            // Resetar classes
+            errorElement.className = 'small';
+            
+            if (tipo === 'info') {
+                errorElement.classList.add('text-info');
+            } else {
+                errorElement.classList.add('text-danger');
+            }
+            
             errorElement.style.display = 'block';
             
-            // Esconder mensagem após 5 segundos
+            // Esconder mensagem após um tempo
+            const timeout = tipo === 'info' ? 4000 : 5000;
             setTimeout(() => {
                 errorElement.style.display = 'none';
-            }, 5000);
-        } else {
-            // Fallback: alerta simples
-            alert(mensagem);
+            }, timeout);
         }
     }
 
@@ -201,7 +261,7 @@ window.ViaCepUtil = (function() {
         // Validar CEP
         if (!validarCep(cep)) {
             marcarErroInput();
-            exibirErro('CEP inválido. Digite um CEP válido com 8 dígitos.');
+            exibirMensagem('CEP inválido. Digite um CEP válido com 8 dígitos.');
             return;
         }
 
@@ -213,15 +273,24 @@ window.ViaCepUtil = (function() {
 
         try {
             const dadosEndereco = await buscarEndereco(cep);
-            preencherCamposEndereco(dadosEndereco);
+            const camposVazios = preencherCamposEndereco(dadosEndereco);
             
             // Formatar CEP no campo
             elements.cep.value = formatarCep(cep);
             
+            // Mostrar informação se alguns campos ficaram vazios
+            if (camposVazios.length > 0) {
+                console.info(`CEP encontrado, mas sem informações completas`);
+                exibirMensagem(
+                    `CEP encontrado! Complete manualmente: ${camposVazios.join(', ')}.`,
+                    'info'
+                );
+            }
+            
         } catch (error) {
             marcarErroInput();
             limparCamposEndereco();
-            exibirErro(error.message || 'Erro ao buscar CEP. Tente novamente.');
+            exibirMensagem(error.message || 'Erro ao buscar CEP. Tente novamente.');
         } finally {
             setLoadingState(false);
         }
@@ -251,6 +320,12 @@ window.ViaCepUtil = (function() {
         // Limpar erros quando o usuário começar a digitar novamente
         if (elements.cep.classList.contains(CONFIG.errorClass)) {
             elements.cep.classList.remove(CONFIG.errorClass);
+        }
+        
+        // Esconder mensagem quando começar a digitar novo CEP
+        const errorElement = document.getElementById('cep-error-message');
+        if (errorElement && errorElement.style.display !== 'none') {
+            errorElement.style.display = 'none';
         }
     }
 

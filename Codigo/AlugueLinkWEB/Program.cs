@@ -24,6 +24,7 @@ namespace AlugueLinkWEB
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
+            // Add services to the container.
             builder.Services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<CustomExceptionFilter>();
@@ -52,7 +53,6 @@ namespace AlugueLinkWEB
             builder.Services.AddTransient<IPagamentoService, PagamentoService>();
             builder.Services.AddTransient<IManutencaoService, ManutencaoService>();
             
-            // Adicionar HttpClient e ViaCepService
             builder.Services.AddHttpClient<IViaCepService, ViaCepService>();
 
             builder.Services.AddTransient<Microsoft.AspNetCore.Identity.UI.Services.IEmailSender, EmailSender>();
@@ -76,19 +76,42 @@ namespace AlugueLinkWEB
             builder.Services.AddDbContext<IdentityContext>(
                 options => options.UseMySQL(builder.Configuration.GetConnectionString("IdentityDatabase")!));
 
-            builder.Services.AddIdentity<UsuarioIdentity, IdentityRole>(options =>
-            {
-                options.SignIn.RequireConfirmedAccount = false;
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 8;
-                options.Password.RequiredUniqueChars = 1;
-                options.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<IdentityContext>()
-              .AddDefaultTokenProviders();
+            builder.Services.AddDefaultIdentity<UsuarioIdentity>(
+                options =>
+                {
+                    // SignIn settings
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.SignIn.RequireConfirmedEmail = false;
+                    options.SignIn.RequireConfirmedPhoneNumber = false;
 
+                    // Password settings
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequiredLength = 8;
+                    options.Password.RequiredUniqueChars = 1;
+
+                    // Default User settings.
+                    options.User.AllowedUserNameCharacters =
+                            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                    options.User.RequireUniqueEmail = true;
+
+                    // Default Lockout settings
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                    options.Lockout.MaxFailedAccessAttempts = 5;
+                    options.Lockout.AllowedForNewUsers = true;
+                }).AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<IdentityContext>()
+                .AddDefaultTokenProviders();
+
+            // Configure tokens life
+            builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+                // sets a 2 hour lifetime of the generated token to reset password/email/phone number
+                options.TokenLifespan = TimeSpan.FromHours(2)
+            );
+
+            // Configuração de cookies da aplicação
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Identity/Account/Login";
@@ -100,6 +123,8 @@ namespace AlugueLinkWEB
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
                 options.Cookie.SameSite = SameSiteMode.Lax;
+                // ReturnUrlParameter requires 
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
             });
 
             builder.Services.AddAntiforgery(options =>
@@ -110,14 +135,26 @@ namespace AlugueLinkWEB
                 options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
             });
 
+            builder.Services.AddDistributedMemoryCache();
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             var app = builder.Build();
 
+            // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
+            // Configuração de localização
             var supportedCultures = new[] { "pt-BR" };
             var localizationOptions = new RequestLocalizationOptions()
                 .SetDefaultCulture(supportedCultures[0])
@@ -127,16 +164,20 @@ namespace AlugueLinkWEB
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseRouting();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.MapRazorPages();
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            // Executa seeding (roles + admin)
             await DataSeeder.SeedAsync(app.Services);
 
             await app.RunAsync();

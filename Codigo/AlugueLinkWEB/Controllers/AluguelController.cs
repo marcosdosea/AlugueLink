@@ -30,18 +30,15 @@ namespace AlugueLinkWEB.Controllers
         {
             try
             {
-                // Atualizar status dos aluguéis antes de listar
                 aluguelService.AtualizarStatusAlugueis();
             }
             catch (Exception)
             {
-                // Continua mesmo se houver erro na atualização
             }
 
             var aluguels = aluguelService.GetAll(page, pageSize);
             var viewModels = mapper.Map<IEnumerable<AluguelViewModel>>(aluguels).ToList();
 
-            // Aplicar filtro - agora usando códigos diretos do banco
             filtro = (filtro ?? "todos").ToLowerInvariant();
             IEnumerable<AluguelViewModel> filtrados = viewModels;
             switch (filtro)
@@ -97,7 +94,6 @@ namespace AlugueLinkWEB.Controllers
             {
                 try
                 {
-                    // Validações de negócio
                     if (!ValidateBusinessRules(viewModel))
                     {
                         PopulateDropDownLists(viewModel);
@@ -147,7 +143,6 @@ namespace AlugueLinkWEB.Controllers
             {
                 try
                 {
-                    // Validações de negócio
                     if (!ValidateBusinessRules(viewModel))
                     {
                         PopulateDropDownLists(viewModel);
@@ -200,12 +195,11 @@ namespace AlugueLinkWEB.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // Métodos auxiliares (não expostos como rotas)
         private void PopulateDropDownLists(AluguelViewModel? viewModel = null)
         {
-            // Obter lista de imóveis indisponíveis
             var imoveisIndisponiveis = aluguelService.GetImoveisIndisponiveis().ToList();
 
-            // Carregar todos os locatários (agora podem ter múltiplos aluguéis)
             var todosLocatarios = locatarioService.GetAll(1, 1000);
 
             ViewBag.IdLocatario = new SelectList(todosLocatarios.Select(l => new { 
@@ -213,7 +207,6 @@ namespace AlugueLinkWEB.Controllers
                 Text = $"{l.Nome} - {l.Email}"
             }), "Value", "Text", viewModel?.IdLocatario);
 
-            // Carregar imóveis disponíveis
             var todosImoveis = imovelService.GetAll(1, 1000);
             var imoveisDisponiveis = todosImoveis.Where(i => 
                 !imoveisIndisponiveis.Contains(i.Id) || 
@@ -225,7 +218,6 @@ namespace AlugueLinkWEB.Controllers
                 Text = $"{i.Logradouro}, {i.Numero} - {i.Bairro} (R$ {i.Valor:N2})" + (imoveisIndisponiveis.Contains(i.Id) ? " (Alugado)" : "")
             }), "Value", "Text", viewModel?.IdImovel);
 
-            // Status - usar códigos do banco mas exibir nomes amigáveis
             ViewBag.Status = new SelectList(new[]
             {
                 new { Value = "A", Text = "Ativo" },
@@ -238,7 +230,6 @@ namespace AlugueLinkWEB.Controllers
         {
             bool isValid = true;
 
-            // Verificar se o locatário existe
             if (viewModel.IdLocatario.HasValue)
             {
                 var locatario = locatarioService.Get(viewModel.IdLocatario.Value);
@@ -249,7 +240,6 @@ namespace AlugueLinkWEB.Controllers
                 }
             }
 
-            // Verificar se o imóvel existe
             if (viewModel.IdImovel.HasValue)
             {
                 var imovel = imovelService.Get(viewModel.IdImovel.Value);
@@ -260,7 +250,6 @@ namespace AlugueLinkWEB.Controllers
                 }
                 else
                 {
-                    // Verificar se o imóvel está disponível no período
                     if (!aluguelService.IsImovelAvailable(
                         viewModel.IdImovel.Value,
                         viewModel.DataInicio,
@@ -273,7 +262,6 @@ namespace AlugueLinkWEB.Controllers
                 }
             }
 
-            // Validar datas
             if (viewModel.DataInicio.HasValue && viewModel.DataFim.HasValue)
             {
                 if (viewModel.DataInicio >= viewModel.DataFim)

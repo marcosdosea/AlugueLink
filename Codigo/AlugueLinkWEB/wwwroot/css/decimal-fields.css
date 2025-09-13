@@ -1,0 +1,66 @@
+/* Estilos para campos decimais */
+.decimal-error-message {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.decimal-field {
+    position: relative;
+}
+
+.decimal-field input[data-decimal-field="true"] {
+    padding-right: 2.5rem;
+}
+
+.decimal-field::after {
+    content: "R$";
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    font-size: 0.875rem;
+    pointer-events: none;
+}
+
+/* Destaque visual para campos com erro */
+input[data-decimal-field="true"].is-invalid {
+    border-color: #dc3545;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath d='m5.8 3.6-.6 1.2L4.6 6l.6 1.2.6-1.2L6.4 6z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+/* Indicação visual para campos válidos */
+input[data-decimal-field="true"]:valid:not(:placeholder-shown) {
+    border-color: #198754;
+}
+
+/* Animação suave para transições de validação */
+input[data-decimal-field="true"] {
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Tooltip de ajuda para campos decimais */
+.decimal-help {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+/* Estilo para campos opcionais */
+.optional label::after {
+    content: " (opcional)";
+    font-weight: normal;
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 576px) {
+    .decimal-field::after {
+        right: 0.5rem;
+        font-size: 0.75rem;
+    }
+}

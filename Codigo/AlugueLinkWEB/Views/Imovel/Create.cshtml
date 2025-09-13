@@ -112,9 +112,9 @@
                                     <span asp-validation-for="Banheiros" class="text-danger"></span>
                                 </div>
                                 <div class="col-6 col-md-3">
-                                    <label asp-for="Area" class="form-label">Área (m²) <span class="required">*</span></label>
-                                    <input asp-for="Area" class="form-control" type="text" placeholder="0,00" required oninput="formatDecimalInput(this)" data-decimal-field="true" />
-                                    <span asp-validation-for="Area" class="text-danger"></span>
+                                    <label asp-for="AreaStr" class="form-label">Área (m²) <span class="required">*</span></label>
+                                    <input asp-for="AreaStr" class="form-control" type="text" placeholder="0,0" required data-decimal-field="true" />
+                                    <span asp-validation-for="AreaStr" class="text-danger"></span>
                                 </div>
                                 <div class="col-6 col-md-3">
                                     <label asp-for="VagasGaragem" class="form-label text-nowrap">Vagas Garagem</label>
@@ -122,9 +122,9 @@
                                     <span asp-validation-for="VagasGaragem" class="text-danger"></span>
                                 </div>
                                 <div class="col-12">
-                                    <label asp-for="Valor" class="form-label">Valor do Aluguel (R$) <span class="required">*</span></label>
-                                    <input asp-for="Valor" class="form-control" type="text" placeholder="1000,50" required oninput="formatDecimalInput(this)" data-decimal-field="true" />
-                                    <span asp-validation-for="Valor" class="text-danger"></span>
+                                    <label asp-for="ValorStr" class="form-label">Valor do Aluguel (R$) <span class="required">*</span></label>
+                                    <input asp-for="ValorStr" class="form-control" type="text" placeholder="1000,5" required data-decimal-field="true" />
+                                    <span asp-validation-for="ValorStr" class="text-danger"></span>
                                 </div>
                                 <div class="col-12">
                                     <label asp-for="Descricao" class="form-label">Características <span class="required">*</span></label>
@@ -146,7 +146,6 @@
                                     <svg width="80" height="80" class="text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
                                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                                         <circle cx="8.5" cy="8.5" r="1.5"/>
-                                        <polyline points="21,15 16,10 5,21"/>
                                     </svg>
                                 </div>
                                 <p class="text-muted small mb-2">Adicione fotos do imóvel</p>
@@ -169,7 +168,6 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/viacep-util.js"></script>
     <script>
-        // Função para controlar obrigatoriedade dos campos baseado no tipo do imóvel
         function toggleFieldRequirements() {
             const tipoImovel = document.getElementById('tipoImovel');
             const quartosField = document.getElementById('quartosField');
@@ -207,7 +205,6 @@
             tipoImovel.addEventListener('change', toggleFieldRequirements);
             toggleFieldRequirements();
 
-            // Inicializar ViaCEP
             ViaCepUtil.init({
                 cep: 'Cep',
                 logradouro: 'Logradouro',
@@ -216,71 +213,77 @@
                 cidade: 'Cidade',
                 estado: 'Estado'
             });
+
+            // Eventos de input para campos decimais
+            document.querySelectorAll('[data-decimal-field="true"]').forEach(field => {
+                field.addEventListener('input', e => sanitizeDecimal(e.target));
+                field.addEventListener('blur', e => finalizeDecimal(e.target));
+            });
         });
 
-        // Função para formatar entrada decimal com vírgula e uma vírgula no máximo
-        function formatDecimalInput(input) {
-            let value = input.value;
-            value = value.replace(/[^0-9,]/g, '');
-
-            // mantém apenas a primeira vírgula
-            const firstCommaIndex = value.indexOf(',');
-            if (firstCommaIndex !== -1) {
-                const before = value.substring(0, firstCommaIndex + 1);
-                const after = value.substring(firstCommaIndex + 1).replace(/,/g, '');
-                value = before + after;
+        function sanitizeDecimal(input) {
+            let v = input.value;
+            v = v.replace(/[^0-9,]/g, '');
+            const parts = v.split(',');
+            if (parts.length > 2) {
+                v = parts[0] + ',' + parts.slice(1).join('');
             }
-
-            // limita a duas casas decimais
-            if (value.includes(',')) {
-                const [intPart, decPartRaw] = value.split(',');
-                const decPart = (decPartRaw || '').slice(0, 2);
-                value = intPart + (decPart.length ? ',' + decPart : ',');
+            if (v.includes(',')) {
+                const [i, d] = v.split(',');
+                v = i.replace(/^0+(\d)/, '$1') + ',' + (d || '').slice(0,2);
+            } else {
+                v = v.replace(/^0+(\d)/, '$1');
             }
+            input.value = v;
+            input.setCustomValidity('');
+            input.classList.remove('field-error');
+        }
 
-            input.value = value;
-            if (value.trim()) input.setCustomValidity('');
+        function finalizeDecimal(input) {
+            let v = input.value.trim();
+            if (!v) return; // obrigatório tratado em submit
+            if (/^\d+$/.test(v)) {
+                // apenas inteiro digitado -> completa com ,00
+                v = v + ',00';
+            } else if (/^\d+,\d$/.test(v)) {
+                v = v + '0';
+            }
+            if (!/^\d+,\d{2}$/.test(v)) {
+                input.setCustomValidity('Formato inválido. Use vírgula e duas casas (ex: 1234,56).');
+                input.classList.add('field-error');
+            } else {
+                input.setCustomValidity('');
+                input.classList.remove('field-error');
+            }
+            input.value = v;
         }
 
         function validateDecimalField(input) {
-            const value = input.value.trim();
-            if (input.hasAttribute('required') && !value) {
-                input.setCustomValidity('Este campo é obrigatório');
+            if (input.hasAttribute('required') && !input.value.trim()) {
+                input.setCustomValidity('Este campo é obrigatório.');
                 return false;
             }
-            if (value && !/^[0-9]+(\,[0-9]{0,2})?$/.test(value)) {
-                input.setCustomValidity('Digite um valor válido (ex: 1000,50)');
-                return false;
-            }
-            input.setCustomValidity('');
-            return true;
+            finalizeDecimal(input);
+            return input.checkValidity();
         }
 
-        // Validação e conversão antes do envio
+        function cleanCep(cep) { return cep ? cep.replace(/\D/g, '') : ''; }
+
         document.getElementById('imovelForm').addEventListener('submit', function(e) {
             let isValid = true;
-
             const decimalFields = this.querySelectorAll('[data-decimal-field="true"]');
-            decimalFields.forEach(field => {
-                if (!validateDecimalField(field)) {
-                    isValid = false;
-                    field.classList.add('field-error');
-                }
+            decimalFields.forEach(f => {
+                if (!validateDecimalField(f)) { isValid = false; }
             });
-
             if (!isValid) {
                 e.preventDefault();
-                const firstError = this.querySelector('.field-error');
-                if (firstError) { firstError.focus(); }
+                const first = this.querySelector('.field-error');
+                if (first) first.focus();
                 return;
             }
-
-            // Converte vírgula para ponto
-            decimalFields.forEach(field => {
-                if (field.value && field.value.includes(',')) {
-                    field.value = field.value.replace('.', '').replace(',', '.');
-                }
-            });
+            // Não converter vírgula para ponto: binder com cultura pt-BR interpretará corretamente
+            const cepField = document.getElementById('Cep');
+            if (cepField) cepField.value = cleanCep(cepField.value);
         });
     </script>
-}
+}}

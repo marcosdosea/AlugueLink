@@ -27,7 +27,6 @@ namespace AlugueLinkWEB.Controllers
             var locatarios = locatarioService.GetAll(page, pageSize);
             var viewModels = mapper.Map<IEnumerable<LocatarioViewModel>>(locatarios);
 
-            // Adicionar informações de status de ocupação
             var locatariosOcupados = aluguelService.GetLocatariosOcupados().ToList();
             
             foreach (var viewModel in viewModels)
@@ -64,7 +63,6 @@ namespace AlugueLinkWEB.Controllers
 
             var viewModel = mapper.Map<LocatarioViewModel>(locatario);
             
-            // Adicionar informações de status de ocupação
             viewModel.IsOcupado = !aluguelService.IsLocatarioAvailable(id);
             if (viewModel.IsOcupado)
             {

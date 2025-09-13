@@ -4,9 +4,6 @@ using Core.Service;
 
 namespace AlugueLinkWEB.Filter
 {
-    /// <summary>
-    /// Filtro para tratamento customizado de exceções
-    /// </summary>
     public class CustomExceptionFilter : IExceptionFilter
     {
         private readonly ILogger<CustomExceptionFilter> _logger;

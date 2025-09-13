@@ -14,11 +14,6 @@ namespace Service
             _context = context;
         }
 
-        /// <summary>
-        /// Criar um novo locatário na base de dados
-        /// </summary>
-        /// <param name="locatario">Dados do Locatário</param>
-        /// <returns>ID do Locatário</returns>
         public int Create(Locatario locatario)
         {
             _context.Locatarios.Add(locatario);
@@ -26,20 +21,12 @@ namespace Service
             return locatario.Id;
         }
 
-        /// <summary>
-        /// Editar um locatário existente na base de dados
-        /// </summary>
-        /// <param name="locatario">Dados do Locatário</param>
         public void Edit(Locatario locatario)
         {
             _context.Locatarios.Update(locatario);
             _context.SaveChanges();
         }
 
-        /// <summary>
-        /// Deletar um locatário da base de dados
-        /// </summary>
-        /// <param name="id">ID do Locatário</param>
         public void Delete(int id)
         {
             var locatario = _context.Locatarios
@@ -49,42 +36,27 @@ namespace Service
             if (locatario == null)
                 return;
 
-            // Verificar se há aluguéis ativos
             var alugueisAtivos = locatario.Aluguels.Where(a => a.Status == "A").Any();
             if (alugueisAtivos)
             {
                 throw new ServiceException("Não é possível excluir um locatário que possui contratos de aluguel ativos.");
             }
 
-            // Remover pagamentos relacionados aos aluguéis do locatário
             var pagamentos = _context.Pagamentos.Where(p => locatario.Aluguels.Select(a => a.Id).Contains(p.Idaluguel));
             _context.Pagamentos.RemoveRange(pagamentos);
 
-            // Remover aluguéis do locatário
             _context.Aluguels.RemoveRange(locatario.Aluguels);
 
-            // Remover o locatário
             _context.Locatarios.Remove(locatario);
 
             _context.SaveChanges();
         }
 
-        /// <summary>
-        /// Buscar um locatário na base de dados
-        /// </summary>
-        /// <param name="id">ID do Locatário</param>
-        /// <returns>Dados do Locatário</returns>
         public Locatario? Get(int id)
         {
             return _context.Locatarios.Find(id);
         }
 
-        /// <summary>
-        /// Buscar todos os locatários na base de dados com paginação
-        /// </summary>
-        /// <param name="page">Página</param>
-        /// <param name="pageSize">Tamanho da página</param>
-        /// <returns>Lista de Locatários</returns>
         public IEnumerable<Locatario> GetAll(int page, int pageSize)
         {
             return _context.Locatarios
@@ -94,11 +66,6 @@ namespace Service
                 .Take(pageSize);
         }
 
-        /// <summary>
-        /// Buscar locatários por CPF
-        /// </summary>
-        /// <param name="cpf">CPF do locatário</param>
-        /// <returns>Lista de LocatarioDto</returns>
         public IEnumerable<LocatarioDto> GetByCpf(string cpf)
         {
             return _context.Locatarios
@@ -124,11 +91,6 @@ namespace Service
                 });
         }
 
-        /// <summary>
-        /// Buscar locatários por nome
-        /// </summary>
-        /// <param name="nome">Nome do locatário</param>
-        /// <returns>Lista de LocatarioDto</returns>
         public IEnumerable<LocatarioDto> GetByNome(string nome)
         {
             return _context.Locatarios
@@ -154,10 +116,6 @@ namespace Service
                 });
         }
 
-        /// <summary>
-        /// Contar total de locatários
-        /// </summary>
-        /// <returns>Número total de locatários</returns>
         public int GetCount()
         {
             return _context.Locatarios.Count();

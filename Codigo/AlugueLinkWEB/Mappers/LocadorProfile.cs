@@ -5,9 +5,6 @@ using Core;
 
 namespace AlugueLinkWEB.Mappers
 {
-    /// <summary>
-    /// Perfil AutoMapper para Locador
-    /// </summary>
     public class LocadorProfile : Profile
     {
         public LocadorProfile()

@@ -5,9 +5,6 @@ using AlugueLinkWEB.Models;
 
 namespace AlugueLinkWEB.Mappers
 {
-    /// <summary>
-    /// Perfil AutoMapper para Aluguel
-    /// </summary>
     public class AluguelProfile : Profile
     {
         public AluguelProfile()
@@ -29,7 +26,7 @@ namespace AlugueLinkWEB.Mappers
                 .ForMember(dest => dest.DataAssinatura, opt => opt.MapFrom(src => (DateOnly?)src.DataAssinatura))
                 .ForMember(dest => dest.IdLocatario, opt => opt.MapFrom(src => (int?)src.Idlocatario))
                 .ForMember(dest => dest.IdImovel, opt => opt.MapFrom(src => (int?)src.Idimovel))
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status)) // Usar código direto do banco (A, F, P)
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status)) 
                 .ForMember(dest => dest.LocatarioNome, opt => opt.MapFrom(src => src.IdlocatarioNavigation != null ? src.IdlocatarioNavigation.Nome : ""))
                 .ForMember(dest => dest.ImovelEndereco, opt => opt.MapFrom(src => src.IdimovelNavigation != null ? 
                     $"{src.IdimovelNavigation.Logradouro}, {src.IdimovelNavigation.Numero} - {src.IdimovelNavigation.Bairro}" : ""))

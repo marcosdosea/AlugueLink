@@ -4,9 +4,6 @@ using Core;
 
 namespace AlugueLinkWEB.Mappers
 {
-    /// <summary>
-    /// Perfil AutoMapper para Manutencao
-    /// </summary>
     public class ManutencaoProfile : Profile
     {
         public ManutencaoProfile()

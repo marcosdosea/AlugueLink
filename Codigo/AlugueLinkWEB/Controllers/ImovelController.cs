@@ -4,6 +4,8 @@ using Core.Service;
 using AlugueLinkWEB.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace AlugueLinkWEB.Controllers
 {
@@ -14,6 +16,9 @@ namespace AlugueLinkWEB.Controllers
         private readonly ILocadorService locadorService;
         private readonly IAluguelService aluguelService;
         private readonly IMapper mapper;
+
+        private static readonly Regex DecimalPattern = new Regex(@"^\d+,\d{1,2}$", RegexOptions.Compiled);
+        private static readonly CultureInfo PtBr = new CultureInfo("pt-BR");
 
         public ImovelController(IImovelService imovelService, ILocadorService locadorService, 
             IAluguelService aluguelService, IMapper mapper)
@@ -27,20 +32,9 @@ namespace AlugueLinkWEB.Controllers
         // GET: Imovel
         public IActionResult Index(int page = 1, int pageSize = 10, string? filtro = "todos")
         {
-            try
-            {
-                // Atualizar status dos aluguéis antes de verificar disponibilidade
-                aluguelService.AtualizarStatusAlugueis();
-            }
-            catch (Exception)
-            {
-                // Continua mesmo se houver erro na atualização
-            }
-
+            try { aluguelService.AtualizarStatusAlugueis(); } catch (Exception) { }
             var imoveis = imovelService.GetAll(page, pageSize);
             var viewModels = mapper.Map<IEnumerable<ImovelViewModel>>(imoveis).ToList();
-
-            // Informações de status de aluguel
             var imoveisIndisponiveis = aluguelService.GetImoveisIndisponiveis().ToList();
             foreach (var viewModel in viewModels)
             {
@@ -56,29 +50,17 @@ namespace AlugueLinkWEB.Controllers
                     }
                 }
             }
-
-            // Aplicar filtro
             filtro = (filtro ?? "todos").ToLowerInvariant();
-            IEnumerable<ImovelViewModel> filtrados = viewModels;
-            switch (filtro)
+            IEnumerable<ImovelViewModel> filtrados = filtro switch
             {
-                case "alugados":
-                    filtrados = viewModels.Where(vm => vm.IsAlugado);
-                    break;
-                case "disponiveis":
-                case "disponíveis":
-                    filtrados = viewModels.Where(vm => !vm.IsAlugado);
-                    break;
-                default:
-                    filtrados = viewModels;
-                    break;
-            }
-
+                "alugados" => viewModels.Where(vm => vm.IsAlugado),
+                "disponiveis" or "disponíveis" => viewModels.Where(vm => !vm.IsAlugado),
+                _ => viewModels
+            };
             ViewBag.Filtro = filtro;
             ViewBag.TotalItems = imovelService.GetCount();
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
-
             return View(filtrados);
         }
 
@@ -86,14 +68,8 @@ namespace AlugueLinkWEB.Controllers
         public IActionResult Details(int id)
         {
             var imovel = imovelService.Get(id);
-            if (imovel == null)
-            {
-                return NotFound();
-            }
-
+            if (imovel == null) return NotFound();
             var viewModel = mapper.Map<ImovelViewModel>(imovel);
-            
-            // Adicionar informações de status de aluguel
             viewModel.IsAlugado = !aluguelService.IsImovelAvailable(id);
             if (viewModel.IsAlugado)
             {
@@ -105,46 +81,32 @@ namespace AlugueLinkWEB.Controllers
                     viewModel.DataFimAluguel = aluguelAtivo.DataFim;
                 }
             }
-            
             return View(viewModel);
         }
 
         // GET: Imovel/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
         // POST: Imovel/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(ImovelViewModel viewModel)
         {
-            // Validação condicional para tipo comercial: quartos/banheiros não obrigatórios
-            if (!viewModel.IsComercial)
-            {
-                if (!viewModel.Quartos.HasValue)
-                {
-                    ModelState.AddModelError("Quartos", "Número de quartos é obrigatório para este tipo de imóvel");
-                }
-                if (!viewModel.Banheiros.HasValue)
-                {
-                    ModelState.AddModelError("Banheiros", "Número de banheiros é obrigatório para este tipo de imóvel");
-                }
-            }
+            ValidateDecimalRawFormat("ValorStr");
+            ValidateDecimalRawFormat("AreaStr");
+            ParseDecimalFields(viewModel);
+            ValidateQuartosBanheiros(viewModel);
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // Garantir que existe um locador válido
                     var locadorId = EnsureValidLocador(viewModel.LocadorId);
                     if (locadorId == 0)
                     {
                         ModelState.AddModelError("", "Erro: Nenhum locador encontrado. É necessário cadastrar um locador primeiro.");
                         return View(viewModel);
                     }
-
                     viewModel.LocadorId = locadorId;
                     var imovel = mapper.Map<Imovel>(viewModel);
                     imovelService.Create(imovel);
@@ -163,11 +125,7 @@ namespace AlugueLinkWEB.Controllers
         public IActionResult Edit(int id)
         {
             var imovel = imovelService.Get(id);
-            if (imovel == null)
-            {
-                return NotFound();
-            }
-
+            if (imovel == null) return NotFound();
             var viewModel = mapper.Map<ImovelViewModel>(imovel);
             return View(viewModel);
         }
@@ -177,36 +135,22 @@ namespace AlugueLinkWEB.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, ImovelViewModel viewModel)
         {
-            if (id != viewModel.Id)
-            {
-                return NotFound();
-            }
-
-            // Validação condicional para tipo comercial: quartos/banheiros não obrigatórios
-            if (!viewModel.IsComercial)
-            {
-                if (!viewModel.Quartos.HasValue)
-                {
-                    ModelState.AddModelError("Quartos", "Número de quartos é obrigatório para este tipo de imóvel");
-                }
-                if (!viewModel.Banheiros.HasValue)
-                {
-                    ModelState.AddModelError("Banheiros", "Número de banheiros é obrigatório para este tipo de imóvel");
-                }
-            }
+            if (id != viewModel.Id) return NotFound();
+            ValidateDecimalRawFormat("ValorStr");
+            ValidateDecimalRawFormat("AreaStr");
+            ParseDecimalFields(viewModel);
+            ValidateQuartosBanheiros(viewModel);
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // Garantir que existe um locador válido
                     var locadorId = EnsureValidLocador(viewModel.LocadorId);
                     if (locadorId == 0)
                     {
                         ModelState.AddModelError("", "Erro: Nenhum locador encontrado. É necessário cadastrar um locador primeiro.");
                         return View(viewModel);
                     }
-
                     viewModel.LocadorId = locadorId;
                     var imovel = mapper.Map<Imovel>(viewModel);
                     imovelService.Edit(imovel);
@@ -225,11 +169,7 @@ namespace AlugueLinkWEB.Controllers
         public IActionResult Delete(int id)
         {
             var imovel = imovelService.Get(id);
-            if (imovel == null)
-            {
-                return NotFound();
-            }
-
+            if (imovel == null) return NotFound();
             var viewModel = mapper.Map<ImovelViewModel>(imovel);
             return View(viewModel);
         }
@@ -252,31 +192,30 @@ namespace AlugueLinkWEB.Controllers
             {
                 TempData["ErrorMessage"] = "Erro ao excluir imóvel: " + ex.Message;
             }
-            
             return RedirectToAction(nameof(Index));
+        }
+
+        private void ValidateQuartosBanheiros(ImovelViewModel viewModel)
+        {
+            if (!viewModel.IsComercial)
+            {
+                if (!viewModel.Quartos.HasValue)
+                    ModelState.AddModelError("Quartos", "Número de quartos é obrigatório para este tipo de imóvel");
+                if (!viewModel.Banheiros.HasValue)
+                    ModelState.AddModelError("Banheiros", "Número de banheiros é obrigatório para este tipo de imóvel");
+            }
         }
 
         private int EnsureValidLocador(int? locadorId)
         {
-            // Se foi fornecido um ID válido, verificar se existe
             if (locadorId.HasValue && locadorId.Value > 0)
             {
                 var existingLocador = locadorService.Get(locadorId.Value);
-                if (existingLocador != null)
-                {
-                    return locadorId.Value;
-                }
+                if (existingLocador != null) return locadorId.Value;
             }
-
-            // Tentar encontrar o primeiro locador disponível
             var locadores = locadorService.GetAll(1, 1);
             var firstLocador = locadores.FirstOrDefault();
-            if (firstLocador != null)
-            {
-                return firstLocador.Id;
-            }
-
-            // Se não há locadores, criar um locador padrão
+            if (firstLocador != null) return firstLocador.Id;
             var defaultLocador = new Locador
             {
                 Nome = "Locador Padrão",
@@ -284,17 +223,35 @@ namespace AlugueLinkWEB.Controllers
                 Telefone = "11999999999",
                 Cpf = "00000000000"
             };
+            try { return locadorService.Create(defaultLocador); } catch { return 0; }
+        }
 
-            try
+        private bool PopulateLocadoresDropDownList(object? selectedLocador = null) => true;
+
+        private void ValidateDecimalRawFormat(string fieldName)
+        {
+            var raw = Request.Form[fieldName];
+            if (string.IsNullOrWhiteSpace(raw)) return;
+            raw = raw.ToString().Trim();
+            if (!DecimalPattern.IsMatch(raw))
             {
-                return locadorService.Create(defaultLocador);
-            }
-            catch (Exception)
-            {
-                return 0; // Falha ao criar locador padrão
+                if (ModelState.TryGetValue(fieldName, out var entry)) entry.Errors.Clear();
+                ModelState.AddModelError(fieldName, "Formato inválido. Use vírgula e 1 ou 2 casas decimais (ex: 123,4 ou 123,45).");
             }
         }
 
-        private bool PopulateLocadoresDropDownList(object? selectedLocador = null) => true; // método legacy mantido por compatibilidade
+        private void ParseDecimalFields(ImovelViewModel vm)
+        {
+            if (!string.IsNullOrWhiteSpace(vm.AreaStr) && DecimalPattern.IsMatch(vm.AreaStr))
+            {
+                if (decimal.TryParse(vm.AreaStr, NumberStyles.Number, PtBr, out var area)) vm.Area = area;
+                else ModelState.AddModelError("AreaStr", "Não foi possível interpretar a área.");
+            }
+            if (!string.IsNullOrWhiteSpace(vm.ValorStr) && DecimalPattern.IsMatch(vm.ValorStr))
+            {
+                if (decimal.TryParse(vm.ValorStr, NumberStyles.Number, PtBr, out var valor)) vm.Valor = valor;
+                else ModelState.AddModelError("ValorStr", "Não foi possível interpretar o valor.");
+            }
+        }
     }
 }
