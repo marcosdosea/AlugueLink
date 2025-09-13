@@ -5,12 +5,11 @@ using AlugueLinkWEB.Mappers;
 using AlugueLinkWEB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Moq;
 
 namespace AlugueLinkWEB.Controllers.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class AluguelControllerTests
     {
         private static AluguelController controller = null!;
@@ -20,7 +19,6 @@ namespace AlugueLinkWEB.Controllers.Tests
         [TestInitialize]
         public void Initialize()
         {
-            // Arrange
             var mockAluguelService = new Mock<IAluguelService>();
             var mockLocatarioService = new Mock<ILocatarioService>();
             var mockImovelService = new Mock<IImovelService>();
@@ -61,57 +59,50 @@ namespace AlugueLinkWEB.Controllers.Tests
 
             controller = new AluguelController(mockAluguelService.Object, mockLocatarioService.Object, mockImovelService.Object, mapper);
 
-            // Setup TempData para evitar NullReferenceException
             var tempData = new Mock<ITempDataDictionary>();
             controller.TempData = tempData.Object;
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void IndexTest_Valido()
         {
-            // Act
             var result = controller.Index();
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(IEnumerable<AluguelViewModel>));
 
-            var listaAlugueis = (IEnumerable<AluguelViewModel>)viewResult.ViewData.Model;
-            Assert.AreEqual(3, listaAlugueis.Count());
+            var lista = (IEnumerable<AluguelViewModel>)viewResult.ViewData.Model;
+            Assert.AreEqual(3, lista.Count());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void IndexTest_ComFiltro_Ativos()
         {
-            // Act
             var result = controller.Index(page, pageSize, "ativos");
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(IEnumerable<AluguelViewModel>));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DetailsTest_Valido()
         {
-            // Act
             var result = controller.Details(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(AluguelViewModel));
-            AluguelViewModel aluguelModel = (AluguelViewModel)viewResult.ViewData.Model;
-            Assert.AreEqual(1, aluguelModel.Id);
-            Assert.AreEqual("A", aluguelModel.Status);
+            
+            var model = (AluguelViewModel)viewResult.ViewData.Model;
+            Assert.AreEqual(1, model.Id);
+            Assert.AreEqual("A", model.Status);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DetailsTest_NotFound()
         {
-            // Arrange
             var mockAluguelService = new Mock<IAluguelService>();
             var mockLocatarioService = new Mock<ILocatarioService>();
             var mockImovelService = new Mock<IImovelService>();
@@ -124,75 +115,62 @@ namespace AlugueLinkWEB.Controllers.Tests
 
             var testController = new AluguelController(mockAluguelService.Object, mockLocatarioService.Object, mockImovelService.Object, mapper);
 
-            // Act
             var result = testController.Details(999);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Get_Valido()
         {
-            // Act
             var result = controller.Create();
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Post_Valido()
         {
-            // Arrange
-            // For ar ModelState v lido
             controller.ModelState.Clear();
 
-            // Act
-            var result = controller.Create(GetNewAluguel());
+            var result = controller.Create(GetNewAluguelModel());
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-            RedirectToActionResult redirectToActionResult = (RedirectToActionResult)result;
-            Assert.IsNull(redirectToActionResult.ControllerName);
-            Assert.AreEqual("Index", redirectToActionResult.ActionName);
+            var redirect = (RedirectToActionResult)result;
+            Assert.IsNull(redirect.ControllerName);
+            Assert.AreEqual("Index", redirect.ActionName);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Post_Invalido()
         {
-            // Arrange
             controller.ModelState.AddModelError("DataInicio", "Campo requerido");
 
-            // Act
-            var result = controller.Create(GetNewAluguel());
+            var result = controller.Create(GetNewAluguelModel());
 
-            // Assert
             Assert.AreEqual(1, controller.ModelState.ErrorCount);
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(AluguelViewModel));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest_Get_Valido()
         {
-            // Act
             var result = controller.Edit(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(AluguelViewModel));
-            AluguelViewModel aluguelModel = (AluguelViewModel)viewResult.ViewData.Model;
-            Assert.AreEqual(1, aluguelModel.Id);
-            Assert.AreEqual("A", aluguelModel.Status);
+            
+            var model = (AluguelViewModel)viewResult.ViewData.Model;
+            Assert.AreEqual(1, model.Id);
+            Assert.AreEqual("A", model.Status);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest_Get_NotFound()
         {
-            // Arrange
             var mockAluguelService = new Mock<IAluguelService>();
             var mockLocatarioService = new Mock<ILocatarioService>();
             var mockImovelService = new Mock<IImovelService>();
@@ -205,64 +183,53 @@ namespace AlugueLinkWEB.Controllers.Tests
 
             var testController = new AluguelController(mockAluguelService.Object, mockLocatarioService.Object, mockImovelService.Object, mapper);
 
-            // Act
             var result = testController.Edit(999);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest_Post_Valido()
         {
-            // Arrange
-            // For ar ModelState v lido
             controller.ModelState.Clear();
 
-            // Act
             var result = controller.Edit(1, GetTargetAluguelModel());
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-            RedirectToActionResult redirectToActionResult = (RedirectToActionResult)result;
-            Assert.IsNull(redirectToActionResult.ControllerName);
-            Assert.AreEqual("Index", redirectToActionResult.ActionName);
+            var redirect = (RedirectToActionResult)result;
+            Assert.IsNull(redirect.ControllerName);
+            Assert.AreEqual("Index", redirect.ActionName);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest_Post_IdMismatch()
         {
-            // Arrange
             controller.ModelState.Clear();
             var model = GetTargetAluguelModel();
-            model.Id = 2; // ID diferente do par metro
+            model.Id = 2;
 
-            // Act
             var result = controller.Edit(1, model);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DeleteTest_Get_Valido()
         {
-            // Act
             var result = controller.Delete(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(AluguelViewModel));
-            AluguelViewModel aluguelModel = (AluguelViewModel)viewResult.ViewData.Model;
-            Assert.AreEqual(1, aluguelModel.Id);
-            Assert.AreEqual("A", aluguelModel.Status);
+            
+            var model = (AluguelViewModel)viewResult.ViewData.Model;
+            Assert.AreEqual(1, model.Id);
+            Assert.AreEqual("A", model.Status);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DeleteTest_Get_NotFound()
         {
-            // Arrange
             var mockAluguelService = new Mock<IAluguelService>();
             var mockLocatarioService = new Mock<ILocatarioService>();
             var mockImovelService = new Mock<IImovelService>();
@@ -275,27 +242,23 @@ namespace AlugueLinkWEB.Controllers.Tests
 
             var testController = new AluguelController(mockAluguelService.Object, mockLocatarioService.Object, mockImovelService.Object, mapper);
 
-            // Act
             var result = testController.Delete(999);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DeleteTest_Post_Valido()
         {
-            // Act
             var result = controller.DeleteConfirmed(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-            RedirectToActionResult redirectToActionResult = (RedirectToActionResult)result;
-            Assert.IsNull(redirectToActionResult.ControllerName);
-            Assert.AreEqual("Index", redirectToActionResult.ActionName);
+            var redirect = (RedirectToActionResult)result;
+            Assert.IsNull(redirect.ControllerName);
+            Assert.AreEqual("Index", redirect.ActionName);
         }
 
-        private AluguelViewModel GetNewAluguel()
+        private static AluguelViewModel GetNewAluguelModel()
         {
             return new AluguelViewModel
             {
@@ -309,38 +272,10 @@ namespace AlugueLinkWEB.Controllers.Tests
             };
         }
 
-        private static Aluguel GetTargetAluguel()
+        private static List<Aluguel> GetTestAlugueis()
         {
-            return new Aluguel
+            return new List<Aluguel>
             {
-                Id = 1,
-                Idlocatario = 1,
-                Idimovel = 1,
-                DataInicio = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
-                DataFim = DateOnly.FromDateTime(DateTime.Now.AddMonths(10)),
-                DataAssinatura = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
-                Status = "A"
-            };
-        }
-
-        private AluguelViewModel GetTargetAluguelModel()
-        {
-            return new AluguelViewModel
-            {
-                Id = 1,
-                IdLocatario = 1,
-                IdImovel = 1,
-                DataInicio = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
-                DataFim = DateOnly.FromDateTime(DateTime.Now.AddMonths(10)),
-                DataAssinatura = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
-                Status = "A"
-            };
-        }
-
-        private static IEnumerable<Aluguel> GetTestAlugueis()
-        {
-            return
-            [
                 new Aluguel {
                     Id = 1, Idlocatario = 1, Idimovel = 1, Status = "A",
                     DataInicio = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
@@ -359,25 +294,53 @@ namespace AlugueLinkWEB.Controllers.Tests
                     DataFim = DateOnly.FromDateTime(DateTime.Now.AddMonths(13)),
                     DataAssinatura = DateOnly.FromDateTime(DateTime.Now)
                 }
-            ];
+            };
         }
 
-        private static IEnumerable<Locatario> GetTestLocatarios()
+        private static Aluguel GetTargetAluguel()
         {
-            return
-            [
-                new Locatario { Id = 1, Nome = "Jo o Silva", Email = "joao@gmail.com", Cpf = "12345678901" },
+            return new Aluguel
+            {
+                Id = 1,
+                Idlocatario = 1,
+                Idimovel = 1,
+                DataInicio = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
+                DataFim = DateOnly.FromDateTime(DateTime.Now.AddMonths(10)),
+                DataAssinatura = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
+                Status = "A"
+            };
+        }
+
+        private static AluguelViewModel GetTargetAluguelModel()
+        {
+            return new AluguelViewModel
+            {
+                Id = 1,
+                IdLocatario = 1,
+                IdImovel = 1,
+                DataInicio = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
+                DataFim = DateOnly.FromDateTime(DateTime.Now.AddMonths(10)),
+                DataAssinatura = DateOnly.FromDateTime(DateTime.Now.AddMonths(-2)),
+                Status = "A"
+            };
+        }
+
+        private static List<Locatario> GetTestLocatarios()
+        {
+            return new List<Locatario>
+            {
+                new Locatario { Id = 1, Nome = "João Silva", Email = "joao@gmail.com", Cpf = "12345678901" },
                 new Locatario { Id = 2, Nome = "Maria Santos", Email = "maria@gmail.com", Cpf = "98765432100" }
-            ];
+            };
         }
 
-        private static IEnumerable<Imovel> GetTestImoveis()
+        private static List<Imovel> GetTestImoveis()
         {
-            return
-            [
-                new Imovel { Id = 1, Logradouro = "Rua das Flores", Cidade = "S o Paulo", Tipo = "A", Valor = 3500.00m },
+            return new List<Imovel>
+            {
+                new Imovel { Id = 1, Logradouro = "Rua das Flores", Cidade = "São Paulo", Tipo = "A", Valor = 3500.00m },
                 new Imovel { Id = 2, Logradouro = "Av. Copacabana", Cidade = "Rio de Janeiro", Tipo = "C", Valor = 5000.00m }
-            ];
+            };
         }
     }
 }

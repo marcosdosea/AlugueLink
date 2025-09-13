@@ -24,3 +24,10 @@
 
 # Configurações locais
 *.local
+
+# Test Results
+TestResults/
+**/TestResults/
+*.trx
+*.coverage
+*.coveragexml

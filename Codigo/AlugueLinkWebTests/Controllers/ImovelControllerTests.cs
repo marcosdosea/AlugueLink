@@ -11,7 +11,7 @@ using Moq;
 
 namespace AlugueLinkWEB.Controllers.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class ImovelControllerTests
     {
         private static ImovelController controller = null!;
@@ -23,7 +23,6 @@ namespace AlugueLinkWEB.Controllers.Tests
         [TestInitialize]
         public void Initialize()
         {
-            // Arrange
             var mockImovelService = new Mock<IImovelService>();
             var mockLocadorService = new Mock<ILocadorService>();
             var mockAluguelService = new Mock<IAluguelService>();
@@ -84,194 +83,167 @@ namespace AlugueLinkWEB.Controllers.Tests
             };
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void IndexTest_Valido()
         {
-            // Act
             var result = controller.Index();
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(IEnumerable<ImovelViewModel>));
 
-            var listaImoveis = (IEnumerable<ImovelViewModel>)viewResult.ViewData.Model;
-            Assert.AreEqual(3, listaImoveis.Count());
+            var lista = (IEnumerable<ImovelViewModel>)viewResult.ViewData.Model;
+            Assert.AreEqual(3, lista.Count());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DetailsTest_Valido()
         {
-            // Act
             var result = controller.Details(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(ImovelViewModel));
-            ImovelViewModel imovelModel = (ImovelViewModel)viewResult.ViewData.Model;
-            Assert.IsTrue(1 == imovelModel.Id);
-            Assert.AreEqual("Rua das Flores", imovelModel.Logradouro);
+            
+            var model = (ImovelViewModel)viewResult.ViewData.Model;
+            Assert.AreEqual(1, model.Id);
+            Assert.AreEqual("Rua das Flores", model.Logradouro);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Get_Valido()
         {
-            // Act
             var result = controller.Create();
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Post_Valido()
         {
-            // Arrange
             SetupValidFormData();
             controller.ModelState.Clear();
 
-            // Act
-            var result = controller.Create(GetNewImovel());
+            var result = controller.Create(GetNewImovelModel());
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-            RedirectToActionResult redirectToActionResult = (RedirectToActionResult)result;
-            Assert.IsNull(redirectToActionResult.ControllerName);
-            Assert.AreEqual("Index", redirectToActionResult.ActionName);
+            var redirect = (RedirectToActionResult)result;
+            Assert.IsNull(redirect.ControllerName);
+            Assert.AreEqual("Index", redirect.ActionName);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Post_Invalido()
         {
-            // Arrange
             SetupValidFormData();
             controller.ModelState.AddModelError("Logradouro", "Campo requerido");
 
-            // Act
-            var result = controller.Create(GetNewImovel());
+            var result = controller.Create(GetNewImovelModel());
 
-            // Assert
             Assert.AreEqual(1, controller.ModelState.ErrorCount);
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(ImovelViewModel));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Post_ValorInvalido()
         {
-            // Arrange
-            var imovelInvalido = GetNewImovel();
+            var imovelInvalido = GetNewImovelModel();
             imovelInvalido.ValorStr = "invalid";
             SetupInvalidFormData("ValorStr", "invalid");
             controller.ModelState.Clear();
 
-            // Act
             var result = controller.Create(imovelInvalido);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(ImovelViewModel));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Post_AreaInvalida()
         {
-            // Arrange
-            var imovelInvalido = GetNewImovel();
+            var imovelInvalido = GetNewImovelModel();
             imovelInvalido.AreaStr = "abc";
             SetupInvalidFormData("AreaStr", "abc");
             controller.ModelState.Clear();
 
-            // Act
             var result = controller.Create(imovelInvalido);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(ImovelViewModel));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest_Get_Valido()
         {
-            // Act
             var result = controller.Edit(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(ImovelViewModel));
-            ImovelViewModel imovelModel = (ImovelViewModel)viewResult.ViewData.Model;
-            Assert.IsTrue(1 == imovelModel.Id);
-            Assert.AreEqual("Rua das Flores", imovelModel.Logradouro);
-            Assert.IsNotNull(imovelModel.AreaStr);
-            Assert.IsNotNull(imovelModel.ValorStr);
+            
+            var model = (ImovelViewModel)viewResult.ViewData.Model;
+            Assert.AreEqual(1, model.Id);
+            Assert.AreEqual("Rua das Flores", model.Logradouro);
+            Assert.IsNotNull(model.AreaStr);
+            Assert.IsNotNull(model.ValorStr);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest_Post_Valido()
         {
-            // Arrange
             SetupValidFormData();
             controller.ModelState.Clear();
 
-            // Act
             var result = controller.Edit(1, GetTargetImovelModel());
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-            RedirectToActionResult redirectToActionResult = (RedirectToActionResult)result;
-            Assert.IsNull(redirectToActionResult.ControllerName);
-            Assert.AreEqual("Index", redirectToActionResult.ActionName);
+            var redirect = (RedirectToActionResult)result;
+            Assert.IsNull(redirect.ControllerName);
+            Assert.AreEqual("Index", redirect.ActionName);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest_Post_ValorInvalido()
         {
-            // Arrange
             var imovelInvalido = GetTargetImovelModel();
             imovelInvalido.ValorStr = "3500.00";
             SetupInvalidFormData("ValorStr", "3500.00");
             controller.ModelState.Clear();
 
-            // Act
             var result = controller.Edit(1, imovelInvalido);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(ImovelViewModel));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DeleteTest_Get_Valido()
         {
-            // Act
             var result = controller.Delete(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(ImovelViewModel));
-            ImovelViewModel imovelModel = (ImovelViewModel)viewResult.ViewData.Model;
-            Assert.IsTrue(1 == imovelModel.Id);
-            Assert.AreEqual("Rua das Flores", imovelModel.Logradouro);
+            
+            var model = (ImovelViewModel)viewResult.ViewData.Model;
+            Assert.AreEqual(1, model.Id);
+            Assert.AreEqual("Rua das Flores", model.Logradouro);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DeleteTest_Post_Valido()
         {
-            // Act
             var result = controller.DeleteConfirmed(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-            RedirectToActionResult redirectToActionResult = (RedirectToActionResult)result;
-            Assert.IsNull(redirectToActionResult.ControllerName);
-            Assert.AreEqual("Index", redirectToActionResult.ActionName);
+            var redirect = (RedirectToActionResult)result;
+            Assert.IsNull(redirect.ControllerName);
+            Assert.AreEqual("Index", redirect.ActionName);
         }
 
         private void SetupValidFormData()
@@ -298,7 +270,7 @@ namespace AlugueLinkWEB.Controllers.Tests
                 .Returns(formCollection.Object);
         }
 
-        private ImovelViewModel GetNewImovel()
+        private static ImovelViewModel GetNewImovelModel()
         {
             return new ImovelViewModel
             {
@@ -322,6 +294,16 @@ namespace AlugueLinkWEB.Controllers.Tests
             };
         }
 
+        private static List<Imovel> GetTestImoveis()
+        {
+            return new List<Imovel>
+            {
+                new Imovel { Id = 1, Logradouro = "Rua das Flores", Cidade = "São Paulo", Tipo = "A", Valor = 3500.00m },
+                new Imovel { Id = 2, Logradouro = "Av. Copacabana", Cidade = "Rio de Janeiro", Tipo = "C", Valor = 5000.00m },
+                new Imovel { Id = 3, Logradouro = "Rua da Bahia", Cidade = "Belo Horizonte", Tipo = "PC", Valor = 2500.00m }
+            };
+        }
+
         private static Imovel GetTargetImovel()
         {
             return new Imovel
@@ -342,7 +324,7 @@ namespace AlugueLinkWEB.Controllers.Tests
             };
         }
 
-        private ImovelViewModel GetTargetImovelModel()
+        private static ImovelViewModel GetTargetImovelModel()
         {
             return new ImovelViewModel
             {
@@ -366,23 +348,13 @@ namespace AlugueLinkWEB.Controllers.Tests
             };
         }
 
-        private static IEnumerable<Imovel> GetTestImoveis()
+        private static List<Locador> GetTestLocadores()
         {
-            return
-            [
-                new Imovel { Id = 1, Logradouro = "Rua das Flores", Cidade = "São Paulo", Tipo = "A", Valor = 3500.00m },
-                new Imovel { Id = 2, Logradouro = "Av. Copacabana", Cidade = "Rio de Janeiro", Tipo = "C", Valor = 5000.00m },
-                new Imovel { Id = 3, Logradouro = "Rua da Bahia", Cidade = "Belo Horizonte", Tipo = "PC", Valor = 2500.00m }
-            ];
-        }
-
-        private static IEnumerable<Locador> GetTestLocadores()
-        {
-            return
-            [
+            return new List<Locador>
+            {
                 new Locador { Id = 1, Nome = "Pedro Proprietário", Email = "pedro@gmail.com" },
                 new Locador { Id = 2, Nome = "Ana Proprietária", Email = "ana@gmail.com" }
-            ];
+            };
         }
     }
 }
