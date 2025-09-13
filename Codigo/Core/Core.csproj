@@ -7,14 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Services\**" />
-    <EmbeddedResource Remove="Services\**" />
-    <EmbeddedResource Remove="Service\**" />
-    <None Remove="Services\**" />
-    <None Remove="Service\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Service\.gitkeep" />
   </ItemGroup>
 
@@ -30,6 +22,10 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="MySql.EntityFrameworkCore" Version="9.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Util\Util.csproj" />
   </ItemGroup>
 
 </Project>

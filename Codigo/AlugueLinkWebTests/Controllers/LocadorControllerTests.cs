@@ -9,7 +9,7 @@ using Moq;
 
 namespace AlugueLinkWEB.Controllers.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class LocadorControllerTests
     {
         private static LocadorController controller = null!;
@@ -19,7 +19,6 @@ namespace AlugueLinkWEB.Controllers.Tests
         [TestInitialize]
         public void Initialize()
         {
-            // Arrange
             var mockService = new Mock<ILocadorService>();
 
             IMapper mapper = new MapperConfiguration(cfg =>
@@ -40,45 +39,40 @@ namespace AlugueLinkWEB.Controllers.Tests
 
             controller = new LocadorController(mockService.Object, mapper);
             
-            // Setup TempData para evitar NullReferenceException
             var tempData = new Mock<ITempDataDictionary>();
             controller.TempData = tempData.Object;
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void IndexTest_Valido()
         {
-            // Act
             var result = controller.Index();
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(IEnumerable<LocadorViewModel>));
 
-            var listaLocadores = (IEnumerable<LocadorViewModel>)viewResult.ViewData.Model;
-            Assert.AreEqual(3, listaLocadores.Count());
+            var lista = (IEnumerable<LocadorViewModel>)viewResult.ViewData.Model;
+            Assert.AreEqual(3, lista.Count());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DetailsTest_Valido()
         {
-            // Act
             var result = controller.Details(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(LocadorViewModel));
-            LocadorViewModel locadorModel = (LocadorViewModel)viewResult.ViewData.Model;
-            Assert.AreEqual(1, locadorModel.Id);
-            Assert.AreEqual("João Proprietário", locadorModel.Nome);
+            
+            var model = (LocadorViewModel)viewResult.ViewData.Model;
+            Assert.AreEqual(1, model.Id);
+            Assert.AreEqual("João Proprietário", model.Nome);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DetailsTest_NotFound()
         {
-            // Arrange
             var mockService = new Mock<ILocadorService>();
             mockService.Setup(service => service.Get(It.IsAny<int>()))
                 .Returns((Locador?)null);
@@ -88,75 +82,62 @@ namespace AlugueLinkWEB.Controllers.Tests
 
             var testController = new LocadorController(mockService.Object, mapper);
 
-            // Act
             var result = testController.Details(999);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Get_Valido()
         {
-            // Act
             var result = controller.Create();
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Post_Valido()
         {
-            // Arrange
-            // Forçar ModelState válido
             controller.ModelState.Clear();
 
-            // Act
-            var result = controller.Create(GetNewLocador());
+            var result = controller.Create(GetNewLocadorModel());
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-            RedirectToActionResult redirectToActionResult = (RedirectToActionResult)result;
-            Assert.IsNull(redirectToActionResult.ControllerName);
-            Assert.AreEqual("Index", redirectToActionResult.ActionName);
+            var redirect = (RedirectToActionResult)result;
+            Assert.IsNull(redirect.ControllerName);
+            Assert.AreEqual("Index", redirect.ActionName);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest_Post_Invalido()
         {
-            // Arrange
             controller.ModelState.AddModelError("Nome", "Campo requerido");
 
-            // Act
-            var result = controller.Create(GetNewLocador());
+            var result = controller.Create(GetNewLocadorModel());
 
-            // Assert
             Assert.AreEqual(1, controller.ModelState.ErrorCount);
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(LocadorViewModel));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest_Get_Valido()
         {
-            // Act
             var result = controller.Edit(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(LocadorViewModel));
-            LocadorViewModel locadorModel = (LocadorViewModel)viewResult.ViewData.Model;
-            Assert.AreEqual(1, locadorModel.Id);
-            Assert.AreEqual("João Proprietário", locadorModel.Nome);
+            
+            var model = (LocadorViewModel)viewResult.ViewData.Model;
+            Assert.AreEqual(1, model.Id);
+            Assert.AreEqual("João Proprietário", model.Nome);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest_Get_NotFound()
         {
-            // Arrange
             var mockService = new Mock<ILocadorService>();
             mockService.Setup(service => service.Get(It.IsAny<int>()))
                 .Returns((Locador?)null);
@@ -166,64 +147,53 @@ namespace AlugueLinkWEB.Controllers.Tests
 
             var testController = new LocadorController(mockService.Object, mapper);
 
-            // Act
             var result = testController.Edit(999);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest_Post_Valido()
         {
-            // Arrange
-            // Forçar ModelState válido
             controller.ModelState.Clear();
 
-            // Act
             var result = controller.Edit(1, GetTargetLocadorModel());
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-            RedirectToActionResult redirectToActionResult = (RedirectToActionResult)result;
-            Assert.IsNull(redirectToActionResult.ControllerName);
-            Assert.AreEqual("Index", redirectToActionResult.ActionName);
+            var redirect = (RedirectToActionResult)result;
+            Assert.IsNull(redirect.ControllerName);
+            Assert.AreEqual("Index", redirect.ActionName);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest_Post_IdMismatch()
         {
-            // Arrange
             controller.ModelState.Clear();
             var model = GetTargetLocadorModel();
-            model.Id = 2; // ID diferente do parâmetro
+            model.Id = 2;
 
-            // Act
             var result = controller.Edit(1, model);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DeleteTest_Get_Valido()
         {
-            // Act
             var result = controller.Delete(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            ViewResult viewResult = (ViewResult)result;
+            var viewResult = (ViewResult)result;
             Assert.IsInstanceOfType(viewResult.ViewData.Model, typeof(LocadorViewModel));
-            LocadorViewModel locadorModel = (LocadorViewModel)viewResult.ViewData.Model;
-            Assert.AreEqual(1, locadorModel.Id);
-            Assert.AreEqual("João Proprietário", locadorModel.Nome);
+            
+            var model = (LocadorViewModel)viewResult.ViewData.Model;
+            Assert.AreEqual(1, model.Id);
+            Assert.AreEqual("João Proprietário", model.Nome);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DeleteTest_Get_NotFound()
         {
-            // Arrange
             var mockService = new Mock<ILocadorService>();
             mockService.Setup(service => service.Get(It.IsAny<int>()))
                 .Returns((Locador?)null);
@@ -233,27 +203,23 @@ namespace AlugueLinkWEB.Controllers.Tests
 
             var testController = new LocadorController(mockService.Object, mapper);
 
-            // Act
             var result = testController.Delete(999);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DeleteTest_Post_Valido()
         {
-            // Act
             var result = controller.DeleteConfirmed(1);
 
-            // Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
-            RedirectToActionResult redirectToActionResult = (RedirectToActionResult)result;
-            Assert.IsNull(redirectToActionResult.ControllerName);
-            Assert.AreEqual("Index", redirectToActionResult.ActionName);
+            var redirect = (RedirectToActionResult)result;
+            Assert.IsNull(redirect.ControllerName);
+            Assert.AreEqual("Index", redirect.ActionName);
         }
 
-        private LocadorViewModel GetNewLocador()
+        private static LocadorViewModel GetNewLocadorModel()
         {
             return new LocadorViewModel
             {
@@ -262,6 +228,16 @@ namespace AlugueLinkWEB.Controllers.Tests
                 Email = "ana@gmail.com",
                 Telefone = "31999999999",
                 Cpf = "55566677788"
+            };
+        }
+
+        private static List<Locador> GetTestLocadores()
+        {
+            return new List<Locador>
+            {
+                new Locador { Id = 1, Nome = "João Proprietário", Email = "joao@gmail.com", Cpf = "12345678901" },
+                new Locador { Id = 2, Nome = "Maria Proprietária", Email = "maria@gmail.com", Cpf = "98765432100" },
+                new Locador { Id = 3, Nome = "Carlos Silva", Email = "carlos@gmail.com", Cpf = "11122233344" }
             };
         }
 
@@ -277,7 +253,7 @@ namespace AlugueLinkWEB.Controllers.Tests
             };
         }
 
-        private LocadorViewModel GetTargetLocadorModel()
+        private static LocadorViewModel GetTargetLocadorModel()
         {
             return new LocadorViewModel
             {
@@ -287,16 +263,6 @@ namespace AlugueLinkWEB.Controllers.Tests
                 Telefone = "11999999999",
                 Cpf = "12345678901"
             };
-        }
-
-        private static IEnumerable<Locador> GetTestLocadores()
-        {
-            return
-            [
-                new Locador { Id = 1, Nome = "João Proprietário", Email = "joao@gmail.com", Cpf = "12345678901" },
-                new Locador { Id = 2, Nome = "Maria Proprietária", Email = "maria@gmail.com", Cpf = "98765432100" },
-                new Locador { Id = 3, Nome = "Carlos Silva", Email = "carlos@gmail.com", Cpf = "11122233344" }
-            ];
         }
     }
 }

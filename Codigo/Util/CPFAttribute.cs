@@ -2,9 +2,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Util
 {
-    /// <summary>
-    /// Validação customizada para CPF
-    /// </summary>
     public class CPFAttribute : ValidationAttribute
     {
         public override bool IsValid(object? value)
@@ -13,7 +10,7 @@ namespace Util
                 return true;
             
             var valueNoEspecial = Methods.RemoveSpecialsCaracts((string)value);
-            bool valido = Methods.ValidarCpf(valueNoEspecial);
+            var valido = Methods.ValidarCpf(valueNoEspecial);
             return valido;
         }
 

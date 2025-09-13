@@ -178,8 +178,6 @@ namespace AlugueLinkWEB
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            await DataSeeder.SeedAsync(app.Services);
-
             await app.RunAsync();
         }
     }

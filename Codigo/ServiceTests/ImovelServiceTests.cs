@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Service.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class ImovelServiceTests
     {
         private AluguelinkContext context = null!;
@@ -15,9 +15,8 @@ namespace Service.Tests
         [TestInitialize]
         public void Initialize()
         {
-            //Arrange
-            var builder = new DbContextOptionsBuilder<AluguelinkContext>();
-            builder.UseInMemoryDatabase("aluguelinkdb");
+            var builder = new DbContextOptionsBuilder<AluguelinkContext>()
+                .UseInMemoryDatabase("aluguelinkdb");
             var options = builder.Options;
 
             context = new AluguelinkContext(options);
@@ -53,7 +52,7 @@ namespace Service.Tests
                     Bairro = "Vila Madalena",
                     Cidade = "São Paulo",
                     Estado = "SP",
-                    Tipo = "A", // Apartamento
+                    Tipo = "A",
                     Quartos = 3,
                     Banheiros = 2,
                     Area = 120.50m,
@@ -70,7 +69,7 @@ namespace Service.Tests
                     Bairro = "Copacabana",
                     Cidade = "Rio de Janeiro",
                     Estado = "RJ",
-                    Tipo = "C", // Casa
+                    Tipo = "C",
                     Quartos = 4,
                     Banheiros = 3,
                     Area = 200.00m,
@@ -87,7 +86,7 @@ namespace Service.Tests
                     Bairro = "Centro",
                     Cidade = "Belo Horizonte",
                     Estado = "MG",
-                    Tipo = "PC", // Ponto Comercial
+                    Tipo = "PC",
                     Quartos = 0,
                     Banheiros = 2,
                     Area = 80.00m,
@@ -104,7 +103,7 @@ namespace Service.Tests
                     Bairro = "Centro",
                     Cidade = "Curitiba",
                     Estado = "PR",
-                    Tipo = "A", // Apartamento
+                    Tipo = "A",
                     Quartos = 2,
                     Banheiros = 1,
                     Area = 85.00m,
@@ -122,10 +121,9 @@ namespace Service.Tests
             imovelService = new Service.ImovelService(context);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest()
         {
-            // Act
             var imovel = new Imovel
             {
                 Cep = "90000000",
@@ -134,7 +132,7 @@ namespace Service.Tests
                 Bairro = "Moinhos",
                 Cidade = "Porto Alegre",
                 Estado = "RS",
-                Tipo = "C", // Casa
+                Tipo = "C",
                 Quartos = 3,
                 Banheiros = 2,
                 Area = 150.00m,
@@ -146,7 +144,6 @@ namespace Service.Tests
 
             imovelService.Create(imovel);
 
-            // Assert
             Assert.AreEqual(5, imovelService.GetAll(page, pageSize).Count());
             var imovelInserido = imovelService.Get(imovel.Id);
             Assert.IsNotNull(imovelInserido);
@@ -157,22 +154,19 @@ namespace Service.Tests
             Assert.AreEqual(4000.00m, imovelInserido.Valor);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DeleteTest()
         {
-            // Act
             imovelService.Delete(2);
 
-            // Assert
             Assert.AreEqual(3, imovelService.GetAll(page, pageSize).Count());
             var imovel = imovelService.Get(2);
             Assert.IsNull(imovel);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EditTest()
         {
-            //Act 
             var imovel = imovelService.Get(3);
             Assert.IsNotNull(imovel);
             imovel.Logradouro = "Rua Editada";
@@ -183,7 +177,6 @@ namespace Service.Tests
             imovel.Banheiros = 1;
             imovelService.Edit(imovel);
 
-            //Assert
             imovel = imovelService.Get(3);
             Assert.IsNotNull(imovel);
             Assert.AreEqual("Rua Editada", imovel.Logradouro);
@@ -194,13 +187,11 @@ namespace Service.Tests
             Assert.AreEqual(1, imovel.Banheiros);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetTest()
         {
-            // Act
             var imovel = imovelService.Get(1);
 
-            // Assert
             Assert.IsNotNull(imovel);
             Assert.AreEqual("Rua das Flores", imovel.Logradouro);
             Assert.AreEqual("São Paulo", imovel.Cidade);
@@ -211,13 +202,11 @@ namespace Service.Tests
             Assert.AreEqual(3500.00m, imovel.Valor);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetAllTest()
         {
-            // Act
             var listaImoveis = imovelService.GetAll(page, pageSize);
 
-            // Assert
             Assert.IsInstanceOfType(listaImoveis, typeof(IEnumerable<Imovel>));
             Assert.IsNotNull(listaImoveis);
             Assert.AreEqual(4, listaImoveis.Count());
@@ -225,13 +214,11 @@ namespace Service.Tests
             Assert.AreEqual("Rua das Flores", listaImoveis.First().Logradouro);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetByLocadorTest()
         {
-            //Act
             var imoveis = imovelService.GetByLocador(1);
 
-            //Assert
             Assert.IsInstanceOfType(imoveis, typeof(IEnumerable<Core.DTO.ImovelDto>));
             Assert.IsNotNull(imoveis);
             Assert.AreEqual(2, imoveis.Count());
@@ -239,39 +226,33 @@ namespace Service.Tests
             Assert.IsTrue(imoveis.Any(i => i.Logradouro == "Rua da Bahia"));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetByTipoTest()
         {
-            //Act
             var imoveis = imovelService.GetByTipo("A");
 
-            //Assert
             Assert.IsInstanceOfType(imoveis, typeof(IEnumerable<Core.DTO.ImovelDto>));
             Assert.IsNotNull(imoveis);
             Assert.AreEqual(2, imoveis.Count());
             Assert.IsTrue(imoveis.All(i => i.Tipo == "A"));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetByValorRangeTest()
         {
-            //Act
             var imoveis = imovelService.GetByValorRange(2000.00m, 3000.00m);
 
-            //Assert
             Assert.IsInstanceOfType(imoveis, typeof(IEnumerable<Core.DTO.ImovelDto>));
             Assert.IsNotNull(imoveis);
             Assert.AreEqual(2, imoveis.Count());
             Assert.IsTrue(imoveis.All(i => i.Valor >= 2000.00m && i.Valor <= 3000.00m));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetCountTest()
         {
-            // Act
             var count = imovelService.GetCount();
 
-            // Assert
             Assert.AreEqual(4, count);
         }
     }
