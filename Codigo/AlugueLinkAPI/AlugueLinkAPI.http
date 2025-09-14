@@ -1,0 +1,263 @@
+### AlugueLinkAPI - Arquivo de testes HTTP
+
+@baseUrl = https://localhost:7291/api
+
+### Autenticação - Registrar usuário
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "email": "admin@aluguelink.com",
+  "password": "Admin1234!"
+}
+
+### Autenticação - Login
+# @name auth_response
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "admin@aluguelink.com",
+  "password": "Admin1234!"
+}
+
+###############################################
+# LOCADORES
+###############################################
+
+### Listar Locadores
+GET {{baseUrl}}/locadores?page=1&pageSize=10
+
+### Buscar Locador por ID
+GET {{baseUrl}}/locadores/1
+
+### Criar Locador
+POST {{baseUrl}}/locadores
+Content-Type: application/json
+
+{
+  "nome": "João Silva",
+  "email": "joao.silva@email.com",
+  "telefone": "11987654321",
+  "cpf": "12345678901"
+}
+
+### Atualizar Locador
+PUT {{baseUrl}}/locadores/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "nome": "João Silva Santos",
+  "email": "joao.silva@email.com",
+  "telefone": "11987654321",
+  "cpf": "12345678901"
+}
+
+### Buscar Locador por Nome
+GET {{baseUrl}}/locadores/search/nome/João
+
+### Buscar Locador por CPF
+GET {{baseUrl}}/locadores/search/cpf/12345678901
+
+### Buscar Locador por Email
+GET {{baseUrl}}/locadores/email/joao.silva@email.com
+
+### Deletar Locador
+DELETE {{baseUrl}}/locadores/1
+
+###############################################
+# LOCATÁRIOS
+###############################################
+
+### Listar Locatários
+GET {{baseUrl}}/locatarios?page=1&pageSize=10
+
+### Buscar Locatário por ID
+GET {{baseUrl}}/locatarios/1
+
+### Criar Locatário
+POST {{baseUrl}}/locatarios
+Content-Type: application/json
+
+{
+  "nome": "Maria Oliveira",
+  "email": "maria.oliveira@email.com",
+  "telefone1": "11987654321",
+  "telefone2": "11987654322",
+  "cpf": "98765432100",
+  "cep": "01310100",
+  "logradouro": "Avenida Paulista",
+  "numero": "1000",
+  "complemento": "Apto 101",
+  "bairro": "Bela Vista",
+  "cidade": "São Paulo",
+  "estado": "SP",
+  "profissao": "Analista de Sistemas",
+  "renda": 8500.00
+}
+
+### Atualizar Locatário
+PUT {{baseUrl}}/locatarios/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "nome": "Maria Oliveira Santos",
+  "email": "maria.oliveira@email.com",
+  "telefone1": "11987654321",
+  "telefone2": "11987654322",
+  "cpf": "98765432100",
+  "cep": "01310100",
+  "logradouro": "Avenida Paulista",
+  "numero": "1000",
+  "complemento": "Apto 101",
+  "bairro": "Bela Vista",
+  "cidade": "São Paulo",
+  "estado": "SP",
+  "profissao": "Analista de Sistemas",
+  "renda": 9000.00
+}
+
+### Buscar Locatário por Nome
+GET {{baseUrl}}/locatarios/search/nome/Maria
+
+### Buscar Locatário por CPF
+GET {{baseUrl}}/locatarios/search/cpf/98765432100
+
+### Deletar Locatário
+DELETE {{baseUrl}}/locatarios/1
+
+###############################################
+# IMÓVEIS
+###############################################
+
+### Listar Imóveis
+GET {{baseUrl}}/imoveis?page=1&pageSize=10
+
+### Buscar Imóvel por ID
+GET {{baseUrl}}/imoveis/1
+
+### Criar Imóvel
+POST {{baseUrl}}/imoveis
+Content-Type: application/json
+
+{
+  "idLocador": 1,
+  "cep": "01310100",
+  "logradouro": "Avenida Paulista",
+  "numero": "500",
+  "complemento": "Torre A",
+  "bairro": "Bela Vista",
+  "cidade": "São Paulo",
+  "estado": "SP",
+  "tipo": "A",
+  "quartos": 3,
+  "banheiros": 2,
+  "area": 85.50,
+  "vagasGaragem": 1,
+  "valor": 3500.00,
+  "descricao": "Apartamento moderno com vista para a cidade"
+}
+
+### Atualizar Imóvel
+PUT {{baseUrl}}/imoveis/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "idLocador": 1,
+  "cep": "01310100",
+  "logradouro": "Avenida Paulista",
+  "numero": "500",
+  "complemento": "Torre A",
+  "bairro": "Bela Vista",
+  "cidade": "São Paulo",
+  "estado": "SP",
+  "tipo": "A",
+  "quartos": 3,
+  "banheiros": 2,
+  "area": 85.50,
+  "vagasGaragem": 1,
+  "valor": 3800.00,
+  "descricao": "Apartamento moderno com vista para a cidade - Reformado"
+}
+
+### Deletar Imóvel
+DELETE {{baseUrl}}/imoveis/1
+
+###############################################
+# ALUGUÉIS
+###############################################
+
+### Listar Aluguéis
+GET {{baseUrl}}/alugueis?page=1&pageSize=10
+
+### Buscar Aluguel por ID
+GET {{baseUrl}}/alugueis/1
+
+### Criar Aluguel
+POST {{baseUrl}}/alugueis
+Content-Type: application/json
+
+{
+  "dataInicio": "2024-01-01",
+  "dataFim": "2024-12-31",
+  "status": "A",
+  "dataAssinatura": "2023-12-15",
+  "idlocatario": 1,
+  "idimovel": 1
+}
+
+### Atualizar Aluguel
+PUT {{baseUrl}}/alugueis/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "dataInicio": "2024-01-01",
+  "dataFim": "2024-12-31",
+  "status": "F",
+  "dataAssinatura": "2023-12-15",
+  "idlocatario": 1,
+  "idimovel": 1
+}
+
+### Deletar Aluguel
+DELETE {{baseUrl}}/alugueis/1
+
+###############################################
+# PAGAMENTOS
+###############################################
+
+### Listar Pagamentos
+GET {{baseUrl}}/pagamentos?page=1&pageSize=10
+
+### Buscar Pagamento por ID
+GET {{baseUrl}}/pagamentos/1
+
+### Criar Pagamento
+POST {{baseUrl}}/pagamentos
+Content-Type: application/json
+
+{
+  "valor": 3500.00,
+  "dataPagamento": "2024-01-05T10:30:00",
+  "tipoPagamento": "P",
+  "idaluguel": 1
+}
+
+### Atualizar Pagamento
+PUT {{baseUrl}}/pagamentos/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "valor": 3500.00,
+  "dataPagamento": "2024-01-05T10:30:00",
+  "tipoPagamento": "CC",
+  "idaluguel": 1
+}
+
+### Deletar Pagamento
+DELETE {{baseUrl}}/pagamentos/1
