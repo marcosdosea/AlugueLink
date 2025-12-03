@@ -283,5 +283,194 @@ namespace Service.Tests
 
             Assert.AreEqual(3, count);
         }
+
+        #region Testes de Integração - Técnicas de Caixa Branca
+
+        #region Helpers para Setup de Testes
+
+        /// <summary>
+        /// Cria um contexto InMemory isolado com dados base para testes de loop.
+        /// </summary>
+        private static (AluguelinkContext context, AluguelService service) CriarContextoTeste(string dbName)
+        {
+            var builder = new DbContextOptionsBuilder<AluguelinkContext>()
+                .UseInMemoryDatabase(dbName);
+            var context = new AluguelinkContext(builder.Options);
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+
+            context.Locadors.Add(new Locador 
+            { 
+                Id = 1, Nome = "Test", Email = "t@t.com", Cpf = "12345678901", Telefone = "123" 
+            });
+            context.Locatarios.Add(new Locatario
+            {
+                Id = 1, Nome = "Test", Email = "t@t.com", Cpf = "12345678901",
+                Telefone1 = "123", Telefone2 = "456", Cep = "12345678", Logradouro = "Rua",
+                Numero = "1", Bairro = "Centro", Cidade = "SP", Estado = "SP"
+            });
+
+            return (context, new AluguelService(context));
+        }
+
+        private static Imovel CriarImovel(int id, string descricao = "Imóvel teste") => new()
+        {
+            Id = id, IdLocador = 1, Cep = "12345678", Logradouro = $"Rua {id}",
+            Numero = id.ToString(), Bairro = "Centro", Cidade = "SP", Estado = "SP",
+            Tipo = "A", Quartos = 1, Banheiros = 1, Area = 50m, VagasGaragem = 1, 
+            Valor = 1000m, Descricao = descricao
+        };
+
+        #endregion
+
+        #region Teste de Ciclo (Loop Testing) - AtualizarStatusAlugueis
+
+        [TestMethod]
+        public void AtualizarStatusAlugueis_ZeroIteracoes_StatusPermanece()
+        {
+            var (context, service) = CriarContextoTeste("db_loop_zero");
+            context.Imovels.Add(CriarImovel(1));
+            context.Aluguels.Add(new Aluguel
+            {
+                Id = 1, Idlocatario = 1, Idimovel = 1, Status = "A",
+                DataInicio = DateOnly.FromDateTime(DateTime.Now.AddMonths(-1)),
+                DataFim = DateOnly.FromDateTime(DateTime.Now.AddMonths(11)),
+                DataAssinatura = DateOnly.FromDateTime(DateTime.Now.AddMonths(-1))
+            });
+            context.SaveChanges();
+
+            service.AtualizarStatusAlugueis();
+
+            Assert.AreEqual("A", context.Aluguels.Find(1)?.Status);
+        }
+
+        [TestMethod]
+        public void AtualizarStatusAlugueis_UmaIteracao_StatusMudaParaFinalizado()
+        {
+            var (context, service) = CriarContextoTeste("db_loop_one");
+            context.Imovels.Add(CriarImovel(1));
+            context.Aluguels.Add(new Aluguel
+            {
+                Id = 1, Idlocatario = 1, Idimovel = 1, Status = "A",
+                DataInicio = DateOnly.FromDateTime(DateTime.Now.AddMonths(-12)),
+                DataFim = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)),
+                DataAssinatura = DateOnly.FromDateTime(DateTime.Now.AddMonths(-12))
+            });
+            context.SaveChanges();
+
+            service.AtualizarStatusAlugueis();
+
+            Assert.AreEqual("F", context.Aluguels.Find(1)?.Status);
+        }
+
+        [TestMethod]
+        public void AtualizarStatusAlugueis_MultiplasIteracoes_StatusesAtualizadosCorretamente()
+        {
+            var (context, service) = CriarContextoTeste("db_loop_multi");
+            context.Imovels.AddRange(CriarImovel(1), CriarImovel(2), CriarImovel(3));
+            
+            var hoje = DateOnly.FromDateTime(DateTime.Now);
+            context.Aluguels.AddRange(
+                new Aluguel { Id = 1, Idlocatario = 1, Idimovel = 1, Status = "A",
+                    DataInicio = hoje.AddMonths(-6), DataFim = hoje.AddDays(-5), DataAssinatura = hoje.AddMonths(-6) },
+                new Aluguel { Id = 2, Idlocatario = 1, Idimovel = 2, Status = "P",
+                    DataInicio = hoje.AddDays(-1), DataFim = hoje.AddMonths(11), DataAssinatura = hoje.AddDays(-10) },
+                new Aluguel { Id = 3, Idlocatario = 1, Idimovel = 3, Status = "A",
+                    DataInicio = hoje.AddMonths(-1), DataFim = hoje.AddMonths(11), DataAssinatura = hoje.AddMonths(-1) }
+            );
+            context.SaveChanges();
+
+            service.AtualizarStatusAlugueis();
+
+            Assert.AreEqual("F", context.Aluguels.Find(1)?.Status, "Ativo expirado -> Finalizado");
+            Assert.AreEqual("A", context.Aluguels.Find(2)?.Status, "Pendente iniciado -> Ativo");
+            Assert.AreEqual("A", context.Aluguels.Find(3)?.Status, "Ativo válido -> Permanece");
+        }
+
+        #endregion
+
+        #region Teste de Fluxo de Dados - NormalizeStatus
+
+        [TestMethod]
+        [DataRow("ATIVO", "A", DisplayName = "NormalizeStatus_ATIVO_RetornaA")]
+        [DataRow("PENDENTE", "P", DisplayName = "NormalizeStatus_PENDENTE_RetornaP")]
+        [DataRow("FINALIZADO", "F", DisplayName = "NormalizeStatus_FINALIZADO_RetornaF")]
+        [DataRow("A", "A", DisplayName = "NormalizeStatus_A_PermaneceMesmo")]
+        [DataRow("", "A", DisplayName = "NormalizeStatus_Vazio_DefaultA")]
+        [DataRow("INVALIDO", "A", DisplayName = "NormalizeStatus_Invalido_DefaultA")]
+        public void Create_NormalizaStatusCorretamente(string statusEntrada, string statusEsperado)
+        {
+            var novoAluguel = new Aluguel
+            {
+                Idlocatario = 1, Idimovel = 2,
+                DataInicio = DateOnly.FromDateTime(DateTime.Now.AddDays(30)),
+                DataFim = DateOnly.FromDateTime(DateTime.Now.AddDays(395)),
+                DataAssinatura = DateOnly.FromDateTime(DateTime.Now),
+                Status = statusEntrada
+            };
+
+            var novoId = aluguelService.Create(novoAluguel);
+
+            var aluguelCriado = aluguelService.Get(novoId);
+            Assert.AreEqual(statusEsperado, aluguelCriado?.Status);
+        }
+
+        #endregion
+
+        #region Teste de Fronteira (Boundary Testing) - IsImovelAvailable
+
+        [TestMethod]
+        public void IsImovelAvailable_PeriodoAnterior_RetornaDisponivel()
+        {
+            var hoje = DateOnly.FromDateTime(DateTime.Now);
+            
+            var disponivel = aluguelService.IsImovelAvailable(1, hoje.AddMonths(-6), hoje.AddMonths(-3));
+
+            Assert.IsTrue(disponivel);
+        }
+
+        [TestMethod]
+        public void IsImovelAvailable_PeriodoPosterior_RetornaDisponivel()
+        {
+            var hoje = DateOnly.FromDateTime(DateTime.Now);
+            
+            var disponivel = aluguelService.IsImovelAvailable(1, hoje.AddMonths(11), hoje.AddMonths(13));
+
+            Assert.IsTrue(disponivel);
+        }
+
+        [TestMethod]
+        public void IsImovelAvailable_PeriodoSobreposto_RetornaIndisponivel()
+        {
+            var hoje = DateOnly.FromDateTime(DateTime.Now);
+            
+            var disponivel = aluguelService.IsImovelAvailable(1, hoje.AddMonths(-3), hoje.AddDays(1));
+
+            Assert.IsFalse(disponivel);
+        }
+
+        [TestMethod]
+        public void IsImovelAvailable_PeriodoDentro_RetornaIndisponivel()
+        {
+            var hoje = DateOnly.FromDateTime(DateTime.Now);
+            
+            var disponivel = aluguelService.IsImovelAvailable(1, hoje, hoje.AddMonths(1));
+
+            Assert.IsFalse(disponivel);
+        }
+
+        [TestMethod]
+        public void IsImovelAvailable_SemAluguelAtivo_RetornaDisponivel()
+        {
+            var hoje = DateOnly.FromDateTime(DateTime.Now);
+            
+            var disponivel = aluguelService.IsImovelAvailable(2, hoje, hoje.AddMonths(12));
+
+            Assert.IsTrue(disponivel);
+        }
+
+        #endregion
+
+        #endregion
     }
 }
